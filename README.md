@@ -17,5 +17,12 @@ probably be move in here.
 Problems
 --------
 
-The services internally use lots of threadlocals that are only setup when requests come through the portal. The services
-also don't have good tests. Need to contain Sakai dependencies inside one class so it's easy to test the code.
+The services internally use lots of threadlocals that are only setup when requests come through the portal.
+The services also don't have good tests.
+Need to contain Sakai dependencies inside one class so it's easy to test the code.
+Error handling, not really any use of exceptions.
+Permissions on services?
+Type API doesn't handle i18n.
+Should use placement IDs rather than site IDs to allow multiple forums per site.
+Should use the standard Sakai authz API rather than re-implementing permissions.
+Doesn't have clean responsibilities between services.
