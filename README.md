@@ -26,3 +26,15 @@ Type API doesn't handle i18n.
 Should use placement IDs rather than site IDs to allow multiple forums per site.
 Should use the standard Sakai authz API rather than re-implementing permissions.
 Doesn't have clean responsibilities between services.
+Too much mutability on entities exposed through the API.
+
+Should things like forum titles be i18ned?
+
+Area is known as "Template Settings" in the interface.
+
+DB Changes
+----------
+These columns can all go as  it's a set rather than an list now.
+MFR_AP_ACCESSORS_T.accessors_index_col 
+MFR_AP_MODERATORS_T.moderators_index_col
+MFR_AP_CONTRIBUTORS_T.contributors_index_col

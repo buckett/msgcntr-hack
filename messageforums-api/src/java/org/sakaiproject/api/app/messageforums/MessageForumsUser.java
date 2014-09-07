@@ -28,7 +28,6 @@ public interface MessageForumsUser {
     public void setUuid(String uuid);
     public PrivateMessage getPrivateMessage();
     public void setPrivateMessage(PrivateMessage privateMessage);
-    public void setApmoderatorsindex(int apmoderatorsindex);
     public ActorPermissions getApAccessors();
     public void setApAccessors(ActorPermissions apAccessors);
     public ActorPermissions getApContributors();
