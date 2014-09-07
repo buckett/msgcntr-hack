@@ -1101,6 +1101,8 @@ public class DiscussionForumManagerImpl extends HibernateDaoSupport implements
     saveForum(forum, true, getCurrentContext(), true, getCurrentUser());
   }
 
+	// The sole purpose the the current user is so that the quartz job can be a different user
+	// quartz jobs should just set the current user on the thread.
   public void saveForum(DiscussionForum forum, boolean draft, String contextId, boolean logEvent, String currentUser)
   {
     if (LOG.isDebugEnabled())
