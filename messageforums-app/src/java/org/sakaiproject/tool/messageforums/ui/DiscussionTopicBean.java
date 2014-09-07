@@ -845,59 +845,6 @@ public class DiscussionTopicBean
 	  return isModeratedAndHasPerm.booleanValue();
   }
 
-  /**
-   * @return
-   */
-  public ArrayList getContributorsList()
-  {
-    LOG.debug("getContributorsList()");  
-    Iterator iter= forumManager.getContributorsList(topic, (DiscussionForum)topic.getBaseForum()).iterator();
-    while (iter.hasNext())
-    { 
-      contributorsList.add((String)iter.next());
-     }
-    return contributorsList; 
-
-  }
-  
-  /**
-   * @return
-   */
-  public ArrayList getAccessorList()
-  {
-    LOG.debug("getAccessorList()");
-    Iterator iter= forumManager.getAccessorsList(topic, (DiscussionForum)topic.getBaseForum()).iterator();
-    while (iter.hasNext())
-    { 
-      accessorList.add((String)iter.next());
-     }
-    return accessorList; 
-  }
-
-  /**
-   * @param accessorList The accessorList to set.
-   */
-  public void setAccessorList(ArrayList accessorList)
-  {    
-    if(LOG.isDebugEnabled())
-     {
-        LOG.debug("setAccessorList(List"+ accessorList+")");
-     }    
-    topic.getActorPermissions().setAccessors(forumManager.decodeAccessorsList(accessorList));
-  }
-
-  /**
-   * @param contributorsList The contributorsList to set.
-   */
-  public void setContributorsList(ArrayList contributorsList)
-  {
-    if(LOG.isDebugEnabled())
-    {
-       LOG.debug("setContributorsList(List"+ contributorsList+")");
-    }    
-    topic.getActorPermissions().setContributors(forumManager.decodeContributorsList(contributorsList));
-  }
-
   public String getGradeAssign()
   {
     return gradeAssign;

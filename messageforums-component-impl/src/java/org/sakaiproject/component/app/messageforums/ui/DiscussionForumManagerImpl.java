@@ -20,16 +20,7 @@
  **********************************************************************************/
 package org.sakaiproject.component.app.messageforums.ui;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -1814,17 +1805,15 @@ public class DiscussionForumManagerImpl extends HibernateDaoSupport implements
   }
 
   /**
-   * @param accessorList
-   * @return
    */
-  private List decodeActorPermissionTypeList(List selectedList)
+  private Set decodeActorPermissionTypeList(Set selectedList)
   {
     if (LOG.isDebugEnabled())
     {
       LOG.debug("decodeActorPermissionTypeList(List" + selectedList + ")");
     }
 
-    List newSelectedMemberList = new ArrayList();
+    Set newSelectedMembers = new LinkedHashSet();
 
     for (Iterator i = selectedList.iterator(); i.hasNext();)
     {
@@ -1844,7 +1833,7 @@ public class DiscussionForumManagerImpl extends HibernateDaoSupport implements
         {
           user.setTypeUuid(typeManager.getAllParticipantType());
           user.setUserId(typeManager.getAllParticipantType());
-          newSelectedMemberList.add(user);
+          newSelectedMembers.add(user);
         }
         else
           if (MembershipItem.TYPE_NOT_SPECIFIED.equals(item.getType()))
@@ -1852,9 +1841,8 @@ public class DiscussionForumManagerImpl extends HibernateDaoSupport implements
             user.setTypeUuid(typeManager.getNotSpecifiedType());
             user.setUserId(typeManager.getNotSpecifiedType());
             // if not specified is seleted then only this value remains.
-            newSelectedMemberList = null;
-            newSelectedMemberList = new ArrayList();
-            newSelectedMemberList.add(user);
+            newSelectedMembers = new LinkedHashSet();
+            newSelectedMembers.add(user);
             break;
           }
           else
@@ -1862,7 +1850,7 @@ public class DiscussionForumManagerImpl extends HibernateDaoSupport implements
             {
               user.setTypeUuid(typeManager.getRoleType());
               user.setUserId(item.getRole().getId());
-              newSelectedMemberList.add(user);
+              newSelectedMembers.add(user);
 
             }
             else
@@ -1870,14 +1858,14 @@ public class DiscussionForumManagerImpl extends HibernateDaoSupport implements
               {
                 user.setTypeUuid(typeManager.getGroupType());
                 user.setUserId(item.getGroup().getId());
-                newSelectedMemberList.add(user);
+                newSelectedMembers.add(user);
               }
               else
                 if (MembershipItem.TYPE_USER.equals(item.getType()))
                 {
                   user.setTypeUuid(typeManager.getUserType());
                   user.setUserId(item.getUser().getId());
-                  newSelectedMemberList.add(user);
+                  newSelectedMembers.add(user);
                 }
                 else
                 {
@@ -1887,109 +1875,10 @@ public class DiscussionForumManagerImpl extends HibernateDaoSupport implements
                 }
       }
     }
-    return newSelectedMemberList;
+    return newSelectedMembers;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager#decodeAccessorsList(java.util.List)
-   */
-  public List decodeAccessorsList(ArrayList accessorList)
-  {
-    if (LOG.isDebugEnabled())
-    {
-      LOG.debug("decodeAccessorsList(List" + accessorList + ")");
-    }
-    if (accessorList == null || accessorList.size() < 1)
-    {
-      return forumManager.createDefaultActorPermissions().getAccessors();
-    }
-    return decodeActorPermissionTypeList(accessorList);
-  }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager#decodeContributorsList(java.util.List)
-   */
-  public List decodeContributorsList(ArrayList contributorList)
-  {
-    if (LOG.isDebugEnabled())
-    {
-      LOG.debug("decodeContributorsList(List" + contributorList + ")");
-    }
-    if (contributorList == null || contributorList.size() < 1)
-    {
-      return forumManager.createDefaultActorPermissions().getContributors();
-    }
-    return decodeActorPermissionTypeList(contributorList);
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager#getContributorsList(org.sakaiproject.api.app.messageforums.DiscussionForum)
-   */
-  public List getContributorsList(DiscussionForum forum)
-  {
-    if (LOG.isDebugEnabled())
-    {
-      LOG.debug(" getContributorsList(DiscussionForum" + forum + ")");
-    }
-    List contributorList = null;
-    if (forum == null)
-    {
-      return null;
-    }
-    if (forum.getActorPermissions() == null
-        || forum.getActorPermissions().getContributors() == null)
-    {
-      forum.setActorPermissions(forumManager.createDefaultActorPermissions());
-      contributorList = forumManager.createDefaultActorPermissions()
-          .getContributors();
-    }
-    else
-    {
-      contributorList = forum.getActorPermissions().getContributors();
-    }
-    Iterator iterator = contributorList.iterator();
-
-    return getContributorAccessorList(iterator);
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager#getAccessorsList(org.sakaiproject.api.app.messageforums.DiscussionForum)
-   */
-  public List getAccessorsList(DiscussionForum forum)
-  {
-    if (LOG.isDebugEnabled())
-    {
-      LOG.debug("getAccessorsList(DiscussionForum" + forum + ")");
-    }
-    List accessorsList = null;
-    if (forum == null)
-    {
-      return null;
-    }
-    if (forum.getActorPermissions() == null
-        || forum.getActorPermissions().getAccessors() == null)
-    {
-      forum.setActorPermissions(forumManager.createDefaultActorPermissions());
-      accessorsList = forumManager.createDefaultActorPermissions()
-          .getAccessors();
-    }
-    else
-    {
-      accessorsList = forum.getActorPermissions().getAccessors();
-    }
-
-    Iterator iterator = accessorsList.iterator();
-
-    return getContributorAccessorList(iterator);
-  }
 
   /**
    * @param iterator
@@ -2096,7 +1985,6 @@ public class DiscussionForumManagerImpl extends HibernateDaoSupport implements
   }
 
   /**
-   * @param courseMemberMap
    *          The courseMemberMap to set.
    */
   public void setCourseMemberMapToNull()
@@ -2104,49 +1992,14 @@ public class DiscussionForumManagerImpl extends HibernateDaoSupport implements
     this.courseMemberMap = null;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager#getContributorsList(org.sakaiproject.api.app.messageforums.DiscussionTopic)
-   */
-  public List getContributorsList(DiscussionTopic topic, DiscussionForum forum)
-  {
-    if (LOG.isDebugEnabled())
-    {
-      LOG.debug("getContributorsList(DiscussionTopic " + topic
-          + ", DiscussionForum " + forum + ")");
-    }
-    List contributorList = null;
-    if (topic == null)
-    {
-      return null;
-    }
-    if (topic.getActorPermissions() == null
-        || topic.getActorPermissions().getContributors() == null)
-    {
-      // hibernate does not permit this b/c saving forum and topics will
-      // throw uniqueobjectexception
-      topic.setActorPermissions(getDeepCopyOfParentActorPermissions(forum
-          .getActorPermissions()));
-      contributorList = topic.getActorPermissions().getContributors();
-    }
-    else
-    {
-      contributorList = topic.getActorPermissions().getContributors();
-    }
-    Iterator iterator = contributorList.iterator();
-
-    return getContributorAccessorList(iterator);
-  }
-
   private ActorPermissions getDeepCopyOfParentActorPermissions(
       ActorPermissions actorPermissions)
   {
     ActorPermissions newAP = new ActorPermissionsImpl();
-    List parentAccessors = actorPermissions.getAccessors();
-    List parentContributors = actorPermissions.getContributors();
-    List newAccessors = new ArrayList();
-    List newContributor = new ArrayList();
+    Set parentAccessors = actorPermissions.getAccessors();
+    Set parentContributors = actorPermissions.getContributors();
+    Set newAccessors = new LinkedHashSet();
+    Set newContributor = new LinkedHashSet();
     Iterator iter = parentAccessors.iterator();
     while (iter.hasNext())
     {
@@ -2170,42 +2023,6 @@ public class DiscussionForumManagerImpl extends HibernateDaoSupport implements
     newAP.setAccessors(newAccessors);
     newAP.setContributors(newContributor);
     return newAP;
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager#getAccessorsList(org.sakaiproject.api.app.messageforums.DiscussionTopic)
-   */
-  public List getAccessorsList(DiscussionTopic topic, DiscussionForum forum)
-  {
-    if (LOG.isDebugEnabled())
-    {
-      LOG.debug("getAccessorsList(DiscussionTopic " + topic
-          + ", DiscussionForum " + forum + ")");
-    }
-    List accessorsList = null;
-    if (topic == null)
-    {
-      return null;
-    }
-    if (topic.getActorPermissions() == null
-        || topic.getActorPermissions().getAccessors() == null)
-    {
-      // hibernate does not permit this b/c saving forum and topics will
-      // throw uniqueobjectexception
-      topic.setActorPermissions(getDeepCopyOfParentActorPermissions(forum
-          .getActorPermissions()));
-      accessorsList = topic.getActorPermissions().getAccessors();
-    }
-    else
-    {
-      accessorsList = topic.getActorPermissions().getAccessors();
-    }
-
-    Iterator iterator = accessorsList.iterator();
-
-    return getContributorAccessorList(iterator);
   }
 
   public DBMembershipItem getAreaDBMember(Set originalSet, String name,

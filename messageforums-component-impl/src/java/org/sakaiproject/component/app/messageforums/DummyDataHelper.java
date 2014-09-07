@@ -20,10 +20,7 @@
  **********************************************************************************/
 package org.sakaiproject.component.app.messageforums;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -689,10 +686,10 @@ public class DummyDataHelper implements DummyDataHelperApi
   private ActorPermissions getActorPermissions()
   {
     ActorPermissions apm = new ActorPermissionsImpl();
-    // TODO: Not sure how sakai handles users - empty lists for now
-    apm.setAccessors(new ArrayList());
-    apm.setContributors(new ArrayList());
-    apm.setModerators(new ArrayList());
+    // TODO: Not sure how sakai handles users - empty sets for now
+    apm.setAccessors(new HashSet());
+    apm.setContributors(new HashSet());
+    apm.setModerators(new HashSet());
     apm.setId(Long.valueOf(123));
     return null;
   }

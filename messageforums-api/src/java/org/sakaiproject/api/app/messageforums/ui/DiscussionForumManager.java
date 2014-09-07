@@ -414,51 +414,11 @@ public interface DiscussionForumManager
    */
   public void markMessageReadStatusForUser(Message message, boolean readStatus, String userId);
 
-   
-  /**
-   * @param accessorList
-   * @return
-   */
-  public List decodeContributorsList(ArrayList contributorList);
-
-  /**
-   * @param accessorList
-   * @return
-   */
-  public List decodeAccessorsList(ArrayList accessorList);
-
-  /**
-   * @param forum
-   * @return
-   */
-  public List getContributorsList(DiscussionForum forum);
-  
-  
-  /**
-   * @param forum
-   * @return
-   */
-  public List getAccessorsList(DiscussionForum forum);
-
   /**
    * @return
    */
   public Map getAllCourseMembers();
 
-  /**
-   * @param topic
-   * @param forum 
-   * @return
-   */
-  public List getAccessorsList(DiscussionTopic topic, DiscussionForum forum);
-
-  /**
-   * @param topic
-   * @param forum 
-   * @return
-   */
-  public List getContributorsList(DiscussionTopic topic, DiscussionForum forum); 
-  
   /**
    * 
    */
