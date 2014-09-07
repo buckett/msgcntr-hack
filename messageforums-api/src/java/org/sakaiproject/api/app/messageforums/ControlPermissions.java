@@ -20,6 +20,11 @@
  **********************************************************************************/
 package org.sakaiproject.api.app.messageforums;
 
+/**
+ * This looks half baked and almost unused.
+ *
+ * @see org.sakaiproject.api.app.messageforums.AreaControlPermission
+ */
 public interface ControlPermissions {
 
     public Long getId();

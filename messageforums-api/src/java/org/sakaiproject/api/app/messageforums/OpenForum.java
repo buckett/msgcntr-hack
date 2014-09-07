@@ -22,7 +22,9 @@ package org.sakaiproject.api.app.messageforums;
 
 import java.util.Date;
 
-
+/**
+ * @see org.sakaiproject.api.app.messageforums.DiscussionForum
+ */
 public interface OpenForum extends BaseForum {
 
     public Boolean getLocked();

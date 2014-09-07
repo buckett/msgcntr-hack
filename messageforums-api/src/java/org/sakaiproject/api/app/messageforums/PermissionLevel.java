@@ -20,6 +20,9 @@
  **********************************************************************************/
 package org.sakaiproject.api.app.messageforums;
 
+/**
+ * A collection of permissions.
+ */
 public interface PermissionLevel extends MutableEntity{
 		
 	public static final String NEW_FORUM = "newForum"; 

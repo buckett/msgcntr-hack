@@ -21,6 +21,11 @@
 package org.sakaiproject.api.app.messageforums;
 
 
+/**
+ * Holds a PermissionsLevel and what it applies to (role or group).
+ *
+ * @see org.sakaiproject.api.app.messageforums.PermissionLevel
+ */
 public interface DBMembershipItem extends MutableEntity {
   
   public static final Integer TYPE_NOT_SPECIFIED = Integer.valueOf(0); 

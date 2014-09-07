@@ -24,6 +24,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
+/**
+ * @see org.sakaiproject.api.app.messageforums.OpenForum
+ * @see org.sakaiproject.api.app.messageforums.PrivateForum
+ */
 public interface BaseForum extends MutableEntity {
 
     public List getAttachments();

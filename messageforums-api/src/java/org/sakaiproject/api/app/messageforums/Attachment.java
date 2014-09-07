@@ -20,6 +20,11 @@
  **********************************************************************************/
 package org.sakaiproject.api.app.messageforums;
 
+/**
+ * An attachment to a message.
+ *
+ * @see org.sakaiproject.api.app.messageforums.Message
+ */
 public interface Attachment extends MutableEntity {
 
     public String getAttachmentId();

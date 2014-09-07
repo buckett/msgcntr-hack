@@ -22,6 +22,9 @@ package org.sakaiproject.api.app.messageforums;
 
 import java.util.Date;
 
+/**
+ * Base level interface for tracking changes to an entity.
+ */
 public interface MutableEntity {
 
     public Date getCreated();

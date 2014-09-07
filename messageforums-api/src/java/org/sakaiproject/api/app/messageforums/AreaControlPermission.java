@@ -20,6 +20,10 @@
  **********************************************************************************/
 package org.sakaiproject.api.app.messageforums;
 
+/**
+ * Permissions for an area.
+ * @see org.sakaiproject.api.app.messageforums.Area
+ */
 public interface AreaControlPermission {
 
     public Boolean getPostToGradebook();
