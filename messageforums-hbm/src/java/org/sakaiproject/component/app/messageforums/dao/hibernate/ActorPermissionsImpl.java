@@ -20,7 +20,9 @@
  **********************************************************************************/
 package org.sakaiproject.component.app.messageforums.dao.hibernate;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,9 +34,9 @@ public class ActorPermissionsImpl implements ActorPermissions {
 
     private static final Log LOG = LogFactory.getLog(ActorPermissionsImpl.class);
     
-    private List contributors = new UniqueArrayList();
-    private List accessors = new UniqueArrayList();
-    private List moderators = new UniqueArrayList();
+    private Set<MessageForumsUser> contributors = new LinkedHashSet<MessageForumsUser>();
+    private Set<MessageForumsUser> accessors = new LinkedHashSet<MessageForumsUser>();
+    private Set<MessageForumsUser> moderators = new LinkedHashSet<MessageForumsUser>();
 
     private Long id;
     private Integer version; 
@@ -55,27 +57,27 @@ public class ActorPermissionsImpl implements ActorPermissions {
         this.version = version;
     }
                 
-    public List getAccessors() {
+    public Set<MessageForumsUser>  getAccessors() {
         return accessors;
     }
 
-    public void setAccessors(List accessors) {
+    public void setAccessors(Set<MessageForumsUser>  accessors) {
         this.accessors = accessors;
     }
 
-    public List getContributors() {
+    public Set<MessageForumsUser>  getContributors() {
         return contributors;
     }
 
-    public void setContributors(List contributors) {
+    public void setContributors(Set<MessageForumsUser>  contributors) {
         this.contributors = contributors;
     }
 
-    public List getModerators() {
+    public Set<MessageForumsUser>  getModerators() {
         return moderators;
     }
 
-    public void setModerators(List moderators) {
+    public void setModerators(Set<MessageForumsUser>  moderators) {
         this.moderators = moderators;
     }
 

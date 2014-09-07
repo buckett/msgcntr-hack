@@ -20,7 +20,7 @@
  **********************************************************************************/
 package org.sakaiproject.api.app.messageforums;
 
-import java.util.List;
+import java.util.Set;
 
 public interface ActorPermissions {
 
@@ -32,17 +32,17 @@ public interface ActorPermissions {
 
     public void setVersion(Integer version);
 
-    public List getAccessors();
+    public Set<MessageForumsUser> getAccessors();
 
-    public void setAccessors(List accessors);
+    public void setAccessors(Set<MessageForumsUser> accessors);
 
-    public List getContributors();
+    public Set<MessageForumsUser> getContributors();
 
-    public void setContributors(java.util.List contributors);
+    public void setContributors(Set<MessageForumsUser> contributors);
 
-    public java.util.List getModerators();
+    public Set<MessageForumsUser> getModerators();
 
-    public void setModerators(java.util.List moderators);
+    public void setModerators(Set<MessageForumsUser> moderators);
     
     public void addAccesssor(MessageForumsUser user);
     

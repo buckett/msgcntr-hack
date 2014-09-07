@@ -37,13 +37,7 @@ public class MessageForumsUserImpl implements MessageForumsUser {
     private ActorPermissions apContributors; 
     private ActorPermissions apModerators; 
     private PrivateMessage privateMessage;            
-     
-    // Indices for hibernate
-    private int apmoderatorsindex;
-    private int apcontributorsindex;
-    private int apaccessorsindex;
-    
-    
+
     /**
      * 
      */
@@ -93,54 +87,6 @@ public class MessageForumsUserImpl implements MessageForumsUser {
 
     public void setPrivateMessage(PrivateMessage privateMessage) {
         this.privateMessage = privateMessage;
-    }
-
-//    public int getMesindex() {
-//        try {
-//            return getPrivateMessage().getRecipients().indexOf(this);
-//        } catch (Exception e) {
-//            return mesindex;
-//        }
-//    }
-//
-//    public void setMesindex(int mesindex) {
-//        this.mesindex = mesindex;
-//    }
-
-    public int getApaccessorsindex() {
-        try {
-            return getApAccessors().getAccessors().indexOf(this);
-        } catch (Exception e) {
-            return apaccessorsindex;
-        }
-    }
-
-    public void setApaccessorsindex(int apaccessorsindex) {
-        this.apaccessorsindex = apaccessorsindex;
-    }
-
-    public int getApcontributorsindex() {
-        try {
-            return getApContributors().getContributors().indexOf(this);
-        } catch (Exception e) {
-            return apcontributorsindex;
-        }
-    }
-
-    public void setApcontributorsindex(int apcontributorsindex) {
-        this.apcontributorsindex = apcontributorsindex;
-    }
-
-    public int getApmoderatorsindex() {
-        try {
-            return getApModerators().getModerators().indexOf(this);
-        } catch (Exception e) {
-            return apmoderatorsindex;
-        }
-    }
-
-    public void setApmoderatorsindex(int apmoderatorsindex) {
-        this.apmoderatorsindex = apmoderatorsindex;
     }
 
     public ActorPermissions getApAccessors() {
