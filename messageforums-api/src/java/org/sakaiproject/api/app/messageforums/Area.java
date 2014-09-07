@@ -24,6 +24,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * An area for messages within a site. This area has some configuration and links to the forums contained within it.
+ * One problem with this is some of the configuration is for the private messages area and some of the configuration
+ * is for the discussion forum area.
+ */
+
 public interface Area extends MutableEntity {
     
     /**
@@ -44,18 +50,40 @@ public interface Area extends MutableEntity {
 
     public void setVersion(Integer version);
 
+	/**
+	 * This site that this area is in.
+	 * @return The site ID.
+	 */
     public String getContextId();
 
+	/**
+	 * @deprecated This shouldn't be exposed through the API.
+	 */
     public void setContextId(String contextId);
 
+	/**
+	 * @deprecated This doesn't look to be used at all.
+	 */
     public Boolean getHidden();
 
+	/**
+	 * @deprecated This is set to true in the live services and false in the tests and never looked at.
+	 */
     public void setHidden(Boolean hidden);
 
+	/**
+	 * The name of this area.
+	 * @return
+	 */
     public String getName();
 
     public void setName(String name);
 
+	/**
+	 * Is this area enabled? Calling tools will get an area and then check to see if it should be used
+	 * by check if it's enabled.
+	 * @return
+	 */
     public Boolean getEnabled();
 
     public void setEnabled(Boolean enabled);
@@ -120,8 +148,15 @@ public interface Area extends MutableEntity {
 
     public void removeOpenForum(BaseForum forum);
 
+	/**
+	 * @deprecated Although it's set it's never used.
+	 */
     public Boolean getLocked();
-    
+
+	/**
+	 *
+	 * @deprecated Although it's called the value is never read.
+	 */
     public void setLocked(Boolean locked);
     
     public Boolean getModerated();
@@ -143,11 +178,17 @@ public interface Area extends MutableEntity {
     public Boolean getAvailabilityRestricted();
     
     public void setAvailabilityRestricted(Boolean restricted);
-      
+
+	/**
+	 * Forum Only.
+	 */
     public Date getOpenDate();
 
 	public void setOpenDate(Date openDate);
-	
+
+	/**
+	 * Forum Only.
+	 */
     public Date getCloseDate();
     
 	public void setCloseDate(Date closeDate);
@@ -155,11 +196,18 @@ public interface Area extends MutableEntity {
 	public Boolean getAvailability();
     
     public void setAvailability(Boolean restricted);
-    
+
+	/**
+	 *  Forum Only.
+	 */
     public Boolean getPostFirst();
     
     public void setPostFirst(Boolean postFirst);
-    
+
+	/**
+	 * Messages Only.
+	 * The groups that shouldn't be show in the list of groups.
+	 */
     public Set getHiddenGroups();
        
     public void setHiddenGroups(Set hiddenGroups);
