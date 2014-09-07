@@ -8,6 +8,9 @@ import org.sakaiproject.api.app.messageforums.DiscussionTopic;
 import org.sakaiproject.api.app.messageforums.ForumScheduleNotification;
 import org.sakaiproject.component.cover.ComponentManager;
 
+/**
+ * @deprecated Shouldn't need covers.
+ */
 public class ForumScheduleNotificationCover {
 
 	private static ForumScheduleNotification m_instance = null;

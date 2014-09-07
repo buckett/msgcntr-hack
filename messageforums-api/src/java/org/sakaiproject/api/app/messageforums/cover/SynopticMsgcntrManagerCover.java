@@ -7,6 +7,9 @@ import java.util.Map;
 import org.sakaiproject.api.app.messageforums.SynopticMsgcntrManager;
 import org.sakaiproject.component.cover.ComponentManager;
 
+/**
+ * @deprecated Shouldn't need covers.
+ */
 public class SynopticMsgcntrManagerCover {
 
 	private static SynopticMsgcntrManager m_instance = null;
