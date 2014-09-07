@@ -26,32 +26,23 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @deprecated Better methods exist in JDK which are clearer.
+ */
 public class Util {
 
-    public static List setToList(Set set) {
-        List list = new ArrayList();
-        if (set != null) {
-            for (Iterator iter = set.iterator(); iter.hasNext();) {
-                Object object = (Object) iter.next();
-                if (object != null) {
-                    list.add(object);
-                }
-            }
-        }
-        return list;
+	/**
+	 * @deprecated Use JDK.
+	 */
+    public static <T> List<T> setToList(Set<T> set) {
+        return new ArrayList<T>(set);
     }
-    
-    public static Set listToSet(List list) {
-        Set set = new HashSet();
-        if (list != null) {
-            for (Iterator iter = list.iterator(); iter.hasNext();) {
-                Object object = (Object) iter.next();
-                if (object != null) {
-                    set.add(object);
-                }
-            }
-        }
-        return set;
+
+	/**
+	 * @deprecated Use JDK.
+	 */
+    public static <T> Set<T> listToSet(List<T> list) {
+        return new HashSet<T>(list);
     }
     
     
