@@ -90,14 +90,6 @@ public class AttachmentImpl extends MutableEntityImpl implements Attachment {
         this.attachmentType = attachmentType;
     }
 
-    public String getAttachmentUrl() {
-        return attachmentUrl;
-    }
-
-    public void setAttachmentUrl(String attachmentUrl) {
-        this.attachmentUrl = attachmentUrl;
-    }
-
     public Message getMessage() {
         return message;
     }

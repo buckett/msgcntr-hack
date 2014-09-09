@@ -3620,8 +3620,6 @@ public class DiscussionForumTool
       		thisAttach.setAttachmentType(ref.getProperties().getProperty(
       				ref.getProperties().getNamePropContentType()));
       		thisAttach.setAttachmentId(ref.getId());
-      		//thisAttach.setAttachmentUrl(ref.getUrl());
-      		thisAttach.setAttachmentUrl("/url");
       		
       		attachments.add(new DecoratedAttachment(thisAttach));
       	}

@@ -653,13 +653,11 @@ public class DummyDataHelper implements DummyDataHelperApi
     a1.setAttachmentName("file 1.doc");
     a1.setAttachmentSize("24K");
     a1.setAttachmentType("application/msword");
-    a1.setAttachmentUrl("http://www.something.com/afile");
     Attachment a2 = new AttachmentImpl();
     a2.setAttachmentId("attach2");
     a2.setAttachmentName("file 2.doc");
     a2.setAttachmentSize("243K");
     a2.setAttachmentType("application/msword");
-    a2.setAttachmentUrl("http://www.something.com/anotherfile");
     attachments.add(a1);
     attachments.add(a2);
     return attachments;

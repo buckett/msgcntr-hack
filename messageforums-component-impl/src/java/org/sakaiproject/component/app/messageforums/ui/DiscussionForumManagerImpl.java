@@ -2138,7 +2138,6 @@ public class DiscussionForumManagerImpl extends HibernateDaoSupport implements
       attach.setModifiedBy(cr.getProperties().getProperty(
           cr.getProperties().getNamePropModifiedBy()));
       attach.setAttachmentType(cr.getContentType());
-      attach.setAttachmentUrl("/url");
 
       return attach;
     }

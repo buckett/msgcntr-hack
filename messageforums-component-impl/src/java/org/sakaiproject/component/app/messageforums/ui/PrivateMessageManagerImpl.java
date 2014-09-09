@@ -364,8 +364,6 @@ public class PrivateMessageManagerImpl extends HibernateDaoSupport implements
         }
       }
       //tempString.replaceAll(" ", "%20");
-      //attach.setAttachmentUrl(newString);
-      attach.setAttachmentUrl("/url");
 
       return attach;
     }

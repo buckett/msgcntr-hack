@@ -43,10 +43,6 @@ public interface Attachment extends MutableEntity {
 
     public void setAttachmentType(String attachmentType);
 
-    public String getAttachmentUrl();
-
-    public void setAttachmentUrl(String attachmentUrl);
-
     public Message getMessage();
 
     public void setMessage(Message parent);
