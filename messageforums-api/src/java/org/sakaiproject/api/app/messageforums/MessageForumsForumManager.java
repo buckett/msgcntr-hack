@@ -61,14 +61,6 @@ public interface MessageForumsForumManager {
     public Topic getTopicByIdWithAttachments(final Long topicId);
     
     /**
-     * Get the attachment list for a topic
-     * used to avoid a hibernate stale object exception
-     * @param topicId
-     * @return
-     */
-    public List<Attachment> getTopicAttachments(final Long topicId);
-    
-    /**
      * Retrieve a given forum for the current user
      */
     public BaseForum getForumById(boolean open, Long forumId);
