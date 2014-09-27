@@ -81,10 +81,11 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 
 /**
+ * This is designed to be the higher level service for the discussion forum.
+ *
  * @author <a href="mailto:rshastri@iupui.edu">Rashmi Shastri</a>
  */
-public class DiscussionForumManagerImpl extends HibernateDaoSupport implements
-    DiscussionForumManager {
+public class DiscussionForumManagerImpl implements DiscussionForumManager {
   private static final String MC_DEFAULT = "mc.default.";
   private static final Log LOG = LogFactory
       .getLog(DiscussionForumManagerImpl.class);
@@ -113,6 +114,7 @@ public class DiscussionForumManagerImpl extends HibernateDaoSupport implements
   public void init()
   {
      LOG.info("init()");
+	  // So crazy that the authz service is re-implemented.
      allowedFunctionsCache = memoryService.newCache("org.sakaiproject.component.app.messageforums.ui.DiscussionForumManagerImpl.allowedFunctionsCache");
   }
   
