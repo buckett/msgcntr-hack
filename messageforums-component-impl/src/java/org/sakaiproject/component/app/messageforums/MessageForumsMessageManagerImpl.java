@@ -77,7 +77,6 @@ public class MessageForumsMessageManagerImpl extends HibernateDaoSupport impleme
     private static final Log LOG = LogFactory.getLog(MessageForumsMessageManagerImpl.class);    
 
     //private static final String QUERY_BY_MESSAGE_ID = "findMessageById";
-    //private static final String QUERY_ATTACHMENT_BY_ID = "findAttachmentById";
     private static final String QUERY_BY_MESSAGE_ID_WITH_ATTACHMENTS = "findMessageByIdWithAttachments";
     private static final String QUERY_COUNT_BY_READ = "findReadMessageCountByTopicId";
     private static final String QUERY_COUNT_BY_AUTHORED = "findAuhtoredMessageCountByTopicId";

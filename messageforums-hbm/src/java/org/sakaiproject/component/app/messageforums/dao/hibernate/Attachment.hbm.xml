@@ -43,16 +43,7 @@
 
   </class>
 
-  <query name="findAttachmentById">
-    <![CDATA[from org.sakaiproject.component.app.messageforums.dao.hibernate.AttachmentImpl as a where a.id = :id]]>
-  </query>
-
   <query name="findAttachmentByUuid">
     <![CDATA[from org.sakaiproject.component.app.messageforums.dao.hibernate.AttachmentImpl as a where a.uuid = :uuid]]>
   </query>
-  <!-- TODO, needs to go -->
-  <query name="findTopicAttachments">
-  	<![CDATA[from org.sakaiproject.component.app.messageforums.dao.hibernate.AttachmentImpl as a where a.topic = :topic]]>
-  </query>
-  
 </hibernate-mapping>
