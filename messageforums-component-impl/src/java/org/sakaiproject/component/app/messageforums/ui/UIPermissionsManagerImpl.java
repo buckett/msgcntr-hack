@@ -62,10 +62,11 @@ import org.sakaiproject.user.cover.UserDirectoryService;
  * @author <a href="mailto:rshastri@iupui.edu">Rashmi Shastri</a>
  */
 public class UIPermissionsManagerImpl implements UIPermissionsManager {
-  private static final Log LOG = LogFactory
+	private static final Log LOG = LogFactory
       .getLog(UIPermissionsManagerImpl.class);
+	public static final String MESSAGE_CENTER_PERMISSION_SET = "message_center_permission_set";
 
-  // dependencies
+	// dependencies
   private AuthzGroupService authzGroupService;
   private SessionManager sessionManager;
   private ToolManager toolManager;
@@ -1017,7 +1018,7 @@ public class UIPermissionsManagerImpl implements UIPermissionsManager {
   	
   	List areaItems = new ArrayList();
   	
-		if (ThreadLocalManager.get("message_center_permission_set") == null || !((Boolean)ThreadLocalManager.get("message_center_permission_set")).booleanValue())
+		if (ThreadLocalManager.get(MESSAGE_CENTER_PERMISSION_SET) == null || !((Boolean)ThreadLocalManager.get(MESSAGE_CENTER_PERMISSION_SET)).booleanValue())
 		{
 			initMembershipForSite();
 		}
@@ -1070,7 +1071,7 @@ public class UIPermissionsManagerImpl implements UIPermissionsManager {
 
   public Set getAreaItemsSet(Area area)
   {
-		if (ThreadLocalManager.get("message_center_permission_set") == null || !((Boolean)ThreadLocalManager.get("message_center_permission_set")).booleanValue())
+		if (ThreadLocalManager.get(MESSAGE_CENTER_PERMISSION_SET) == null || !((Boolean)ThreadLocalManager.get(MESSAGE_CENTER_PERMISSION_SET)).booleanValue())
 		{
 			initMembershipForSite();
 		}
@@ -1098,7 +1099,7 @@ public class UIPermissionsManagerImpl implements UIPermissionsManager {
     //Set membershipItems = forum.getMembershipItemSet();
     
 
-		if (ThreadLocalManager.get("message_center_permission_set") == null || !((Boolean)ThreadLocalManager.get("message_center_permission_set")).booleanValue())
+		if (ThreadLocalManager.get(MESSAGE_CENTER_PERMISSION_SET) == null || !((Boolean)ThreadLocalManager.get(MESSAGE_CENTER_PERMISSION_SET)).booleanValue())
 		{
 			initMembershipForSite();
 		}
@@ -1188,7 +1189,7 @@ public class UIPermissionsManagerImpl implements UIPermissionsManager {
 
   public Set getForumItemsSet(DiscussionForum forum)
   {
-		if (ThreadLocalManager.get("message_center_permission_set") == null || !((Boolean)ThreadLocalManager.get("message_center_permission_set")).booleanValue())
+		if (ThreadLocalManager.get(MESSAGE_CENTER_PERMISSION_SET) == null || !((Boolean)ThreadLocalManager.get(MESSAGE_CENTER_PERMISSION_SET)).booleanValue())
 		{
 			initMembershipForSite();
 		}
@@ -1225,7 +1226,7 @@ public class UIPermissionsManagerImpl implements UIPermissionsManager {
   {
 	  List topicItems = new ArrayList();
     
-		if (ThreadLocalManager.get("message_center_permission_set") == null || !((Boolean)ThreadLocalManager.get("message_center_permission_set")).booleanValue())
+		if (ThreadLocalManager.get(MESSAGE_CENTER_PERMISSION_SET) == null || !((Boolean)ThreadLocalManager.get(MESSAGE_CENTER_PERMISSION_SET)).booleanValue())
 		{
 			initMembershipForSite(siteId, userId);
 		}
@@ -1302,7 +1303,7 @@ public class UIPermissionsManagerImpl implements UIPermissionsManager {
   
   public Set getTopicItemsSet(DiscussionTopic topic)
   {
-		if (ThreadLocalManager.get("message_center_permission_set") == null || !((Boolean)ThreadLocalManager.get("message_center_permission_set")).booleanValue())
+		if (ThreadLocalManager.get(MESSAGE_CENTER_PERMISSION_SET) == null || !((Boolean)ThreadLocalManager.get(MESSAGE_CENTER_PERMISSION_SET)).booleanValue())
 		{
 			initMembershipForSite();
 		}
@@ -1540,7 +1541,7 @@ public class UIPermissionsManagerImpl implements UIPermissionsManager {
   
   private void initMembershipForSite(String siteId, String userId)
   {
-		if (ThreadLocalManager.get("message_center_permission_set") != null && ((Boolean)ThreadLocalManager.get("message_center_permission_set")).booleanValue())
+		if (ThreadLocalManager.get(MESSAGE_CENTER_PERMISSION_SET) != null && ((Boolean)ThreadLocalManager.get(MESSAGE_CENTER_PERMISSION_SET)).booleanValue())
 		{
 			return;
 		}
@@ -1576,7 +1577,7 @@ public class UIPermissionsManagerImpl implements UIPermissionsManager {
   	ThreadLocalManager.set("message_center_membership_area", areaItems);
   	ThreadLocalManager.set("message_center_membership_forum", forumItems);
   	ThreadLocalManager.set("message_center_membership_topic", topicItems);
-	ThreadLocalManager.set("message_center_permission_set", Boolean.valueOf(true));
+	ThreadLocalManager.set(MESSAGE_CENTER_PERMISSION_SET, Boolean.valueOf(true));
   }
   
   public Collection getGroupsWithMember(Site site, String userId){

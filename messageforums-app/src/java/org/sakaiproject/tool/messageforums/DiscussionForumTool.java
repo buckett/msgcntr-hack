@@ -2047,7 +2047,7 @@ public class DiscussionForumTool
         	if(beforeChangeHM != null){
         		if(permissionsUpdated){
         			//need to reset permissions cache to get the correct counts:
-        			ThreadLocalManager.set("message_center_permission_set", false);
+        			ThreadLocalManager.set(UIPermissionsManager.MESSAGE_CENTER_PERMISSION_SET, false);
         		}
         		updateSynopticMessagesForForumComparingOldMessagesCount(getSiteId(), topic.getBaseForum().getId(), topic.getId(), beforeChangeHM, SynopticMsgcntrManager.NUM_OF_ATTEMPTS);
         	}
@@ -7416,19 +7416,6 @@ public class DiscussionForumTool
       
       if (target instanceof DiscussionForum){
       	forum.setMembershipItemSet(membershipItemSet);
-      	
-      //	if (ThreadLocalManager.get("message_center_permission_set") == null || !((Boolean)ThreadLocalManager.get("message_center_permission_set")).booleanValue())
-		//{
-			//this.uiPermissionsManager.initMembershipForSite();
-	//	}
-
-		//Set forumItemsInThread = (Set) ThreadLocalManager.get("message_center_membership_forum");
-     //ThreadLocalManager.set("message_center_membership_forum",membershipItemSet);
-		//Set thisForumItemSet = new HashSet();
-		//Iterator iter = forumItemsInThread.iterator();
-		//thisForumItemSet.add((DBMembershipItem)thisItem);
-		
-      	//forumManager.saveForum(forum);
       }
       else if (area != null){
       	area.setMembershipItemSet(membershipItemSet);

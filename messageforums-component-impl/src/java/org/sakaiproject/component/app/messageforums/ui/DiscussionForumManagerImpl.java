@@ -1145,7 +1145,7 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
     forumManager.saveDiscussionForum(forum, draft, logEvent);
     //set flag to false since permissions could have changed.  This will force a clearing and resetting
     //of the permissions cache.
-    ThreadLocalManager.set("message_center_permission_set", Boolean.valueOf(false));
+    ThreadLocalManager.set(UIPermissionsManager.MESSAGE_CENTER_PERMISSION_SET, Boolean.valueOf(false));
     if (saveArea)
     {
       //Area area = getDiscussionForumArea();
@@ -1248,7 +1248,7 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
     {
       String roleId = (String) roles.next();
       AreaControlPermission controlPermission = permissionManager
-          .getDefaultAreaControlPermissionForRole(roleId, typeManager
+          .getDefaultAreaControlPermissionForRole(getCurrentContext(), roleId, typeManager
               .getDiscussionForumType());
 
       defaultControlPermissions.add(controlPermission);
@@ -1270,12 +1270,12 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
     {
       String roleId = (String) roles.next();
       AreaControlPermission controlPermission = permissionManager
-          .getAreaControlPermissionForRole(roleId, typeManager
+          .getAreaControlPermissionForRole(getCurrentContext(), roleId, typeManager
               .getDiscussionForumType());
       if (controlPermission == null)
       {
         controlPermission = permissionManager
-            .createAreaControlPermissionForRole(roleId, typeManager
+            .createAreaControlPermissionForRole(getCurrentContext(), roleId, typeManager
                 .getDiscussionForumType());
       }
       areaControlPermissions.add(controlPermission);
@@ -1380,7 +1380,7 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
       if (controlPermission == null)
       {
         controlPermission = permissionManager
-            .createForumControlPermissionForRole(roleId, typeManager
+            .createForumControlPermissionForRole(getCurrentContext(), roleId, typeManager
                 .getDiscussionForumType());
       }
       forumControlPermissions.add(controlPermission);

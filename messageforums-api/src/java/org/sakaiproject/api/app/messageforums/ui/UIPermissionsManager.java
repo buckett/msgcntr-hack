@@ -33,8 +33,10 @@ import org.sakaiproject.api.app.messageforums.Area;
  */
 public interface UIPermissionsManager
 {
+	final String MESSAGE_CENTER_PERMISSION_SET = "message_center_permission_set";
 
-  /**
+
+	/**
    * @return
    */
   public boolean isNewForum();
