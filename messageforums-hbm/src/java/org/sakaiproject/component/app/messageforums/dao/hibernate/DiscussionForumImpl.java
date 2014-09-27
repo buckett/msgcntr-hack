@@ -19,37 +19,17 @@
  *
  **********************************************************************************/
 package org.sakaiproject.component.app.messageforums.dao.hibernate;
- 
-import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.api.app.messageforums.ActorPermissions;
 import org.sakaiproject.api.app.messageforums.DateRestrictions;
 import org.sakaiproject.api.app.messageforums.DiscussionForum;
-import org.sakaiproject.api.app.messageforums.UniqueArrayList;
 
 public class DiscussionForumImpl extends OpenForumImpl implements DiscussionForum {
 
-    private static final Log LOG = LogFactory.getLog(DiscussionForumImpl.class);
-
     private DateRestrictions dateRestrictions;
     private ActorPermissions actorPermissions;
-    private int areaindex;
     private Boolean autoMarkThreadsRead;
-    
-    public int getAreaindex() {
-        try {
-            return getArea().getDiscussionForums().indexOf(this);
-        } catch (Exception e) {
-            return areaindex;
-        }
-    }
 
-    public void setAreaindex(int areaindex) {
-        this.areaindex = areaindex;
-    }
-    
     public ActorPermissions getActorPermissions() {
         return actorPermissions;
     }
