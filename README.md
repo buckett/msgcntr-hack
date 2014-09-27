@@ -7,6 +7,16 @@ tool but this hasn't been part of Sakai since 2.6.
 The context ID seen in the code is often the site ID. The context Site ID seen in the code is often the site
 reference.
 
+Goals
+-----
+
+To make immutable set of objects that are highly cached and don't create much GC overhead.
+Don't require open sessions in view as this makes it difficult for other services to call the API without also
+holding a session open in the view.
+There's no benefit to having pages being cachable as we generate unique pages for each user (authz, etc).
+Not sure how to deal with loading summary (eg topic without any attachments vs loading topic and all bits).
+Need to design for AJAX so it's easy to create a REST API.
+
 Dependencies
 ------------
 
@@ -31,6 +41,8 @@ Doesn't have clean responsibilities between services.
 Too much mutability on entities exposed through the API.
 
 Should things like forum titles be i18ned?
+
+Are we going to have an open session in the view?
 
 Area is known as "Template Settings" in the interface.
 
