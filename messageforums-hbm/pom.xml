@@ -27,6 +27,10 @@
       <groupId>org.sakaiproject.msgcntr</groupId>
       <artifactId>messageforums-api</artifactId>
     </dependency>
+	  <dependency>
+		  <groupId>org.hibernate</groupId>
+		  <artifactId>hibernate-core</artifactId>
+	  </dependency>
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
@@ -52,5 +56,37 @@
         </includes>
       </resource>
     </resources>
+	  <plugins>
+		  <plugin>
+			  <!-- run "mvn hibernate3:hbm2ddl" to generate a schema -->
+			  <groupId>org.codehaus.mojo</groupId>
+			  <artifactId>hibernate3-maven-plugin</artifactId>
+			  <version>3.0</version>
+			  <dependencies>
+				  <dependency>
+					  <groupId>org.hibernate</groupId>
+					  <artifactId>hibernate-core</artifactId>
+					  <version>${sakai.hibernate.version}</version>
+				  </dependency>
+				  <dependency>
+					  <groupId>org.sakaiproject.msgcntr</groupId>
+					  <artifactId>messageforums-api</artifactId>
+					  <version>${project.version}</version>
+				  </dependency>
+			  </dependencies>
+			  <configuration>
+				  <hibernatetool destdir="${build.outputDirectory}/generated">
+					  <configuration propertyfile="${basedir}/hibernate.properties">
+						  <fileset dir="${build.sourceDirectory}">
+							  <include name="**/*.hbm.xml"/>
+							  <exclude name="**/*Test.hbm.xml"/>
+						  </fileset>
+					  </configuration>
+					  <hbm2ddl export="false" outputfilename="sql.ddl" format="true"/>
+				  </hibernatetool>
+
+			  </configuration>
+		  </plugin>
+	  </plugins>
   </build>
 </project>
