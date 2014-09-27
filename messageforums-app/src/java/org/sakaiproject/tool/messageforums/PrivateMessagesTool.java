@@ -3768,6 +3768,7 @@ private   int   getNum(char letter,   String   a)
       
       prtMsgManager.removePvtMsgAttachment(sa);
       if(id.toLowerCase().startsWith("/attachment"))
+		  // What is this doing in the tool?
         contentHostingService.removeResource(id);
     }
     catch(Exception e)

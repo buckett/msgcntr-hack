@@ -21,12 +21,18 @@
 package org.sakaiproject.api.app.messageforums;
 
 /**
- * An attachment to a message.
+ * An attachment to a message/topic/forum.
  *
  * @see org.sakaiproject.api.app.messageforums.Message
+ * @see org.sakaiproject.api.app.messageforums.Topic
+ * @see org.sakaiproject.api.app.messageforums.BaseForum
  */
 public interface Attachment extends MutableEntity {
 
+	/**
+	 * This is the ID into content hosting.
+	 * @return
+	 */
     public String getAttachmentId();
 
     public void setAttachmentId(String attachmentId);
@@ -50,11 +56,11 @@ public interface Attachment extends MutableEntity {
     public BaseForum getForum();
 
     public void setForum(BaseForum forum);
-    
+
     public Topic getTopic();
-    
+
     public void setTopic(Topic topic);
-    
+
     public OpenForum getOpenForum();
     
     public void setOpenForum(OpenForum openForum);

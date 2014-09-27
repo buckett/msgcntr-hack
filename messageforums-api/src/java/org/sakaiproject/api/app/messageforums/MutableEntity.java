@@ -24,6 +24,8 @@ import java.util.Date;
 
 /**
  * Base level interface for tracking changes to an entity.
+ * I don't understand why everything has an ID and a UUID.
+ * The UUID is used in URLs but internally the DB uses IDs
  */
 public interface MutableEntity {
 
