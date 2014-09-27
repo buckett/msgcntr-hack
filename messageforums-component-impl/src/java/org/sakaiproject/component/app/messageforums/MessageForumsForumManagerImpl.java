@@ -55,7 +55,6 @@ import org.sakaiproject.api.app.messageforums.PrivateTopic;
 import org.sakaiproject.api.app.messageforums.Topic;
 import org.sakaiproject.api.app.messageforums.cover.ForumScheduleNotificationCover;
 import org.sakaiproject.component.api.ServerConfigurationService;
-import org.sakaiproject.authz.api.Member;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.ActorPermissionsImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.DiscussionForumImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.DiscussionTopicImpl;
