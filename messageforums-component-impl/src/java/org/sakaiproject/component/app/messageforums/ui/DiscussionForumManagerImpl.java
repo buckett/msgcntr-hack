@@ -44,7 +44,6 @@ import org.sakaiproject.api.app.messageforums.MessageForumsUser;
 import org.sakaiproject.api.app.messageforums.MessagePermissions;
 import org.sakaiproject.api.app.messageforums.PermissionLevel;
 import org.sakaiproject.api.app.messageforums.PermissionLevelManager;
-import org.sakaiproject.api.app.messageforums.PermissionManager;
 import org.sakaiproject.api.app.messageforums.Topic;
 import org.sakaiproject.api.app.messageforums.TopicControlPermission;
 import org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager;
@@ -101,7 +100,6 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
   private Map courseMemberMap = null;
   private boolean usingHelper = false; // just a flag until moved to database from helper
   private ContentHostingService contentHostingService;
-  private UIPermissionsManager permissionsManager;
   private EntityBroker entityBroker;
   private MemoryService memoryService;
   private Cache allowedFunctionsCache;
