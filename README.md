@@ -31,7 +31,7 @@ The services internally use lots of threadlocals that are only setup when reques
  - current user is ok to get through threadlocal.
  - everything else not.
 The services also don't have good tests.
-Need to contain Sakai dependencies inside one class so it's easy to test the code.
+Need to contain Sakai dependencies inside one class so it's easy to test the code (not really sure).
 Error handling, not really any use of exceptions.
 Permissions on services?
 Type API doesn't handle i18n.
