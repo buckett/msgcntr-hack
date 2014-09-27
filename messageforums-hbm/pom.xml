@@ -63,6 +63,7 @@
 			  <artifactId>hibernate3-maven-plugin</artifactId>
 			  <version>3.0</version>
 			  <dependencies>
+				  <!-- Otherwise it all breaks -->
 				  <dependency>
 					  <groupId>org.hibernate</groupId>
 					  <artifactId>hibernate-core</artifactId>
@@ -75,7 +76,7 @@
 				  </dependency>
 			  </dependencies>
 			  <configuration>
-				  <hibernatetool destdir="${build.outputDirectory}/generated">
+				  <hibernatetool destdir="${basedir}/target/generated">
 					  <configuration propertyfile="${basedir}/hibernate.properties">
 						  <fileset dir="${build.sourceDirectory}">
 							  <include name="**/*.hbm.xml"/>
