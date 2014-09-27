@@ -35,8 +35,6 @@ public class AttachmentImpl extends MutableEntityImpl implements Attachment {
 
     private String attachmentId;
 
-    private String attachmentUrl;
-
     private String attachmentName;
 
     private String attachmentSize;
