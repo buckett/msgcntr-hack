@@ -51,9 +51,6 @@ public interface Attachment extends MutableEntity {
 
     public void setAttachmentType(String attachmentType);
 
-    //Is it required for editing attachment in Pvt Msg????
-    public Long getPvtMsgAttachId();
-    public void setPvtMsgAttachId(Long pvtMsgAttachId);
     public void setCreatedBy(String createdBy);
     public void setLastModifiedBy(String lastMOdifiedBy);
 }

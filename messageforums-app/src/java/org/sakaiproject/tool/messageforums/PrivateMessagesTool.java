@@ -3746,52 +3746,7 @@ private   int   getNum(char letter,   String   a)
     
     return null ;
   }
-  
-  //process deleting confirm from separate screen
-  public String processRemoveAttach()
-  {
-    LOG.debug("processRemoveAttach()");
-    
-    try
-    {
-      Attachment sa = prtMsgManager.getPvtMsgAttachment(Long.valueOf(removeAttachId));
-      String id = sa.getAttachmentId();
-      
-      for(int i=0; i<attachments.size(); i++)
-      {
-      	DecoratedAttachment thisAttach = (DecoratedAttachment)attachments.get(i);
-        if(((Long)thisAttach.getAttachment().getPvtMsgAttachId()).toString().equals(removeAttachId))
-        {
-          attachments.remove(i);
-          break;
-        }
-      }
-		// TODO Not sure if this is called when we are replying to a message
-		// check that we have a message to reply to.
-      getReplyingMessage().removeAttachment(sa);
-      if(id.toLowerCase().startsWith("/attachment"))
-		  // What is this doing in the tool?
-        contentHostingService.removeResource(id);
-    }
-    catch(Exception e)
-    {
-      LOG.debug("processRemoveAttach() - Exception");
-    }
-    
-    removeAttachId = null;
-    prepareRemoveAttach.clear();
-    return COMPOSE_MSG_PG;
-    
-  }
-  
-  public String processRemoveAttachCancel()
-  {
-    LOG.debug("processRemoveAttachCancel()");
-    
-    removeAttachId = null;
-    prepareRemoveAttach.clear();
-    return COMPOSE_MSG_PG ;
-  }
+
   
 
   ////////////  SETTINGS        //////////////////////////////
