@@ -122,7 +122,7 @@ public interface PermissionManager {
      * Get the area message permission for a given role.  This provides the permissions
      * that the role currently has.
      */
-    public MessagePermissions getAreaMessagePermissionForRole(String role, String typeId);
+    public MessagePermissions getAreaMessagePermissionForRole(String siteId, String role, String typeId);
 
     /**
      * Get the default area message permission for a given role.  This provides the 
@@ -164,7 +164,7 @@ public interface PermissionManager {
      * Create an empty forum message permission with system properties 
      * populated (ie: uuid).
      */
-    public MessagePermissions createForumMessagePermissionForRole(String role, String typeId);
+    public MessagePermissions createForumMessagePermissionForRole(String siteId, String role, String typeId);
     
     /**
      * Save an forum message permission.  This is backed in the database by a single
@@ -208,6 +208,6 @@ public interface PermissionManager {
      */
     public void saveDefaultTopicMessagePermissionForRole(Topic topic, MessagePermissions permission);
     
-    public MessagePermissions getAreaMessagePermissionByRoleAndType(String roleId, String typeId, boolean defaultValue);
+    public MessagePermissions getAreaMessagePermissionByRoleAndType(String siteId, String roleId, String typeId, boolean defaultValue);
 
 }

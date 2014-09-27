@@ -1297,7 +1297,7 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
     {
       String roleId = (String) roles.next();
       MessagePermissions messagePermission = permissionManager
-          .getAreaMessagePermissionForRole(roleId, typeManager
+          .getAreaMessagePermissionForRole(getCurrentContext(), roleId, typeManager
               .getDiscussionForumType());
       if (messagePermission == null)
       {
@@ -1412,7 +1412,7 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
       if (messagePermission == null)
       {
         messagePermission = permissionManager
-            .createForumMessagePermissionForRole(roleId, typeManager
+            .createForumMessagePermissionForRole(getCurrentContext(), roleId, typeManager
                 .getDiscussionForumType());
       }
       forumMessagePermissions.add(messagePermission);

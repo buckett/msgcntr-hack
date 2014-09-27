@@ -82,24 +82,12 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
        ;
     }
 
-    public EventTrackingService getEventTrackingService() {
-        return eventTrackingService;
-    }
-
     public void setEventTrackingService(EventTrackingService eventTrackingService) {
         this.eventTrackingService = eventTrackingService;
     }
 
-    public AreaManager getAreaManager() {
-        return areaManager;
-    }
-
     public void setAreaManager(AreaManager areaManager) {
         this.areaManager = areaManager;
-    }
-
-    public MessageForumsTypeManager getTypeManager() {
-        return typeManager;
     }
 
     public void setTypeManager(MessageForumsTypeManager typeManager) {
@@ -108,14 +96,6 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
 
     public void setSessionManager(SessionManager sessionManager) {
         this.sessionManager = sessionManager;
-    }
-
-    public IdManager getIdManager() {
-        return idManager;
-    }
-
-    public SessionManager getSessionManager() {
-        return sessionManager;
     }
 
     public void setIdManager(IdManager idManager) {
@@ -521,8 +501,8 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
      * Get the area message permission for a given role.  This provides the permissions
      * that the role currently has.
      */
-    public MessagePermissions getAreaMessagePermissionForRole(String role, String typeId) {
-        MessagePermissions permissions = getAreaMessagePermissionByRoleAndType(role, typeId, false);
+    public MessagePermissions getAreaMessagePermissionForRole(String siteId, String role, String typeId) {
+        MessagePermissions permissions = getAreaMessagePermissionByRoleAndType(siteId, role, typeId, false);
         MessagePermissions mp = new MessagePermissionsImpl();
 
         if (permissions == null) {
@@ -610,7 +590,7 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
      * message permission (used for areas, forums, and topics).
      */
     public void saveAreaMessagePermissionForRole(Area area, MessagePermissions permission, String typeId) {
-        MessagePermissions permissions = getAreaMessagePermissionByRoleAndType(permission.getRole(), typeId, false); 
+        MessagePermissions permissions = getAreaMessagePermissionByRoleAndType(area.getContextId(), permission.getRole(), typeId, false);
         if (permissions == null) {
             permissions = new MessagePermissionsImpl();
         }
@@ -641,7 +621,7 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
      * single message permission (used for areas, forums, and topics).
      */
     public void saveDefaultAreaMessagePermissionForRole(Area area, MessagePermissions permission, String typeId) {
-        MessagePermissions permissions = getAreaMessagePermissionByRoleAndType(permission.getRole(), typeId, true); 
+        MessagePermissions permissions = getAreaMessagePermissionByRoleAndType(area.getContextId(), permission.getRole(), typeId, true);
         if (permissions == null) {
             permissions = new MessagePermissionsImpl();
         }
@@ -719,9 +699,10 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
      * Create an empty forum message permission with system properties 
      * populated (ie: uuid).
      */
-    public MessagePermissions createForumMessagePermissionForRole(String role, String typeId) {
+	@Override
+    public MessagePermissions createForumMessagePermissionForRole(String siteId, String role, String typeId) {
         MessagePermissions permissions = new MessagePermissionsImpl();
-        MessagePermissions mp = getAreaMessagePermissionForRole(role, typeId);
+        MessagePermissions mp = getAreaMessagePermissionForRole(siteId, role, typeId);
         if (mp != null) {
             permissions.setDefaultValue(mp.getDefaultValue());
             permissions.setDeleteAny(mp.getDeleteAny());
@@ -932,10 +913,11 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
             eventTrackingService.post(eventTrackingService.newEvent(DiscussionForumService.EVENT_FORUMS_TOPIC_REVISE, getEventMessage(topic, permissions), false));
         }
     }
-    
-    public MessagePermissions getAreaMessagePermissionByRoleAndType(final String roleId, final String typeId, final boolean defaultValue) {
+
+	@Override
+    public MessagePermissions getAreaMessagePermissionByRoleAndType(final String siteId, final String roleId, final String typeId, final boolean defaultValue) {
         LOG.debug("getAreaMessagePermissionByRole executing for current user: " + getCurrentUser());
-        final Area area = areaManager.getAreaByContextIdAndTypeId(typeId);
+        final Area area = areaManager.getAreaByContextIdAndTypeId(siteId, typeId);
         if (area == null) {
             return null;
         }
