@@ -51,13 +51,7 @@ public class AttachmentImpl extends MutableEntityImpl implements Attachment {
     private Topic topic;    
     private OpenForum openForum;
     private PrivateForum privateForum;
-    
-    // indecies for hibernate
-//    private int mesindex;    
-//    private int ofindex;
-//    private int pfindex;
-//    private int tindex;
-   
+
     public String getAttachmentId() {
         return attachmentId;
     }
@@ -97,23 +91,6 @@ public class AttachmentImpl extends MutableEntityImpl implements Attachment {
     public void setMessage(Message message) {
         this.message = message;
     }
-    
-//    public boolean equals(Object other) {
-//        if (!(other instanceof AttachmentImpl)) {
-//            return false;
-//        }
-//
-//        Attachment attachment = (Attachment) other;
-//        return new EqualsBuilder().append(attachmentId, attachment.getAttachmentId()).isEquals();
-//    }
-//
-//    public int hashCode() {
-//        return new HashCodeBuilder().append(attachmentId).toHashCode();
-//    }
-//
-//    public String toString() {
-//        return new ToStringBuilder(this).append("attachmentId", attachmentId).append("attachmentUrl", attachmentUrl).append("attachmentName", attachmentName).append("attachmentSize", attachmentSize).append("attachmentType", attachmentType).toString();
-//    }
 
     public BaseForum getForum() {
         return forum;
@@ -130,54 +107,6 @@ public class AttachmentImpl extends MutableEntityImpl implements Attachment {
     public void setTopic(Topic topic) {
         this.topic = topic;
     }
-
-//    public int getMesindex() {
-//        try {
-//            return getMessage().getAttachments().indexOf(this);
-//        } catch (Exception e) {
-//            return mesindex;
-//        }
-//    }
-//
-//    public void setMesindex(int mesindex) {
-//        this.mesindex = mesindex;
-//    }
-//
-//    public int getOfindex() {
-//        try {
-//            return getForum().getAttachments().indexOf(this);
-//        } catch (Exception e) {
-//            return ofindex;
-//        }
-//    }
-//
-//    public void setOfindex(int ofindex) {
-//        this.ofindex = ofindex;
-//    }
-//
-//    public int getPfindex() {
-//        try {
-//            return getForum().getAttachments().indexOf(this);
-//        } catch (Exception e) {
-//            return pfindex;
-//        }
-//    }
-//
-//    public void setPfindex(int pfindex) {
-//        this.pfindex = pfindex;
-//    }
-//
-//    public int getTindex() {
-//        try {
-//            return getTopic().getAttachments().indexOf(this);
-//        } catch (Exception e) {
-//            return tindex;
-//        }
-//    }
-//
-//    public void setTindex(int tindex) {
-//        this.tindex = tindex;
-//    }
 
     public OpenForum getOpenForum() {
         return openForum;
