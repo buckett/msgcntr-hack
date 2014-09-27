@@ -32,11 +32,11 @@ import java.util.SortedSet;
  */
 public interface BaseForum extends MutableEntity {
 
-    public List getAttachments();
+    public List<Attachment> getAttachments();
 
-    public void setAttachments(List attachments);
+    public void setAttachments(List<Attachment> attachments);
     
-    public Set getAttachmentsSet();
+    public Set<Attachment> getAttachmentsSet();
 
     public String getExtendedDescription();
 

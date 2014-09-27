@@ -26,9 +26,9 @@ import java.util.Set;
  
 public interface Topic extends MutableEntity {
 
-    public List getAttachments();
+    public List<Attachment> getAttachments();
 
-    public void setAttachments(List attachments);
+    public void setAttachments(List<Attachment> attachments);
 
     public String getExtendedDescription();
 

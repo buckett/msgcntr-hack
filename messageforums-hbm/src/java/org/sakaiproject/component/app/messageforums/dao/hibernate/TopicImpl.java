@@ -48,7 +48,7 @@ public abstract class TopicImpl extends MutableEntityImpl implements Topic {
     private String title;
     private String shortDescription;
     private String extendedDescription;
-    private SortedSet attachmentsSet;// = new HashSet();
+    private SortedSet<Attachment> attachmentsSet;// = new HashSet();
     private Boolean mutable;
     private Integer sortIndex;
     private String typeUuid;
@@ -98,20 +98,20 @@ public abstract class TopicImpl extends MutableEntityImpl implements Topic {
         this.messagesSet = messagesSet;
     }
 
-    public Set getAttachmentsSet() {
+    public Set<Attachment> getAttachmentsSet() {
         return attachmentsSet;
     }
   
-    public void setAttachmentsSet(SortedSet attachmentsSet) {
+    public void setAttachmentsSet(SortedSet<Attachment> attachmentsSet) {
         this.attachmentsSet = attachmentsSet;
     }
     
-    public List getAttachments()
+    public List<Attachment> getAttachments()
     {
       return Util.setToList(attachmentsSet);
     }
   
-    public void setAttachments(List attachments)
+    public void setAttachments(List<Attachment> attachments)
     {
       this.attachmentsSet = new TreeSet(new AttachmentByCreatedDateDesc());
       this.attachmentsSet.addAll(attachments);
@@ -299,7 +299,7 @@ public abstract class TopicImpl extends MutableEntityImpl implements Topic {
         }
         
         if (attachmentsSet == null) {
-            attachmentsSet = new TreeSet(new AttachmentByCreatedDateDesc());
+            attachmentsSet = new TreeSet<Attachment>(new AttachmentByCreatedDateDesc());
         }
         attachment.setTopic(this);
         attachmentsSet.add(attachment);

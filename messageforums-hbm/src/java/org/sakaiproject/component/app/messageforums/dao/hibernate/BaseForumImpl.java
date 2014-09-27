@@ -45,7 +45,7 @@ public class BaseForumImpl extends MutableEntityImpl implements BaseForum {
     private String shortDescription;
     private String extendedDescription;
     private String typeUuid;
-    private SortedSet attachmentsSet;// = new HashSet();
+    private SortedSet<Attachment> attachmentsSet;// = new HashSet();
     private SortedSet topicsSet;// = new HashSet();
     private Set membershipItemSet;
     private Area area;
@@ -53,20 +53,20 @@ public class BaseForumImpl extends MutableEntityImpl implements BaseForum {
     private Boolean moderated;
     private Boolean postFirst;
     
-    public Set getAttachmentsSet() {
+    public Set<Attachment> getAttachmentsSet() {
         return attachmentsSet;
     }
 
-    public void setAttachmentsSet(SortedSet attachmentsSet) {
+    public void setAttachmentsSet(SortedSet<Attachment> attachmentsSet) {
         this.attachmentsSet = attachmentsSet;
     }
     
-    public List getAttachments()
+    public List<Attachment> getAttachments()
     {
       return Util.setToList(attachmentsSet);
     }
 
-    public void setAttachments(List attachments)
+    public void setAttachments(List<Attachment> attachments)
     {
       this.attachmentsSet = new TreeSet(new AttachmentByCreatedDateDesc());
       this.attachmentsSet.addAll(attachments);
@@ -234,7 +234,7 @@ public class BaseForumImpl extends MutableEntityImpl implements BaseForum {
         }
         
         if (attachmentsSet == null) {
-            attachmentsSet = new TreeSet(new AttachmentByCreatedDateDesc());
+            attachmentsSet = new TreeSet<Attachment>(new AttachmentByCreatedDateDesc());
         }
         attachment.setForum(this);
         attachmentsSet.add(attachment);

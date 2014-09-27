@@ -40,7 +40,7 @@ public class MessageImpl extends MutableEntityImpl implements Message
 	private String title;
 	private String body;
 	private String author;
-	private Set attachmentsSet; // = new HashSet();
+	private Set<Attachment> attachmentsSet; // = new HashSet();
 	private String label;
 	private Message inReplyTo;
 	private String typeUuid;
@@ -115,20 +115,20 @@ public class MessageImpl extends MutableEntityImpl implements Message
 		this.approved = approved;
 	}
 
-	public Set getAttachmentsSet() {
+	public Set<Attachment> getAttachmentsSet() {
 		return attachmentsSet;
 	}
 
-	public void setAttachmentsSet(Set attachmentsSet) {
+	public void setAttachmentsSet(Set<Attachment> attachmentsSet) {
 		this.attachmentsSet = attachmentsSet;
 	}
 
-	public List getAttachments()
+	public List<Attachment> getAttachments()
 	{
 		return Util.setToList(attachmentsSet);
 	}
 
-	public void setAttachments(List attachments)
+	public void setAttachments(List<Attachment> attachments)
 	{
 		this.attachmentsSet = Util.listToSet(attachments);
 	}
