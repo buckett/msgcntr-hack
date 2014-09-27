@@ -94,6 +94,8 @@ public class PrivateMessageManagerImpl extends HibernateDaoSupport implements
   private static final String QUERY_MESSAGES_BY_ID_WITH_RECIPIENTS = "findPrivateMessageByIdWithRecipients";
   
   private static final String MESSAGECENTER_BUNDLE = "org.sakaiproject.api.app.messagecenter.bundle.Messages";
+
+  private static final ResourceLoader rb = new ResourceLoader(MESSAGECENTER_BUNDLE);
   
   private AreaManager areaManager;
   private MessageForumsMessageManager messageManager;
@@ -1917,9 +1919,7 @@ return topicTypeUuid;
    */
   public String getResourceBundleString(String key) 
   {
-//	 ResourceLoader rb = new ResourceLoader(MESSAGECENTER_BUNDLE);
-
-      return areaManager.getResourceBundleString(key);
+      return rb.getString(key);
   }
   
   private String getResourceBundleString(String key, Object[] replacementValues) 

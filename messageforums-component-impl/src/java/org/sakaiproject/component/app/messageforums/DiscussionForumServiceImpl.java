@@ -62,14 +62,15 @@ import org.sakaiproject.entity.api.ResourceProperties;
 import org.sakaiproject.entity.cover.EntityManager;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.component.cover.ComponentManager;
-import org.sakaiproject.component.cover.ServerConfigurationService;
+import org.sakaiproject.component.api.ServerConfigurationService;
 import org.sakaiproject.content.api.ContentHostingService;
 import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.service.gradebook.shared.GradebookService;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
-import org.sakaiproject.site.cover.SiteService;
+import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.tool.cover.ToolManager;
+import org.sakaiproject.util.ResourceLoader;
 import org.sakaiproject.util.Validator;
 import org.sakaiproject.util.cover.LinkMigrationHelper;
 import org.w3c.dom.DOMException;
@@ -112,6 +113,10 @@ public class DiscussionForumServiceImpl  implements DiscussionForumService, Enti
 	private static final String ARCHIVE_VERSION = "2.4"; // in case new features are added in future exports
 	private static final String VERSION_ATTR = "version";
 
+	private static final String MESSAGECENTER_BUNDLE = "org.sakaiproject.api.app.messagecenter.bundle.Messages";
+	final ResourceLoader rb = new ResourceLoader(MESSAGECENTER_BUNDLE);
+
+
 	private MessageForumsForumManager forumManager;
 	private AreaManager areaManager;
 	private MessageForumsMessageManager messageManager;
@@ -119,6 +124,17 @@ public class DiscussionForumServiceImpl  implements DiscussionForumService, Enti
 	private DiscussionForumManager dfManager;
 	private PermissionLevelManager permissionManager;
 	private ContentHostingService contentHostingService;
+
+	public void setSiteService(SiteService siteService) {
+		this.siteService = siteService;
+	}
+
+	public void setServerConfigurationService(ServerConfigurationService serverConfigurationService) {
+		this.serverConfigurationService = serverConfigurationService;
+	}
+
+	private SiteService siteService;
+	private ServerConfigurationService serverConfigurationService;
 	
 	public void setContentHostingService(ContentHostingService contentHostingService) {
 		this.contentHostingService = contentHostingService;
@@ -411,7 +427,7 @@ public class DiscussionForumServiceImpl  implements DiscussionForumService, Enti
 	{
 		Map<String, String> transversalMap = new HashMap<String, String>();
 		
-		boolean importOpenCloseDates = ServerConfigurationService.getBoolean("msgcntr.forums.import.openCloseDates", true);
+		boolean importOpenCloseDates = serverConfigurationService.getBoolean("msgcntr.forums.import.openCloseDates", true);
 		try 
 		{
 			LOG.debug("transfer copy mc items by transferCopyEntities");
@@ -509,10 +525,10 @@ public class DiscussionForumServiceImpl  implements DiscussionForumService, Enti
 
 						// save the forum, since this is copying over a forum, send "false" for parameter otherwise
 						//it will create a default forum as well
-						Area area = areaManager.getDiscussionArea(toContext, false);
+						Area area = getDiscussionArea(toContext, false);
 						newForum.setArea(area);
 
-						if ("false".equalsIgnoreCase(ServerConfigurationService.getString("import.importAsDraft")))
+						if ("false".equalsIgnoreCase(serverConfigurationService.getString("import.importAsDraft")))
 						{
 							forumManager.saveDiscussionForum(newForum, newForum.getDraft().booleanValue());
 						}
@@ -606,6 +622,43 @@ public class DiscussionForumServiceImpl  implements DiscussionForumService, Enti
 		}
 		
 		return transversalMap;
+	}
+
+	private Area getDiscussionArea(String toContext, boolean createDefaultForum) {
+		Area area = areaManager.getDiscussionArea(toContext);
+		//if set populate the default Forum and topic
+		if  (createDefaultForum && serverConfigurationService.getBoolean("forums.setDefault.forum", true)) {
+			setAreaDefaultElements(area);
+		}
+		return area;
+	}
+
+	// This should be at a higher level than the DAO.
+	private void setAreaDefaultElements(Area area) {
+		LOG.info("setAreaDefaultElements(" + area.getId() + ")");
+		DiscussionForum forum = forumManager.createDiscussionForum();
+		forum.setArea(area);
+		String siteTitle = null;
+		try {
+			Site site = siteService.getSite(area.getContextId());
+			siteTitle = site.getTitle();
+		} catch (IdUnusedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//MSGCNTR-453
+		forum.setCreatedBy("admin");
+		forum.setTitle(rb.getFormattedMessage("default_forum", new Object[]{siteTitle}));
+		forum.setDraft(false);
+		forum.setModerated(area.getModerated());
+		forum.setPostFirst(area.getPostFirst());
+		forumManager.saveDiscussionForum(forum);
+		DiscussionTopic topic = forumManager.createDiscussionForumTopic(forum);
+		topic.setTitle(rb.getString("default_topic"));
+		//MSGCNTR-453
+		topic.setCreatedBy("admin");
+		forumManager.saveDiscussionForumTopic(topic, false);
+
 	}
 
 	public String merge(String siteId, Element root, String archivePath, String fromSiteId, Map attachmentNames, Map userIdTrans, Set userListAllowImport)
@@ -918,7 +971,7 @@ public class DiscussionForumServiceImpl  implements DiscussionForumService, Enti
 													{
 														Area area = areaManager.getDiscussionArea(siteId);
 														dfForum.setArea(area);
-														if ("false".equalsIgnoreCase(ServerConfigurationService.getString("import.importAsDraft")))
+														if ("false".equalsIgnoreCase(serverConfigurationService.getString("import.importAsDraft")))
 														{
 															forumManager.saveDiscussionForum(dfForum, dfForum.getDraft().booleanValue());
 														}
@@ -939,7 +992,7 @@ public class DiscussionForumServiceImpl  implements DiscussionForumService, Enti
 										{
 											Area area = areaManager.getDiscussionArea(siteId);
 											dfForum.setArea(area);
-											if ("false".equalsIgnoreCase(ServerConfigurationService.getString("import.importAsDraft")))
+											if ("false".equalsIgnoreCase(serverConfigurationService.getString("import.importAsDraft")))
 											{
 												forumManager.saveDiscussionForum(dfForum, dfForum.getDraft().booleanValue());
 											}
@@ -1176,7 +1229,7 @@ public class DiscussionForumServiceImpl  implements DiscussionForumService, Enti
 			}
 			
 			// get any groups/sections in site
-			Site currentSite = SiteService.getSite(contextId); 
+			Site currentSite = siteService.getSite(contextId);
 			  Collection groups = currentSite.getGroups();
 			  for (Iterator groupIterator = groups.iterator(); groupIterator.hasNext();)
 		      {

@@ -26,10 +26,7 @@ import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
+import org.hibernate.*;
 import org.hibernate.collection.PersistentSet;
 import org.sakaiproject.api.app.messageforums.Area;
 import org.sakaiproject.api.app.messageforums.AreaManager;
@@ -54,18 +51,29 @@ import org.sakaiproject.util.ResourceLoader;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-public class AreaManagerImpl extends HibernateDaoSupport implements AreaManager {
+/**
+ * This is a DAO for Area.
+ * Converted from HibernateTemplate to SessionFactory.
+ */
+public class AreaManagerImpl implements AreaManager {
+
     private static final Log LOG = LogFactory.getLog(AreaManagerImpl.class);
+	private static final ResourceLoader rb = new ResourceLoader("org.sakaiproject.api.app.messagecenter.bundle.Messages");
 
     private static final String QUERY_AREA_BY_CONTEXT_AND_TYPE_ID = "findAreaByContextIdAndTypeId";
     private static final String QUERY_AREA_BY_TYPE = "findAreaByType";
 
     // TODO: pull titles from bundle
-    private static final String MESSAGECENTER_BUNDLE = "org.sakaiproject.api.app.messagecenter.bundle.Messages";
     private static final String MESSAGES_TITLE = "cdfm_message_pvtarea";
     private static final String FORUMS_TITLE = "cdfm_discussion_forums";
 
-    private IdManager idManager;
+	private SessionFactory sessionFactory;
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	private IdManager idManager;
 
     private MessageForumsForumManager forumManager;
 
@@ -74,7 +82,6 @@ public class AreaManagerImpl extends HibernateDaoSupport implements AreaManager 
     private MessageForumsTypeManager typeManager;
 
     private ServerConfigurationService serverConfigurationService;
-    private Boolean DEFAULT_AUTO_MARK_READ = false;    
 
     private SiteService siteService;
     
@@ -96,7 +103,7 @@ public class AreaManagerImpl extends HibernateDaoSupport implements AreaManager 
 
 	public void init() {
        LOG.info("init()");
-       DEFAULT_AUTO_MARK_READ = serverConfigurationService.getBoolean("msgcntr.forums.default.auto.mark.threads.read", false);
+
     }
 
 
@@ -138,84 +145,50 @@ public class AreaManagerImpl extends HibernateDaoSupport implements AreaManager 
         if (area == null) {
             area = createArea(typeManager.getPrivateMessageAreaType(), siteId);
             area.setContextId(siteId);
-            area.setName(getResourceBundleString(MESSAGES_TITLE));
+            area.setName(rb.getString(MESSAGES_TITLE));
             area.setEnabled(Boolean.FALSE);
             area.setHidden(Boolean.TRUE);
             area.setLocked(Boolean.FALSE);
             area.setModerated(Boolean.FALSE);
             area.setPostFirst(Boolean.FALSE);
-	    area.setAutoMarkThreadsRead(DEFAULT_AUTO_MARK_READ);
+	    area.setAutoMarkThreadsRead(serverConfigurationService.getBoolean("msgcntr.forums.default.auto.mark.threads.read", false));
             area.setSendToEmail(serverConfigurationService.getInt(DEFAULT_SEND_TO_EMAIL_PROP, Area.EMAIL_COPY_OPTIONAL));
             saveArea(area);
         }
 
         return area;
     }
-
-    public Area getDiscusionArea() {
-        return getDiscussionArea(this.getContextId());
-    }
     
     public Area getDiscussionArea(String contextId) {
-    	return getDiscussionArea(contextId, true);
-    }
-    
-    public Area getDiscussionArea(String contextId, boolean createDefaultForum) {
+
     	LOG.debug("getDiscussionArea(" + contextId +")");
     	if (contextId == null) {
-    		return getDiscusionArea();
+    		throw new IllegalArgumentException("contextId can't be null");
     	}
     	Area area = this.getAreaByContextIdAndTypeId(contextId, typeManager.getDiscussionForumType());
     	
     	if (area == null) {
     		LOG.info("setting up a new Discussion Area for " + contextId);
     		area = createArea(typeManager.getDiscussionForumType(), contextId);
-    		area.setName(getResourceBundleString(FORUMS_TITLE));
+    		area.setName(rb.getString(FORUMS_TITLE));
             area.setEnabled(Boolean.TRUE);
             area.setHidden(Boolean.TRUE);
             area.setLocked(Boolean.FALSE);
             area.setModerated(Boolean.FALSE);
             area.setPostFirst(Boolean.FALSE);
-            area.setAutoMarkThreadsRead(DEFAULT_AUTO_MARK_READ);
+            area.setAutoMarkThreadsRead(serverConfigurationService.getBoolean("msgcntr.forums.default.auto.mark.threads.read", false));
             // this is a Messages tool option
 	    area.setSendToEmail(serverConfigurationService.getInt(DEFAULT_SEND_TO_EMAIL_PROP, Area.EMAIL_COPY_OPTIONAL));
 	    area.setAvailabilityRestricted(Boolean.FALSE);
             saveArea(area);
-            //if set populate the default Forum and topic
-            if  (createDefaultForum && serverConfigurationService.getBoolean("forums.setDefault.forum", true)) {
-            	setAreaDefaultElements(area);
-            }
+
             
     	}
     	
     	return area;
 	}
-    private void setAreaDefaultElements(Area area) {
-    	LOG.info("setAreaDefaultElements(" + area.getId() + ")");
-    	DiscussionForum forum = forumManager.createDiscussionForum();
-    	forum.setArea(area);
-    	String siteTitle = null;
-    	try {
-			Site site = siteService.getSite(area.getContextId());
-			siteTitle = site.getTitle();
-		} catch (IdUnusedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//MSGCNTR-453
-    	forum.setCreatedBy("admin");
-    	forum.setTitle(getResourceBundleString("default_forum", new Object[]{(Object)siteTitle}));
-    	forum.setDraft(false);
-    	forum.setModerated(area.getModerated());
-    	forum.setPostFirst(area.getPostFirst());
-        forumManager.saveDiscussionForum(forum);
-    	DiscussionTopic topic = forumManager.createDiscussionForumTopic(forum);
-    	topic.setTitle(getResourceBundleString("default_topic"));
-    	//MSGCNTR-453
-    	topic.setCreatedBy("admin");
-    	forumManager.saveDiscussionForumTopic(topic, false);
-    	
-    }
+
+
     
     public boolean isPrivateAreaEnabled() {
         return getPrivateArea().getEnabled().booleanValue();
@@ -295,13 +268,13 @@ public class AreaManagerImpl extends HibernateDaoSupport implements AreaManager 
         // the area will always be available. 
         area.setAvailability(true); 
         
-        getHibernateTemplate().saveOrUpdate(area);
+        sessionFactory.getCurrentSession().saveOrUpdate(area);
 
         LOG.debug("saveArea executed with areaId: " + area.getId());
     }
 
     public void deleteArea(Area area) {
-        getHibernateTemplate().delete(area);
+		sessionFactory.getCurrentSession().delete(area);
         LOG.debug("deleteArea executed with areaId: " + area.getId());
     }
 
@@ -321,35 +294,27 @@ public class AreaManagerImpl extends HibernateDaoSupport implements AreaManager 
         LOG.debug("getAreaByContextIdAndTypeId executing for current user: " + getCurrentUser());
         return this.getAreaByContextIdAndTypeId(getContextId(), typeId);
     }
-    
-    public Area getAreaByContextIdAndTypeId(final String contextId, final String typeId) {
-        LOG.debug("getAreaByContextIdAndTypeId executing for current user: " + getCurrentUser());
-        HibernateCallback hcb = new HibernateCallback() {
-            public Object doInHibernate(Session session) throws HibernateException, SQLException {
-                Query q = session.getNamedQuery(QUERY_AREA_BY_CONTEXT_AND_TYPE_ID);
-                q.setParameter("contextId", contextId, Hibernate.STRING);
-                q.setParameter("typeId", typeId, Hibernate.STRING);
-                return q.uniqueResult();
-            }
-        };
 
-        return (Area) getHibernateTemplate().execute(hcb);
-    }
+	public Area getAreaByContextIdAndTypeId(final String contextId, final String typeId) {
+		LOG.debug("getAreaByContextIdAndTypeId executing for current user: " + getCurrentUser());
+		Session session = sessionFactory.getCurrentSession();
+		Query q = session.getNamedQuery(QUERY_AREA_BY_CONTEXT_AND_TYPE_ID);
+		q.setParameter("contextId", contextId, Hibernate.STRING);
+		q.setParameter("typeId", typeId, Hibernate.STRING);
+		return (Area) q.uniqueResult();
+
+	}
     
     
 
     public Area getAreaByType(final String typeId) {
-      final String currentUser = getCurrentUser();
-      LOG.debug("getAreaByType executing for current user: " + currentUser);
-      HibernateCallback hcb = new HibernateCallback() {
-          public Object doInHibernate(Session session) throws HibernateException, SQLException {
-              Query q = session.getNamedQuery(QUERY_AREA_BY_TYPE);              
-              q.setParameter("typeId", typeId, Hibernate.STRING);              
-              return q.uniqueResult();
-          }
-      };        
-      return (Area) getHibernateTemplate().execute(hcb);
-    }
+		final String currentUser = getCurrentUser();
+		LOG.debug("getAreaByType executing for current user: " + currentUser);
+		Session session = sessionFactory.getCurrentSession();
+		Query q = session.getNamedQuery(QUERY_AREA_BY_TYPE);
+		q.setParameter("typeId", typeId, Hibernate.STRING);
+		return (Area) q.uniqueResult();
+	}
        
     // helpers
 
@@ -361,33 +326,4 @@ public class AreaManagerImpl extends HibernateDaoSupport implements AreaManager 
     	String user = sessionManager.getCurrentSessionUserId();
   		return (user == null) ? "test-user" : user;
     }
-
-    private String getEventMessage(Object object) {
-    	  return "/MessageCenter/site/" + getContextId() + "/" + object.toString() + "/" + getCurrentUser(); 
-        //return "MessageCenter::" + getCurrentUser() + "::" + object.toString();
-    }
-
-    /**
-     * Gets Strings from Message Bundle (specifically for titles)
-     * 
-     * @param key
-     * 			Message bundle key for String wanted
-     * 
-     * @return
-     * 			String requested or "[missing key: key]" if not found
-     */
-    public String getResourceBundleString(String key) 
-    {
-    	final ResourceLoader rb = new ResourceLoader(MESSAGECENTER_BUNDLE);
-    	return rb.getString(key);
-    }
-    
-    private String getResourceBundleString(String key, Object[] replacementValues) 
-    {
-    	final ResourceLoader rb = new ResourceLoader(MESSAGECENTER_BUNDLE);
-    	return rb.getFormattedMessage(key, replacementValues);
-    	
-    	
-    }
-
 }

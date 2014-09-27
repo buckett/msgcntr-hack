@@ -113,23 +113,4 @@ public interface AreaManager
 	 * @return The discussion area for the site.
 	 */
 	public Area getDiscussionArea(String siteId);
-	
-	/**
-	 * Get the discussion are for the given site
-	 * @param siteId The site ID.
-	 * @param createDefaultForum Should the default forum be created.
-	 * @return The discussion area for the site.
-	 * @deprecated This should need to be part of the public API as the reason for not creating the default
-	 * forum is that you might be restoring an archive, but that should be done inside the service.
-	 */
-	public Area getDiscussionArea(final String siteId, boolean createDefaultForum);
-
-	/**
-	 * Get a resource bundle value.
-	 * @param key The string to lookup.
-	 * @return The translated string.
-	 * @deprecated Doing resource bundle calls through the API isn't good as it creates a bigger API when we should
-	 * have the bundle only really used in the tool.
-	 */
-	public String getResourceBundleString(String key);
 }
