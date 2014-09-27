@@ -55,10 +55,7 @@
         class="org.sakaiproject.component.app.messageforums.MessageForumsTypeManagerImpl" init-method="init" singleton="true">
         <property name="typeManager">
             <ref bean="org.sakaiproject.api.common.type.TypeManager"/>
-        </property>  
-		    <property name="sqlService">
-		     		<ref bean="org.sakaiproject.db.api.SqlService"/>
-		    </property>        
+        </property>
     </bean>
      
     <bean id="org.sakaiproject.api.app.messageforums.DummyDataHelperApi" class="org.sakaiproject.component.app.messageforums.DummyDataHelper">

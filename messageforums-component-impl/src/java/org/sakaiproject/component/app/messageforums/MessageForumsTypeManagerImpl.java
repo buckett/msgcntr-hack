@@ -76,24 +76,11 @@ public class MessageForumsTypeManagerImpl implements MessageForumsTypeManager
   private Map initPermissionTypes;
   
   private TypeManager typeManager;
-  private SqlService sqlService;
-  private Boolean autoDdl;
 
   public void init() throws Exception
   {
 	  LOG.info("init()");           
 	  try {
-	  	//  run ddl 
-		  /*if (autoDdl.booleanValue()){
-			  try
-			  {                        
-				  sqlService.ddl(this.getClass().getClassLoader(), "mfr");
-			  }       
-			  catch (Throwable t)
-			  {
-				  LOG.warn(this + ".init(): ", t);
-			  }
-		  }*/
 		  loadInitialDefaultPermissionType();
 	  }
 	  catch (Exception e) {
@@ -527,13 +514,5 @@ public class MessageForumsTypeManagerImpl implements MessageForumsTypeManager
   	initPermissionTypes.put(CONTRIBUTOR, getContributorLevelType());
   	initPermissionTypes.put(NONE, getNoneLevelType());
   	initPermissionTypes.put(CUSTOM, getCustomLevelType());
-  }
-
-  public void setSqlService(SqlService sqlService) {
-	  this.sqlService = sqlService;
-  }
-
-  public void setAutoDdl(Boolean autoDdl) {
-	  this.autoDdl = autoDdl;
   }
 }
