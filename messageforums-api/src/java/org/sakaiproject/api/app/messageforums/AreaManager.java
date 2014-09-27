@@ -65,17 +65,7 @@ public interface AreaManager
 	 * @return The area
 	 */
 	public Area getAreaByContextIdAndTypeId(String siteId, String typeId);
-	
-	/** 
-	 * Get all Areas of the given type
-	 * @param typeId
-	 * @return
-	 * 
-	 * @deprecated since Jan 2008, seems never to have been used and doesn't look to work as there will be lots of
-	 * areas found.
-	 */
-	public Area getAreaByType(String typeId);
-	
+
 	/**
 	 * Get the private area for this site
 	 * @deprecated No explicit site passed in.

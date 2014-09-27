@@ -268,18 +268,7 @@ public class AreaManagerImpl implements AreaManager {
 		return (Area) q.uniqueResult();
 
 	}
-    
-    
 
-    public Area getAreaByType(final String typeId) {
-		final String currentUser = getCurrentUser();
-		LOG.debug("getAreaByType executing for current user: " + currentUser);
-		Session session = sessionFactory.getCurrentSession();
-		Query q = session.getNamedQuery(QUERY_AREA_BY_TYPE);
-		q.setParameter("typeId", typeId, StandardBasicTypes.STRING);
-		return (Area) q.uniqueResult();
-	}
-       
     // helpers
 
     private String getNextUuid() {
