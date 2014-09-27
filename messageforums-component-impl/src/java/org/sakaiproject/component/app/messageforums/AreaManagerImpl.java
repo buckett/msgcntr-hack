@@ -75,15 +75,11 @@ public class AreaManagerImpl implements AreaManager {
 
 	private IdManager idManager;
 
-    private MessageForumsForumManager forumManager;
-
     private SessionManager sessionManager;
 
     private MessageForumsTypeManager typeManager;
 
     private ServerConfigurationService serverConfigurationService;
-
-    private SiteService siteService;
     
     /**
      * sakai.property for setting the default Messages tool option for sending a copy of a message
@@ -95,10 +91,6 @@ public class AreaManagerImpl implements AreaManager {
     public void setServerConfigurationService(
 			ServerConfigurationService serverConfigurationService) {
 		this.serverConfigurationService = serverConfigurationService;
-	}
-
-	public void setSiteService(SiteService siteService) {
-		this.siteService = siteService;
 	}
 
 	public void init() {
@@ -130,10 +122,6 @@ public class AreaManagerImpl implements AreaManager {
 
     public void setIdManager(IdManager idManager) {
         this.idManager = idManager;
-    }
-
-    public void setForumManager(MessageForumsForumManager forumManager) {
-        this.forumManager = forumManager;
     }
 
     public Area getPrivateArea() {
