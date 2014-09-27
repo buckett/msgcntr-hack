@@ -28,6 +28,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.*;
 import org.hibernate.collection.PersistentSet;
+import org.hibernate.type.StandardBasicTypes;
 import org.sakaiproject.api.app.messageforums.Area;
 import org.sakaiproject.api.app.messageforums.AreaManager;
 import org.sakaiproject.api.app.messageforums.BaseForum;
@@ -119,7 +120,6 @@ public class AreaManagerImpl implements AreaManager {
         Area area = getAreaByContextIdAndTypeId(siteId, typeManager.getPrivateMessageAreaType());
         if (area == null) {
             area = createArea(typeManager.getPrivateMessageAreaType(), siteId);
-            area.setContextId(siteId);
             area.setName(rb.getString(MESSAGES_TITLE));
             area.setEnabled(Boolean.FALSE);
             area.setHidden(Boolean.TRUE);
@@ -163,14 +163,14 @@ public class AreaManagerImpl implements AreaManager {
     	return area;
 	}
 
-    public Area createArea(String typeId, String contextParam) {
+    public AreaImpl createArea(String typeId, String contextParam) {
     	
     	  if (LOG.isDebugEnabled())
         {
           LOG.debug("createArea(" + typeId + "," + contextParam + ")");
         }
     	      	      	  
-        Area area = new AreaImpl();
+        AreaImpl area = new AreaImpl();
         area.setUuid(getNextUuid());
         area.setTypeUuid(typeId);
         area.setCreated(new Date());
@@ -202,8 +202,6 @@ public class AreaManagerImpl implements AreaManager {
      */
     public void saveArea(Area area) {
     	String currentUser = getCurrentUser();
-		
-        boolean isNew = area.getId() == null;
 
         area.setModified(new Date());
         area.setModifiedBy(currentUser);

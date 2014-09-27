@@ -57,11 +57,6 @@ public interface Area extends MutableEntity {
     public String getContextId();
 
 	/**
-	 * @deprecated This shouldn't be exposed through the API.
-	 */
-    public void setContextId(String contextId);
-
-	/**
 	 * @deprecated This doesn't look to be used at all.
 	 */
     public Boolean getHidden();

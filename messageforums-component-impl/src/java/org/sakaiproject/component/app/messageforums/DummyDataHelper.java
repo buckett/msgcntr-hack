@@ -69,7 +69,7 @@ public class DummyDataHelper implements DummyDataHelperApi
 
   public Area getPrivateArea()
   {
-    Area a1 = new AreaImpl();
+    AreaImpl a1 = new AreaImpl();
     a1.setContextId("context1");
     a1.setHidden(Boolean.FALSE);
     a1.setName("Messages Area");
@@ -410,7 +410,7 @@ public class DummyDataHelper implements DummyDataHelperApi
 //**********************************************************************************
   public Area getDiscussionForumArea()
   {
-    Area a2 = new AreaImpl();
+    AreaImpl a2 = new AreaImpl();
     a2.setContextId("context2");
     a2.setHidden(Boolean.FALSE);
     a2.setName("Forums");
