@@ -27,7 +27,6 @@ import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.api.app.messageforums.ActorPermissions;
 import org.sakaiproject.api.app.messageforums.DateRestrictions;
 import org.sakaiproject.api.app.messageforums.DiscussionTopic;
-import org.sakaiproject.api.app.messageforums.Label;
 import org.sakaiproject.api.app.messageforums.UniqueArrayList;
 
 public class DiscussionTopicImpl extends OpenTopicImpl implements DiscussionTopic {
@@ -105,35 +104,5 @@ public class DiscussionTopicImpl extends OpenTopicImpl implements DiscussionTopi
 
     public void setMustRespondBeforeReading(Boolean mustRespondBeforeReading) {
         this.mustRespondBeforeReading = mustRespondBeforeReading;
-    }
-    
-    ////////////////////////////////////////////////////////////////////////
-    // helper methods for collections
-    ////////////////////////////////////////////////////////////////////////
-    
-    public void addLabel(Label label) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("addLabel(label " + label + ")");
-        }
-        
-        if (label == null) {
-            throw new IllegalArgumentException("topic == null");
-        }
-        
-        label.setDiscussionTopic(this);
-        labels.add(label);
-    }
-
-    public void removeLabel(Label label) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("removeLabel(label " + label + ")");
-        }
-        
-        if (label == null) {
-            throw new IllegalArgumentException("Illegal topic argument passed!");
-        }
-        
-        label.setDiscussionTopic(null);
-        labels.remove(label);
     }
 }

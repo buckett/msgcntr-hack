@@ -46,3 +46,6 @@ MFR_AP_MODERATORS_T.moderators_index_col
 MFR_AP_CONTRIBUTORS_T.contributors_index_col
 
 MFR_ATTACHMENT_T.url
+
+-- This table is for the Label class which is unused and hasn't been touched since 2006 really.
+DROP TABLE MFR_LABEL_T;

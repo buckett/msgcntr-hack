@@ -27,14 +27,12 @@ import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.api.app.messageforums.ActorPermissions;
 import org.sakaiproject.api.app.messageforums.DateRestrictions;
 import org.sakaiproject.api.app.messageforums.DiscussionForum;
-import org.sakaiproject.api.app.messageforums.Label;
 import org.sakaiproject.api.app.messageforums.UniqueArrayList;
 
 public class DiscussionForumImpl extends OpenForumImpl implements DiscussionForum {
 
     private static final Log LOG = LogFactory.getLog(DiscussionForumImpl.class);
 
-    private List labels = new UniqueArrayList();
     private DateRestrictions dateRestrictions;
     private ActorPermissions actorPermissions;
     private int areaindex;
@@ -66,44 +64,6 @@ public class DiscussionForumImpl extends OpenForumImpl implements DiscussionForu
 
     public void setDateRestrictions(DateRestrictions dateRestrictions) {
         this.dateRestrictions = dateRestrictions;
-    }
-
-    public List getLabels() {
-        return labels;
-    }
-
-    public void setLabels(List labels) {
-        this.labels = labels;
-    }
-    
-    ////////////////////////////////////////////////////////////////////////
-    // helper methods for collections
-    ////////////////////////////////////////////////////////////////////////   
-    
-    public void addLabel(Label label) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("addLabel(label " + label + ")");
-        }
-        
-        if (label == null) {
-            throw new IllegalArgumentException("topic == null");
-        }
-        
-        label.setDiscussionForum(this);
-        labels.add(label);
-    }
-
-    public void removeLabel(Label label) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("removeLabel(label " + label + ")");
-        }
-        
-        if (label == null) {
-            throw new IllegalArgumentException("Illegal topic argument passed!");
-        }
-        
-        label.setDiscussionForum(null);
-        labels.remove(label);
     }
 
 	public Boolean getAutoMarkThreadsRead() {

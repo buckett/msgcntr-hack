@@ -32,7 +32,6 @@ import org.sakaiproject.api.app.messageforums.DateRestrictions;
 import org.sakaiproject.api.app.messageforums.DiscussionForum;
 import org.sakaiproject.api.app.messageforums.DiscussionTopic;
 import org.sakaiproject.api.app.messageforums.DummyDataHelperApi;
-import org.sakaiproject.api.app.messageforums.Label;
 import org.sakaiproject.api.app.messageforums.Message;
 import org.sakaiproject.api.app.messageforums.MessageForumsTypeManager;
 import org.sakaiproject.api.app.messageforums.MessagePermissions;
@@ -45,7 +44,6 @@ import org.sakaiproject.component.app.messageforums.dao.hibernate.ControlPermiss
 import org.sakaiproject.component.app.messageforums.dao.hibernate.DateRestrictionsImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.DiscussionForumImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.DiscussionTopicImpl;
-import org.sakaiproject.component.app.messageforums.dao.hibernate.LabelImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.MessageImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.MessagePermissionsImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.PrivateForumImpl;
@@ -125,7 +123,6 @@ public class DummyDataHelper implements DummyDataHelperApi
     dtm.setExtendedDescription("the extended description");
     dtm.setId(Long.valueOf(12));
     dtm.setUuid("12");
-    dtm.setLabels(getLabels());
     dtm.setLocked(Boolean.TRUE);
     dtm.setModerated(Boolean.FALSE);
     dtm.setPostFirst(Boolean.FALSE);
@@ -148,7 +145,6 @@ public class DummyDataHelper implements DummyDataHelperApi
     dtm1.setExtendedDescription("the extended description");
     dtm1.setId(Long.valueOf(1211));
     dtm1.setUuid("1211");
-    dtm1.setLabels(getLabels());
     dtm1.setLocked(Boolean.TRUE);
     dtm1.setModerated(Boolean.FALSE);
     dtm1.setPostFirst(Boolean.FALSE);
@@ -171,7 +167,6 @@ public class DummyDataHelper implements DummyDataHelperApi
     dtm2.setExtendedDescription("the extended description");
     dtm2.setId(Long.valueOf(1233));
     dtm2.setUuid("1233");
-    dtm2.setLabels(getLabels());
     dtm2.setLocked(Boolean.TRUE);
     dtm2.setModerated(Boolean.FALSE);
     dtm2.setPostFirst(Boolean.FALSE);  
@@ -194,7 +189,6 @@ public class DummyDataHelper implements DummyDataHelperApi
     dtm3.setExtendedDescription("the extended description");
     dtm3.setId(Long.valueOf(123));
     dtm3.setUuid("123");
-    dtm3.setLabels(getLabels());
     dtm3.setLocked(Boolean.TRUE);
     dtm3.setModerated(Boolean.FALSE);
     dtm3.setPostFirst(Boolean.FALSE);
@@ -217,7 +211,6 @@ public class DummyDataHelper implements DummyDataHelperApi
     dtm13.setExtendedDescription("the extended description");
     dtm13.setId(Long.valueOf(132));
     dtm13.setUuid("132");
-    dtm13.setLabels(getLabels());
     dtm13.setLocked(Boolean.TRUE);
     dtm13.setModerated(Boolean.FALSE);
     dtm13.setPostFirst(Boolean.FALSE);
@@ -451,7 +444,6 @@ public class DummyDataHelper implements DummyDataHelperApi
         .setExtendedDescription("This forum is used to discuss assigned case studies. You should follow the case study preparation instructions before posting.");
     dfm1.setId(Long.valueOf(5));
     dfm1.setUuid("5");
-    dfm1.setLabels(getLabels());
     dfm1.setLocked(Boolean.FALSE);
     dfm1.setModerated(Boolean.TRUE);
     dfm1.setPostFirst(Boolean.FALSE);
@@ -475,7 +467,6 @@ public class DummyDataHelper implements DummyDataHelperApi
     dfm2.setExtendedDescription("the extended description 2");
     dfm2.setId(Long.valueOf(6));
     dfm2.setUuid("6");
-    dfm2.setLabels(getLabels());
     dfm2.setLocked(Boolean.TRUE);
     dfm2.setModerated(Boolean.FALSE);
     dfm2.setPostFirst(Boolean.FALSE);
@@ -553,7 +544,6 @@ public class DummyDataHelper implements DummyDataHelperApi
         .setExtendedDescription("Extended: The case requires at lease two decisions in setting your strategy to advance the project: 1. Which customer groups to include in the project scope? 2. Should Customs be included as a development partner?");
     dtm1.setId(Long.valueOf(11));
     dtm1.setUuid("11");
-    dtm1.setLabels(getLabels());
     dtm1.setLocked(Boolean.FALSE);
     dtm1.setModerated(Boolean.TRUE);
     dtm1.setPostFirst(Boolean.FALSE);
@@ -587,7 +577,6 @@ public class DummyDataHelper implements DummyDataHelperApi
         .setExtendedDescription("Extended: The case requires at lease two decisions in setting your strategy to advance the project: 1. Which customer groups to include in the project scope? 2. Should Customs be included as a development partner?");
     dtm1.setId(Long.valueOf(11));
     dtm1.setUuid("511");
-    dtm1.setLabels(getLabels());
     dtm1.setLocked(Boolean.FALSE);
     dtm1.setModerated(Boolean.TRUE);
     dtm1.setPostFirst(Boolean.FALSE);
@@ -621,7 +610,6 @@ public class DummyDataHelper implements DummyDataHelperApi
         .setExtendedDescription("Extended: The case requires at lease two decisions in setting your strategy to advance the project: 1. Which customer groups to include in the project scope? 2. Should Customs be included as a development partner?");
     dtm1.setId(Long.valueOf(11));
     dtm1.setUuid("521");
-    dtm1.setLabels(getLabels());
     dtm1.setLocked(Boolean.FALSE);
     dtm1.setModerated(Boolean.TRUE);
     dtm1.setPostFirst(Boolean.FALSE);
@@ -661,24 +649,6 @@ public class DummyDataHelper implements DummyDataHelperApi
     attachments.add(a1);
     attachments.add(a2);
     return attachments;
-  }
-
-  private List getLabels()
-  {
-    List labels = new ArrayList();
-    Label l1 = new LabelImpl();
-    l1.setKey("group-key");
-    l1.setValue("group");
-    Label l2 = new LabelImpl();
-    l2.setKey("partner-key");
-    l2.setValue("partner");
-    Label l3 = new LabelImpl();
-    l3.setKey("alone-key");
-    l3.setValue("alone");
-    labels.add(l1);
-    labels.add(l2);
-    labels.add(l3);
-    return labels;
   }
 
   private ActorPermissions getActorPermissions()

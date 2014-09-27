@@ -173,12 +173,6 @@
         class="org.sakaiproject.component.app.messageforums.dao.hibernate.ActorPermissionsImpl"
         not-null="false" cascade="save-update" unique="true"/>
         -->
-        
-	    <list name="labels" lazy="true" table="MFR_LABEL_T" cascade="all">
-	        <key column="dt_surrogateKey"/>
-	        <index column="dt_index_col" />
-	        <one-to-many class="org.sakaiproject.component.app.messageforums.dao.hibernate.LabelImpl" />
-	    </list>
 	  </subclass>
 
     </subclass>

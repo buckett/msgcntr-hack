@@ -104,11 +104,6 @@
     <subclass 
       name="org.sakaiproject.component.app.messageforums.dao.hibernate.DiscussionForumImpl"
       discriminator-value="DF">
-	  <list name="labels" lazy="true" table="MFR_LABEL_T" cascade="all">
-	      <key column="df_surrogateKey"/>
-	      <index column="df_index_col" />
-	      <one-to-many class="org.sakaiproject.component.app.messageforums.dao.hibernate.LabelImpl" />
-	  </list>   	     
 	  <!--
       <many-to-one name="dateRestrictions" column="DATE_RESTRICTIONS"
         class="org.sakaiproject.component.app.messageforums.dao.hibernate.DateRestrictionsImpl"

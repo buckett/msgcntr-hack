@@ -22,6 +22,9 @@ package org.sakaiproject.api.app.messageforums;
 
 import java.util.List;
 
+/**
+ * Adds permissions to a forum.
+ */
 public interface DiscussionForum extends OpenForum {
 
     public ActorPermissions getActorPermissions();
@@ -31,14 +34,6 @@ public interface DiscussionForum extends OpenForum {
     public DateRestrictions getDateRestrictions();
 
     public void setDateRestrictions(DateRestrictions dateRestrictions);
-
-    public List getLabels();
-
-    public void setLabels(List labels);
-    
-    public void addLabel(Label label);
-
-    public void removeLabel(Label label);
     
     public Boolean getAutoMarkThreadsRead();
     
