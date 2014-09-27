@@ -34,14 +34,6 @@ public interface AreaManager
 	 * @param area The area to update.
 	 */
 	public void saveArea(Area area);
-
-	/**
-	 *
-	 * @param area
-	 * @param currentUser
-	 * @deprecated Should be passing in the current user as it should be set on the thread.
-	 */
-	public void saveArea(Area area, String currentUser);
 	
 	/**
 	 * Create an area of the given type in the given site

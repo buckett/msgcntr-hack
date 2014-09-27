@@ -202,10 +202,7 @@ public class AreaManagerImpl implements AreaManager {
      */
     public void saveArea(Area area) {
     	String currentUser = getCurrentUser();
-    	saveArea( area, currentUser);
-    }
-    
-    public void saveArea(Area area, String currentUser){
+		
         boolean isNew = area.getId() == null;
 
         area.setModified(new Date());
