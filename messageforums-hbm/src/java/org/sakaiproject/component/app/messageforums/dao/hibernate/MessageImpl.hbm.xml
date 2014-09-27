@@ -61,9 +61,6 @@
 		<one-to-many class="org.sakaiproject.component.app.messageforums.dao.hibernate.AttachmentImpl" />
 	</list> 
 	-->   
-    <property name="label">
-      <column name="LABEL" length="255" not-null="false" index="MFR_MESSAGE_LABEL_I" />
-    </property>
     <many-to-one name="inReplyTo" column="IN_REPLY_TO"
       class="org.sakaiproject.component.app.messageforums.dao.hibernate.MessageImpl"
       not-null="false" cascade="none" index="MFR_MESSAGE_T_IN_REPLY_TO_I"/>
