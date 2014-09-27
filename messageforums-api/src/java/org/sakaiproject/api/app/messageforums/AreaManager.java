@@ -106,14 +106,6 @@ public interface AreaManager
 	* @return The private area for this site, if one doesn't exist it will be created.
 		*/
 	public Area getPrivateArea(String siteId);
-	
-	/**
-	 * Get the discussion are for this site.
-	 * @return The discussion area for the site.
-	 * @see #getDiscussionArea(String)
-	 * @deprecated No explicit site is passed in.
-	 */
-	public Area getDiscusionArea();
 
 	/**
 	 * Get the discussion are for this site.

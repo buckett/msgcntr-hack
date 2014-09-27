@@ -844,7 +844,7 @@ public class DiscussionForumTool
     
     setEditMode(true);
     setPermissionMode(PERMISSION_MODE_TEMPLATE);
-    template = new DiscussionAreaBean(areaManager.getDiscusionArea());
+    template = new DiscussionAreaBean(areaManager.getDiscussionArea(getSiteId()));
                
     if(!isInstructor())
     {
@@ -1010,7 +1010,7 @@ public class DiscussionForumTool
     }
     
     Area area = null;
-    if ((area = areaManager.getDiscusionArea()) != null){
+    if ((area = areaManager.getDiscussionArea(getSiteId())) != null){
     	area.setMembershipItemSet(new HashSet());
     	area.setModerated(Boolean.FALSE);
     	area.setPostFirst(Boolean.FALSE);
@@ -1179,13 +1179,13 @@ public class DiscussionForumTool
     if (getNewForum())
     {
       DiscussionForum forum = forumManager.createForum();
-      forum.setModerated(areaManager.getDiscusionArea().getModerated()); // default to template setting
-      forum.setAutoMarkThreadsRead(areaManager.getDiscusionArea().getAutoMarkThreadsRead()); // default to template setting
-      forum.setPostFirst(areaManager.getDiscusionArea().getPostFirst()); // default to template setting
-      if (areaManager.getDiscusionArea().getAvailabilityRestricted()) {
+      forum.setModerated(areaManager.getDiscussionArea(getSiteId()).getModerated()); // default to template setting
+      forum.setAutoMarkThreadsRead(areaManager.getDiscussionArea(getSiteId()).getAutoMarkThreadsRead()); // default to template setting
+      forum.setPostFirst(areaManager.getDiscussionArea(getSiteId()).getPostFirst()); // default to template setting
+      if (areaManager.getDiscussionArea(getSiteId()).getAvailabilityRestricted()) {
           forum.setAvailabilityRestricted(true);
-          forum.setOpenDate(areaManager.getDiscusionArea().getOpenDate());
-          forum.setCloseDate(areaManager.getDiscusionArea().getCloseDate());
+          forum.setOpenDate(areaManager.getDiscussionArea(getSiteId()).getOpenDate());
+          forum.setCloseDate(areaManager.getDiscussionArea(getSiteId()).getCloseDate());
       }
       
       selectedForum = null;
@@ -3973,8 +3973,8 @@ public class DiscussionForumTool
   private void setupForum() {
 	  if(selectedForum == null)  {
 		  DiscussionForum forum = forumManager.createForum();
-	      forum.setModerated(areaManager.getDiscusionArea().getModerated()); // default to template setting
-	      forum.setPostFirst(areaManager.getDiscusionArea().getPostFirst()); // default to template setting
+	      forum.setModerated(areaManager.getDiscussionArea(getSiteId()).getModerated()); // default to template setting
+	      forum.setPostFirst(areaManager.getDiscussionArea(getSiteId()).getPostFirst()); // default to template setting
 	      selectedForum = new DiscussionForumBean(forum, uiPermissionsManager, forumManager);
 	      if("true".equalsIgnoreCase(ServerConfigurationService.getString("mc.defaultLongDescription")))
 	      {
