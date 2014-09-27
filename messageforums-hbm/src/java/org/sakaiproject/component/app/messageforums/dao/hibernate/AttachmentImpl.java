@@ -20,18 +20,9 @@
  **********************************************************************************/
 package org.sakaiproject.component.app.messageforums.dao.hibernate;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.api.app.messageforums.Attachment;
-import org.sakaiproject.api.app.messageforums.BaseForum;
-import org.sakaiproject.api.app.messageforums.Message;
-import org.sakaiproject.api.app.messageforums.OpenForum;
-import org.sakaiproject.api.app.messageforums.PrivateForum;
-import org.sakaiproject.api.app.messageforums.Topic;
 
 public class AttachmentImpl extends MutableEntityImpl implements Attachment {
-
-    private static final Log LOG = LogFactory.getLog(AttachmentImpl.class);
 
     private String attachmentId;
 
@@ -40,8 +31,6 @@ public class AttachmentImpl extends MutableEntityImpl implements Attachment {
     private String attachmentSize;
 
     private String attachmentType;
-
-    private Long pvtMsgAttachId;
 
     public String getAttachmentId() {
         return attachmentId;
