@@ -2327,7 +2327,7 @@ private   int   getNum(char letter,   String   a)
     //Add attachments
     for(int i=0; i<attachments.size(); i++)
     {
-      prtMsgManager.addAttachToPvtMsg(aMsg, ((DecoratedAttachment)attachments.get(i)).getAttachment());         
+      aMsg.addAttachment(((DecoratedAttachment)attachments.get(i)).getAttachment());
     }    
     if(clearAttachments){
     	//clear
@@ -2893,7 +2893,7 @@ private   int   getNum(char letter,   String   a)
     	//Add attachments
     	for(int i=0; i<allAttachments.size(); i++)
     	{
-    		prtMsgManager.addAttachToPvtMsg(rrepMsg, ((DecoratedAttachment)allAttachments.get(i)).getAttachment());         
+    		rrepMsg.addAttachment(((DecoratedAttachment)allAttachments.get(i)).getAttachment());
     	}            
 
     	return rrepMsg;
@@ -3081,7 +3081,7 @@ private   int   getNum(char letter,   String   a)
     	//Add attachments
     	for(int i=0; i<allAttachments.size(); i++)
     	{
-    		prtMsgManager.addAttachToPvtMsg(rrepMsg, ((DecoratedAttachment)allAttachments.get(i)).getAttachment());         
+    		rrepMsg.addAttachment(((DecoratedAttachment)allAttachments.get(i)).getAttachment());
     	}  
     	
     	return rrepMsg;
@@ -3213,8 +3213,9 @@ private   int   getNum(char letter,   String   a)
 	  //Add attachments
 	  for(int i=0; i<allAttachments.size(); i++)
 	  {
-		  prtMsgManager.addAttachToPvtMsg(rrepMsg, ((DecoratedAttachment)allAttachments.get(i)).getAttachment());         
-	  }            
+		  // Doesn't work as we don't have a session.
+		  rrepMsg.addAttachment(((DecoratedAttachment)allAttachments.get(i)).getAttachment());
+	  }
 
 	  User autheruser=null;
 	  try {
@@ -3765,8 +3766,9 @@ private   int   getNum(char letter,   String   a)
           break;
         }
       }
-      
-      prtMsgManager.removePvtMsgAttachment(sa);
+		// TODO Not sure if this is called when we are replying to a message
+		// check that we have a message to reply to.
+      getReplyingMessage().removeAttachment(sa);
       if(id.toLowerCase().startsWith("/attachment"))
 		  // What is this doing in the tool?
         contentHostingService.removeResource(id);

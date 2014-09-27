@@ -950,7 +950,7 @@ public class DiscussionTopicBean
 	public List<DecoratedAttachment> getAttachList()
 	{
 		List<DecoratedAttachment> decoAttachList = new ArrayList<DecoratedAttachment>();
-		List<Attachment> attachList = forumManager.getTopicAttachments(topic.getId());  
+		List<Attachment> attachList = getTopic().getAttachments();
 		if(attachList != null)
 		{
 			for(int i=0; i<attachList.size(); i++)
