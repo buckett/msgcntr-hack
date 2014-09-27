@@ -22,6 +22,8 @@ package org.sakaiproject.api.app.messageforums;
 
 /**
  * An attachment to a message/topic/forum.
+ * There isn't any attachment manager at the moment, they are linked to other objects that do have services.
+ * This might change in the future as we try to keep these detached from the other objects.
  *
  * @see org.sakaiproject.api.app.messageforums.Message
  * @see org.sakaiproject.api.app.messageforums.Topic
