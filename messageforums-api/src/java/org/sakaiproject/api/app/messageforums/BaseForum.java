@@ -25,6 +25,8 @@ import java.util.Set;
 import java.util.SortedSet;
 
 /**
+ * Never directly used, look at the extensions.
+ *
  * @see org.sakaiproject.api.app.messageforums.OpenForum
  * @see org.sakaiproject.api.app.messageforums.PrivateForum
  */
