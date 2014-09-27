@@ -265,8 +265,8 @@ public class AreaManagerImpl implements AreaManager {
 		LOG.debug("getAreaByContextIdAndTypeId executing for current user: " + getCurrentUser());
 		Session session = sessionFactory.getCurrentSession();
 		Query q = session.getNamedQuery(QUERY_AREA_BY_CONTEXT_AND_TYPE_ID);
-		q.setParameter("contextId", contextId, Hibernate.STRING);
-		q.setParameter("typeId", typeId, Hibernate.STRING);
+		q.setParameter("contextId", contextId, StandardBasicTypes.STRING);
+		q.setParameter("typeId", typeId, StandardBasicTypes.STRING);
 		return (Area) q.uniqueResult();
 
 	}
@@ -278,7 +278,7 @@ public class AreaManagerImpl implements AreaManager {
 		LOG.debug("getAreaByType executing for current user: " + currentUser);
 		Session session = sessionFactory.getCurrentSession();
 		Query q = session.getNamedQuery(QUERY_AREA_BY_TYPE);
-		q.setParameter("typeId", typeId, Hibernate.STRING);
+		q.setParameter("typeId", typeId, StandardBasicTypes.STRING);
 		return (Area) q.uniqueResult();
 	}
        
