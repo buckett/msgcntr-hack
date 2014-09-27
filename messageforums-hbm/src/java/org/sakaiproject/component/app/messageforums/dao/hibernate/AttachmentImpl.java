@@ -75,9 +75,4 @@ public class AttachmentImpl extends MutableEntityImpl implements Attachment {
         this.attachmentType = attachmentType;
     }
 
-    public void setLastModifiedBy(String lastMOdifiedBy)
-    {
-      // TODO Auto-generated method stub
-      
-    }
 }

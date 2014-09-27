@@ -50,7 +50,4 @@ public interface Attachment extends MutableEntity {
     public String getAttachmentType();
 
     public void setAttachmentType(String attachmentType);
-
-    public void setCreatedBy(String createdBy);
-    public void setLastModifiedBy(String lastMOdifiedBy);
 }
