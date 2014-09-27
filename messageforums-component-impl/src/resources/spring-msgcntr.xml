@@ -15,7 +15,6 @@
                 <value>org/sakaiproject/component/app/messageforums/dao/hibernate/PrivateForum.hbm.xml</value>
                 <value>org/sakaiproject/component/app/messageforums/dao/hibernate/Label.hbm.xml</value>
                 <value>org/sakaiproject/component/app/messageforums/dao/hibernate/DBMembershipItemImpl.hbm.xml</value>
-                <value>org/sakaiproject/component/app/messageforums/dao/hibernate/PermissionLevelImpl.hbm.xml</value>
                 <value>org/sakaiproject/component/app/messageforums/dao/hibernate/EmailNotification.hbm.xml</value>
                 <value>org/sakaiproject/component/app/messageforums/dao/hibernate/SynopticMsgcntrItem.hbm.xml</value>
                 <value>org/sakaiproject/component/app/messageforums/dao/hibernate/HiddenGroupImpl.hbm.xml</value>
@@ -64,42 +63,7 @@
         </property>
     </bean>
  
-     <bean id="org.sakaiproject.api.app.messageforums.PermissionManager" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <property name="transactionManager">
-            <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager"/>
-        </property>
-        <property name="target">
-            <bean class="org.sakaiproject.component.app.messageforums.PermissionManagerImpl" singleton="true" init-method="init">
-                <property name="sessionFactory">
-                    <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
-                </property>
-				<property name="idManager">
-					<ref bean="org.sakaiproject.id.api.IdManager" />
-				</property>				 				
-				<property name="sessionManager">
-					<ref bean="org.sakaiproject.tool.api.SessionManager" />
-				</property>				 								
-		        <property name="typeManager">
-        		    <ref bean="org.sakaiproject.api.app.messageforums.MessageForumsTypeManager"/>
-		        </property>
-                <property name="areaManager">
-                    <ref bean="org.sakaiproject.api.app.messageforums.AreaManager"/>
-                </property>
-		        <property name="eventTrackingService">
-        		    <ref bean="org.sakaiproject.event.api.EventTrackingService"/>
-		        </property>		
-		         <property name="defaultPermissionsManager">
-        		    <ref bean="org.sakaiproject.api.app.messageforums.DefaultPermissionsManager"/>
-		        </property>	       
-            </bean>            
-        </property>
-         <property name="transactionAttributes">
-            <props>
-                <prop key="*">PROPAGATION_REQUIRED</prop>
-            </props>
-        </property> 
-    </bean>
-    
+
     <bean id="org.sakaiproject.api.app.messageforums.DefaultPermissionsManager" class="org.sakaiproject.component.app.messageforums.DefaultPermissionsManagerImpl"   init-method="init">
         <property name="functionManager">
             <ref bean="org.sakaiproject.authz.api.FunctionManager"/>
@@ -118,10 +82,7 @@
         </property>
         <property name="sessionManager">
 			<ref bean="org.sakaiproject.tool.api.SessionManager" />
-		</property>		
-	    <property name="permissionManager">
-            <ref bean="org.sakaiproject.api.app.messageforums.PermissionManager"/>
-        </property>
+		</property>
         <property name="permissionLevelManager">
             <ref bean="org.sakaiproject.api.app.messageforums.PermissionLevelManager"/>
         </property>
@@ -336,9 +297,6 @@
                 </property>							
                 <property name="forumManager">
                     <ref bean="org.sakaiproject.api.app.messageforums.MessageForumsForumManager"/>
-                </property>	
-                <property name="permissionManager">
-                    <ref bean="org.sakaiproject.api.app.messageforums.PermissionManager"/>
                 </property>
                 <property name="typeManager">
         		    <ref bean="org.sakaiproject.api.app.messageforums.MessageForumsTypeManager"/>

@@ -27,20 +27,17 @@ import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.api.app.messageforums.ActorPermissions;
 import org.sakaiproject.api.app.messageforums.Area;
 import org.sakaiproject.api.app.messageforums.Attachment;
-import org.sakaiproject.api.app.messageforums.ControlPermissions;
 import org.sakaiproject.api.app.messageforums.DateRestrictions;
 import org.sakaiproject.api.app.messageforums.DiscussionForum;
 import org.sakaiproject.api.app.messageforums.DiscussionTopic;
 import org.sakaiproject.api.app.messageforums.DummyDataHelperApi;
 import org.sakaiproject.api.app.messageforums.Message;
 import org.sakaiproject.api.app.messageforums.MessageForumsTypeManager;
-import org.sakaiproject.api.app.messageforums.MessagePermissions;
 import org.sakaiproject.api.app.messageforums.PrivateForum;
 import org.sakaiproject.api.app.messageforums.PrivateMessage;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.ActorPermissionsImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.AreaImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.AttachmentImpl;
-import org.sakaiproject.component.app.messageforums.dao.hibernate.ControlPermissionsImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.DateRestrictionsImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.DiscussionForumImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.DiscussionTopicImpl;
@@ -662,19 +659,6 @@ public class DummyDataHelper implements DummyDataHelperApi
     return null;
   }
 
-  private ControlPermissions getControlPermissions()
-  {
-    ControlPermissions cpm = new ControlPermissionsImpl();
-    cpm.setChangeSettings(Boolean.TRUE);
-    cpm.setId(Long.valueOf(234));
-    cpm.setMovePostings(Boolean.TRUE);
-    cpm.setNewResponse(Boolean.TRUE);
-    cpm.setNewTopic(Boolean.TRUE);
-    cpm.setResponseToResponse(Boolean.TRUE);
-    cpm.setRole("Not sure what sakai roles are");
-    return cpm;
-  }
-
   private DateRestrictions getDateRestrictions()
   {
     DateRestrictions drm = new DateRestrictionsImpl();
@@ -688,20 +672,6 @@ public class DummyDataHelper implements DummyDataHelperApi
     drm.setVisible(new Date());
     drm.setVisiblePostOnSchedule(Boolean.TRUE);
     return drm;
-  }
-
-  private MessagePermissions getMessgePermissions()
-  {
-    MessagePermissions mpm = new MessagePermissionsImpl();
-    mpm.setDeleteAny(Boolean.TRUE);
-    mpm.setDeleteOwn(Boolean.TRUE);
-    mpm.setId(Long.valueOf(22));
-    mpm.setRead(Boolean.TRUE);
-    mpm.setReadDrafts(Boolean.TRUE);
-    mpm.setReviseAny(Boolean.TRUE);
-    mpm.setReviseOwn(Boolean.TRUE);
-    mpm.setRole("Not sure what sakai roles are");
-    return mpm;
   }
 
   private List list2set(List list)
