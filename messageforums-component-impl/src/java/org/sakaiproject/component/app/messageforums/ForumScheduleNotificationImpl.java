@@ -18,6 +18,8 @@ import org.sakaiproject.api.app.messageforums.MessageForumsTypeManager;
 import org.sakaiproject.api.app.messageforums.SynopticMsgcntrManager;
 import org.sakaiproject.api.app.messageforums.cover.SynopticMsgcntrManagerCover;
 import org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager;
+import org.sakaiproject.tool.api.Session;
+import org.sakaiproject.tool.api.SessionManager;
 import org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureException;
 
 public class ForumScheduleNotificationImpl implements ForumScheduleNotification {
@@ -47,6 +49,11 @@ public class ForumScheduleNotificationImpl implements ForumScheduleNotification 
     {
         this.timeService = timeService;
     }
+
+	private SessionManager sessionManager;
+	public void setSessionManager(SessionManager sessionManager) {
+		this.sessionManager = sessionManager;
+	}
 
     private ScheduledInvocationManager scheduledInvocationManager;
 
@@ -114,6 +121,12 @@ public class ForumScheduleNotificationImpl implements ForumScheduleNotification 
     
     
     public void execute(String opaqueContext){
+		// We want to act as a special user.
+		String userId = "-forumScheduler-";
+		Session session = sessionManager.getCurrentSession();
+		session.setUserEid(userId);
+		session.setUserId(userId);
+
     	LOG.info("ForumScheduleNotificationImpl.execute(): " + opaqueContext);
     	if(opaqueContext.startsWith(AREA_PREFIX)){
     		String siteId = opaqueContext.substring(AREA_PREFIX.length());
@@ -161,7 +174,7 @@ public class ForumScheduleNotificationImpl implements ForumScheduleNotification 
     			//save forum and update synoptic counts
     			String siteId = forumManager.getContextForForumById(forumId);
     			HashMap<String, Integer> beforeChangeHM = SynopticMsgcntrManagerCover.getUserToNewMessagesForForumMap(siteId, forum.getId(), null);
-    			forumManager.saveForum(forum, forum.getDraft(), siteId, false, "-forumScheduler-");
+    			forumManager.saveForum(forum, forum.getDraft(), siteId, false);
     			updateSynopticMessagesForForumComparingOldMessagesCount(siteId, forum.getId(), null, beforeChangeHM, SynopticMsgcntrManager.NUM_OF_ATTEMPTS);
     		}
 
@@ -189,7 +202,7 @@ public class ForumScheduleNotificationImpl implements ForumScheduleNotification 
     			String siteId = forumManager.getContextForTopicById(topicId);
     			HashMap<String, Integer> beforeChangeHM = SynopticMsgcntrManagerCover.getUserToNewMessagesForForumMap(siteId, topic.getBaseForum().getId(), topic.getId());
     			
-    			forumManager.saveTopic(topic, topic.getDraft(), false, "-forumScheduler-");
+    			forumManager.saveTopic(topic, topic.getDraft(), false);
     			updateSynopticMessagesForForumComparingOldMessagesCount(siteId, topic.getBaseForum().getId(), topic.getId(), beforeChangeHM, SynopticMsgcntrManager.NUM_OF_ATTEMPTS);
     		}
     	}

@@ -559,7 +559,10 @@
         </property>      
         <property name="forumManager">
              <ref bean="org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager"/>
-         </property>  
+         </property>
+		<property name="sessionManager">
+			<ref bean="org.sakaiproject.tool.api.SessionManager"/>
+		</property>
 	</bean>
     
     <bean id="org.sakaiproject.api.app.messageforums.SynopticMsgcntrManager"     

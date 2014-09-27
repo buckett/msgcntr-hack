@@ -849,11 +849,7 @@ public class MessageForumsForumManagerImpl extends HibernateDaoSupport implement
     
     public void saveDiscussionForum(DiscussionForum forum, boolean draft, boolean logEvent) {
     	String currentUser = getCurrentUser();
-    	saveDiscussionForum(forum, draft, logEvent, currentUser);
-    }
-    
-    public void saveDiscussionForum(DiscussionForum forum, boolean draft, boolean logEvent, String currentUser) {
-    
+
         boolean isNew = forum.getId() == null;
 
         if (forum.getSortIndex() == null) {
@@ -945,11 +941,12 @@ public class MessageForumsForumManagerImpl extends HibernateDaoSupport implement
      * Save a discussion forum topic
      */
     public void saveDiscussionForumTopic(DiscussionTopic topic, boolean parentForumDraftStatus) {
-    	saveDiscussionForumTopic(topic, parentForumDraftStatus, getCurrentUser(), true);
+    	saveDiscussionForumTopic(topic, parentForumDraftStatus, true);
     }
     
-    public void saveDiscussionForumTopic(DiscussionTopic topic, boolean parentForumDraftStatus, String currentUser, boolean logEvent) {
+    public void saveDiscussionForumTopic(DiscussionTopic topic, boolean parentForumDraftStatus, boolean logEvent) {
         boolean isNew = topic.getId() == null;
+		String currentUser = getCurrentUser();
 
         if (topic.getMutable() == null) {
             topic.setMutable(Boolean.FALSE);
@@ -980,10 +977,10 @@ public class MessageForumsForumManagerImpl extends HibernateDaoSupport implement
                                   
           if(topic.getDraft().equals(Boolean.TRUE))
           {        	  
-	  	    saveDiscussionForum(discussionForum, discussionForum.getDraft().booleanValue(), logEvent, currentUser);
+	  	    saveDiscussionForum(discussionForum, discussionForum.getDraft().booleanValue(), logEvent);
           }
           else
-            saveDiscussionForum(discussionForum, parentForumDraftStatus, logEvent, currentUser);
+            saveDiscussionForum(discussionForum, parentForumDraftStatus, logEvent);
           //sak-5146 saveDiscussionForum(discussionForum, parentForumDraftStatus);
             
         } else {

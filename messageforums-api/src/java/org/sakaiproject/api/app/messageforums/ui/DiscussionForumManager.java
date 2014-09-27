@@ -275,7 +275,7 @@ public interface DiscussionForumManager
    * @param forum
    */
   public void saveForum(DiscussionForum forum);
-  public void saveForum(DiscussionForum forum, boolean draft, String contextId, boolean logEvent, String currentUser);
+  public void saveForum(DiscussionForum forum, boolean draft, String contextId, boolean logEvent);
   
   /**
    * Saves the given forum object. If forum is new, will be saved in the given contextId
@@ -299,7 +299,6 @@ public interface DiscussionForumManager
    * @param topic
    */
   public void saveTopic(DiscussionTopic topic, boolean draft, boolean logEvent);
-  public void saveTopic(DiscussionTopic topic, boolean draft, boolean logEvent, String currentUser);
   /**
    * @param topic
    */

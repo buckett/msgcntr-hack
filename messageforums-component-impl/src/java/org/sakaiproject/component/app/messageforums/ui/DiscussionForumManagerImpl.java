@@ -76,8 +76,6 @@ import org.sakaiproject.tool.cover.ToolManager;
 import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-
 
 
 /**
@@ -1067,7 +1065,7 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
     {
       LOG.debug("saveForum(DiscussionForum" + forum + ")");
     }
-    saveForum(forum, false, getCurrentContext(), true, getCurrentUser());
+    saveForum(forum, false, getCurrentContext(), true);
   }
   
   public void saveForum(String contextId, DiscussionForum forum) {
@@ -1077,7 +1075,7 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
           throw new IllegalArgumentException("Null contextId or forum passed to saveForum. contextId:" + contextId);
       }
       
-      saveForum(forum, forum.getDraft(), contextId, true, getCurrentUser());
+      saveForum(forum, forum.getDraft(), contextId, true);
   }
 
   /*
@@ -1091,12 +1089,12 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
     {
       LOG.debug("saveForumAsDraft(DiscussionForum" + forum + ")");
     }
-    saveForum(forum, true, getCurrentContext(), true, getCurrentUser());
+    saveForum(forum, true, getCurrentContext(), true);
   }
 
-	// The sole purpose the the current user is so that the quartz job can be a different user
+	// The sole purpose of the the current user is so that the quartz job can be a different user
 	// quartz jobs should just set the current user on the thread.
-  public void saveForum(DiscussionForum forum, boolean draft, String contextId, boolean logEvent, String currentUser)
+  public void saveForum(DiscussionForum forum, boolean draft, String contextId, boolean logEvent)
   {
     if (LOG.isDebugEnabled())
     {
@@ -1144,7 +1142,7 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
 //      }
 //    }
     
-    forumManager.saveDiscussionForum(forum, draft, logEvent, currentUser);
+    forumManager.saveDiscussionForum(forum, draft, logEvent);
     //set flag to false since permissions could have changed.  This will force a clearing and resetting
     //of the permissions cache.
     ThreadLocalManager.set("message_center_permission_set", Boolean.valueOf(false));
@@ -1156,7 +1154,7 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
       forum.setArea(area);
       forum.setSortIndex(Integer.valueOf(0));
       area.addDiscussionForum(forum);
-      areaManager.saveArea(area, currentUser);
+      areaManager.saveArea(area);
     }
   }
 
@@ -1195,11 +1193,6 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
   
   public void saveTopic(DiscussionTopic topic, boolean draft, boolean logEvent)
   {
-	  saveTopic(topic, draft, logEvent, getCurrentUser());
-  }
-
-  public void saveTopic(DiscussionTopic topic, boolean draft, boolean logEvent, String currentUser)
-  {
     LOG
         .debug("saveTopic(DiscussionTopic " + topic + ", boolean " + draft
             + ")");
@@ -1207,13 +1200,13 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
     boolean saveForum = topic.getId() == null;
     
     topic.setDraft(Boolean.valueOf(draft));
-    forumManager.saveDiscussionForumTopic(topic, false, currentUser, logEvent);
+    forumManager.saveDiscussionForumTopic(topic, false, logEvent);
     
     if (saveForum)
     {
       DiscussionForum forum = (DiscussionForum) topic.getBaseForum();
       forum.addTopic(topic);
-      forumManager.saveDiscussionForum(forum, forum.getDraft().booleanValue(), logEvent, currentUser);
+      forumManager.saveDiscussionForum(forum, forum.getDraft().booleanValue(), logEvent);
       //sak-5146 forumManager.saveDiscussionForum(forum);
     }
     
