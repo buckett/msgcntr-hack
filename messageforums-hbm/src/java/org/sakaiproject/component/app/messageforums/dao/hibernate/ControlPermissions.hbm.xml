@@ -45,9 +45,6 @@
     <property name="changeSettings">
       <column name="CHANGE_SETTINGS" not-null="true" />
     </property>
-    <property name="defaultValue">
-      <column name="DEFAULT_VALUE" not-null="true" />
-    </property>
     
      
     <many-to-one name="area" column="areaSurrogateKey"

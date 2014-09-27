@@ -21,9 +21,10 @@
 package org.sakaiproject.api.app.messageforums;
 
 /**
- * This looks half baked and almost unused.
  *
  * @see org.sakaiproject.api.app.messageforums.AreaControlPermission
+ * @see org.sakaiproject.api.app.messageforums.ForumControlPermission
+ * @see org.sakaiproject.api.app.messageforums.TopicControlPermission
  */
 public interface ControlPermissions {
 
@@ -78,9 +79,4 @@ public interface ControlPermissions {
     public Topic getTopic();
     
     public void setTopic(Topic topic);
-    
-    public Boolean getDefaultValue();
-
-    public void setDefaultValue(Boolean defaultValue);
-    
 }

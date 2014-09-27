@@ -194,7 +194,6 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
         boolean isNew = permissions.getId() == null;
         
         permissions.setArea(area);
-        permissions.setDefaultValue(Boolean.FALSE);
         permissions.setChangeSettings(permission.getChangeSettings());
         permissions.setMovePostings(permission.getMovePostings());
         permissions.setNewForum(permission.getNewForum());
@@ -221,7 +220,6 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
         boolean isNew = permissions.getId() == null;
 
         permissions.setArea(area);
-        permissions.setDefaultValue(Boolean.TRUE);
         permissions.setChangeSettings(permission.getChangeSettings());
         permissions.setMovePostings(permission.getMovePostings());
         permissions.setNewForum(permission.getNewForum());
@@ -298,7 +296,6 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
         boolean isNew = permissions.getId() == null;
 
         permissions.setForum(forum);
-        permissions.setDefaultValue(Boolean.FALSE);
         permissions.setChangeSettings(permission.getChangeSettings());
         permissions.setMovePostings(permission.getMovePostings());
         permissions.setNewForum(Boolean.FALSE);
@@ -326,7 +323,6 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
         boolean isNew = permissions.getId() == null;
 
         permissions.setForum(forum);
-        permissions.setDefaultValue(Boolean.TRUE);
         permissions.setChangeSettings(permission.getChangeSettings());
         permissions.setMovePostings(permission.getMovePostings());
         permissions.setNewForum(Boolean.FALSE);
@@ -400,7 +396,6 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
         boolean isNew = permissions.getId() == null;
 
         permissions.setTopic(topic);
-        permissions.setDefaultValue(Boolean.FALSE);
         permissions.setChangeSettings(permission.getChangeSettings());
         permissions.setMovePostings(permission.getMovePostings());
         permissions.setNewForum(Boolean.FALSE);
@@ -428,7 +423,6 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
         boolean isNew = permissions.getId() == null;
 
         permissions.setTopic(topic);
-        permissions.setDefaultValue(Boolean.TRUE);
         permissions.setChangeSettings(permission.getChangeSettings());
         permissions.setMovePostings(permission.getMovePostings());
         permissions.setNewForum(Boolean.FALSE);

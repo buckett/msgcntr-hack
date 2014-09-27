@@ -27,6 +27,10 @@ import org.sakaiproject.api.app.messageforums.BaseForum;
 import org.sakaiproject.api.app.messageforums.ControlPermissions;
 import org.sakaiproject.api.app.messageforums.Topic;
 
+/**
+ * This is the generic interface to permissions for Areas/Forums/Topics.
+ * Its persisted in the database but
+ */
 public class ControlPermissionsImpl implements ControlPermissions {
 
     private static final Log LOG = LogFactory.getLog(ControlPermissionsImpl.class);
@@ -46,8 +50,6 @@ public class ControlPermissionsImpl implements ControlPermissions {
     private Boolean movePostings;
 
     private Boolean changeSettings;
-
-    private Boolean defaultValue;
 
     private Area area;
 
@@ -129,14 +131,6 @@ public class ControlPermissionsImpl implements ControlPermissions {
         this.responseToResponse = responseToResponse;
     }
 
-    public Boolean getDefaultValue() {
-        return defaultValue;
-    }
-
-    public void setDefaultValue(Boolean defaultValue) {
-        this.defaultValue = defaultValue;
-    }
-
     public String getRole() {
         return role;
     }
@@ -176,42 +170,6 @@ public class ControlPermissionsImpl implements ControlPermissions {
     public void setTopic(Topic topic) {
         this.topic = topic;
     }
-
-//    public int getAreaindex() {
-//        try {
-//            return getArea().getOpenForums().indexOf(this);
-//        } catch (Exception e) {
-//            return areaindex;
-//        }
-//    }
-//
-//    public void setAreaindex(int areaindex) {
-//        this.areaindex = areaindex;
-//    }
-//
-//    public int getForumindex() {
-//        try {
-//            return getForum().getTopics().indexOf(this);
-//        } catch (Exception e) {
-//            return forumindex;
-//        }
-//    }
-//
-//    public void setForumindex(int forumindex) {
-//        this.forumindex = forumindex;
-//    }
-//
-//    public int getTopicindex() {
-//        try {
-//            return getTopic().getMessages().indexOf(this);
-//        } catch (Exception e) {
-//            return topicindex;
-//        }
-//    }
-//
-//    public void setTopicindex(int topicindex) {
-//        this.topicindex = topicindex;
-//    }
 
     public String toString() {
     	return "ControlPermissions/" + id;
