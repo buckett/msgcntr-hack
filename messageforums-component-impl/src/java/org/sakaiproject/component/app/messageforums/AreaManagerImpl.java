@@ -87,22 +87,17 @@ public class AreaManagerImpl implements AreaManager {
      * and {@link Area#EMAIL_COPY_ALWAYS}
      */
     private static final String DEFAULT_SEND_TO_EMAIL_PROP = "msgcntr.defaultSendToEmailSetting";
-    
-    public void setServerConfigurationService(
+
+	public void init() {
+		LOG.info("init()");
+
+	}
+
+	public void setServerConfigurationService(
 			ServerConfigurationService serverConfigurationService) {
 		this.serverConfigurationService = serverConfigurationService;
 	}
 
-	public void init() {
-       LOG.info("init()");
-
-    }
-
-
-
-    public MessageForumsTypeManager getTypeManager() {
-        return typeManager;
-    }
 
     public void setTypeManager(MessageForumsTypeManager typeManager) {
         this.typeManager = typeManager;
@@ -110,14 +105,6 @@ public class AreaManagerImpl implements AreaManager {
 
     public void setSessionManager(SessionManager sessionManager) {
         this.sessionManager = sessionManager;
-    }
-
-    public IdManager getIdManager() {
-        return idManager;
-    }
-
-    public SessionManager getSessionManager() {
-        return sessionManager;
     }
 
     public void setIdManager(IdManager idManager) {
@@ -175,12 +162,6 @@ public class AreaManagerImpl implements AreaManager {
     	
     	return area;
 	}
-
-
-    
-    public boolean isPrivateAreaEnabled() {
-        return getPrivateArea().getEnabled().booleanValue();
-    }
 
     public Area createArea(String typeId, String contextParam) {
     	

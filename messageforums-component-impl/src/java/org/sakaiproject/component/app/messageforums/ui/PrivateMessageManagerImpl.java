@@ -130,36 +130,6 @@ public class PrivateMessageManagerImpl extends HibernateDaoSupport implements
 		this.contentHostingService = contentHostingService;
 	}
 
-  public boolean getPrivateAreaEnabled()
-  {
-
-    if (LOG.isDebugEnabled())
-    {
-      LOG.debug("getPrivateAreaEnabled()");
-    }
-        
-    return areaManager.isPrivateAreaEnabled();
-
-  }
-
-  public void setPrivateAreaEnabled(boolean value)
-  {
-
-    if (LOG.isDebugEnabled())
-    {
-      LOG.debug("setPrivateAreaEnabled(value: " + value + ")");
-    }
-
-  }
-
-  /**
-   * @see org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager#isPrivateAreaEnabled()
-   */
-  public boolean isPrivateAreaEnabled()
-  {
-    return areaManager.isPrivateAreaEnabled();
-  }
-
   /**
    * @see org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager#getPrivateMessageArea()
    */

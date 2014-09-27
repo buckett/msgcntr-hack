@@ -30,12 +30,6 @@ package org.sakaiproject.api.app.messageforums;
 public interface AreaManager
 {
 	/**
-	 * Is the private area enabled in this site?
-	 * @return <code>true</code> is this area has a private messages area.
-	 */
-	public boolean isPrivateAreaEnabled();
-	
-	/**
 	 * Save an area. This is used to update settings on an area.
 	 * @param area The area to update.
 	 */

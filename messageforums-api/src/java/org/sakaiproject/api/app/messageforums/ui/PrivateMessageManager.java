@@ -78,13 +78,6 @@ public interface PrivateMessageManager {
     public List getMessagesByTypeByContext(final String typeUuid, final String contextId, final String userId, final String orderField,
     	      final String order);
 
-
-    /**
-     * check if private message area is enabled for the current user
-     * @return boolean
-     */
-    boolean isPrivateAreaEnabled();
-
     /**
      * retrieve private message area if it is enabled for the current user
      * @return area
