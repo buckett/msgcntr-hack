@@ -70,7 +70,6 @@ public class UIPermissionsManagerImpl implements UIPermissionsManager {
   private AuthzGroupService authzGroupService;
   private SessionManager sessionManager;
   private ToolManager toolManager;
-  private PermissionManager permissionManager;
   private PermissionLevelManager permissionLevelManager;
   private MessageForumsTypeManager typeManager;
   private SecurityService securityService;
@@ -141,20 +140,6 @@ public class UIPermissionsManagerImpl implements UIPermissionsManager {
       LOG.debug("setToolManager(ToolManager " + toolManager + ")");
     }
     this.toolManager = toolManager;
-  }
-
-  /**
-   * @param permissionManager
-   *          The permissionManager to set.
-   */
-  public void setPermissionManager(PermissionManager permissionManager)
-  {
-    if (LOG.isDebugEnabled())
-    {
-      LOG.debug("setPermissionManager(PermissionManager " + permissionManager
-          + ")");
-    }
-    this.permissionManager = permissionManager;
   }
 
   /**

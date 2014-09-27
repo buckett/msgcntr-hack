@@ -26,13 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.sakaiproject.api.app.messageforums.Area;
-import org.sakaiproject.api.app.messageforums.Attachment;
-import org.sakaiproject.api.app.messageforums.DBMembershipItem;
-import org.sakaiproject.api.app.messageforums.DiscussionForum;
-import org.sakaiproject.api.app.messageforums.DiscussionTopic;
-import org.sakaiproject.api.app.messageforums.Message;
-import org.sakaiproject.api.app.messageforums.Topic;
+import org.sakaiproject.api.app.messageforums.*;
 import org.sakaiproject.user.api.User;
 
 /**
@@ -307,7 +301,7 @@ public interface DiscussionForumManager
   /**
    * @return
    */
-  public List getDefaultControlPermissions();
+  public List<AreaControlPermission> getDefaultControlPermissions();
 
   /**
    * @return
