@@ -49,18 +49,12 @@
 	<property name="gradeAssignmentName" column="GRADEASSIGNMENTNAME" type="string" not-null="false"/>
 	<property name="numReaders" column="NUM_READERS" type="integer"/>
 
-    
+    <!-- because this is lazy extra API methods were added so get a session again so the values could be loaded -->
     <set name="attachmentsSet" lazy="true" order-by="created desc" cascade="all-delete-orphan" batch-size="10">
-        <key column="m_surrogateKey"/>                        
-        <one-to-many class="org.sakaiproject.component.app.messageforums.dao.hibernate.AttachmentImpl"/>            
+		<!-- The foreign-key will have the index created -->
+        <key column="m_surrogateKey" foreign-key="MFR_ATTACHMENT_MESSAGE"/>
+        <one-to-many class="org.sakaiproject.component.app.messageforums.dao.hibernate.AttachmentImpl"/>
     </set>
-  	<!-- 
-  	<list name="attachments" lazy="true" table="MFR_ATTACHMENT_T" cascade="all">
-		<key column="m_surrogateKey"/>
-		<index column="mes_index_col" />
-		<one-to-many class="org.sakaiproject.component.app.messageforums.dao.hibernate.AttachmentImpl" />
-	</list> 
-	-->   
     <many-to-one name="inReplyTo" column="IN_REPLY_TO"
       class="org.sakaiproject.component.app.messageforums.dao.hibernate.MessageImpl"
       not-null="false" cascade="none" index="MFR_MESSAGE_T_IN_REPLY_TO_I"/>

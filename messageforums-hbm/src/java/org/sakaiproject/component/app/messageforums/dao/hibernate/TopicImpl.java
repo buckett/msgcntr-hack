@@ -101,11 +101,11 @@ public abstract class TopicImpl extends MutableEntityImpl implements Topic {
     public Set<Attachment> getAttachmentsSet() {
         return attachmentsSet;
     }
-  
+
     public void setAttachmentsSet(SortedSet<Attachment> attachmentsSet) {
         this.attachmentsSet = attachmentsSet;
     }
-    
+
     public List<Attachment> getAttachments()
     {
       return Util.setToList(attachmentsSet);
@@ -301,7 +301,6 @@ public abstract class TopicImpl extends MutableEntityImpl implements Topic {
         if (attachmentsSet == null) {
             attachmentsSet = new TreeSet<Attachment>(new AttachmentByCreatedDateDesc());
         }
-        attachment.setTopic(this);
         attachmentsSet.add(attachment);
     }
 
@@ -313,8 +312,6 @@ public abstract class TopicImpl extends MutableEntityImpl implements Topic {
         if (attachment == null) {
             throw new IllegalArgumentException("Illegal attachment argument passed!");
         }
-        
-        attachment.setTopic(null);
         attachmentsSet.remove(attachment);
     }
     

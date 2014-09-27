@@ -242,10 +242,7 @@ public class MessageImpl extends MutableEntityImpl implements Message
 		{
 			throw new IllegalArgumentException("attachment == null");
 		}
-
-		attachment.setMessage(this);
 		attachmentsSet.add(attachment);
-
 		if (!hasAttachments.booleanValue()){
 			hasAttachments = Boolean.TRUE;
 		}
@@ -263,10 +260,7 @@ public class MessageImpl extends MutableEntityImpl implements Message
 		{
 			throw new IllegalArgumentException("Illegal attachment argument passed!");
 		}
-
-		attachment.setMessage(null);
-		attachmentsSet.remove(attachment);  
-
+		attachmentsSet.remove(attachment);
 		if (attachmentsSet.size() == 0){
 			hasAttachments = Boolean.FALSE;
 		}

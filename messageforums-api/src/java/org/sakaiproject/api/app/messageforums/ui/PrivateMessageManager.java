@@ -183,9 +183,7 @@ public interface PrivateMessageManager {
     
     
     //Attachment
-    public void addAttachToPvtMsg(final PrivateMessage pvtMsgData, final Attachment pvtMsgAttach);
     public Attachment createPvtMsgAttachment(String attachId, String name);
-    public void removePvtMsgAttachment(Attachment o);
     public Attachment getPvtMsgAttachment(final Long pvtMsgAttachId);
     
     

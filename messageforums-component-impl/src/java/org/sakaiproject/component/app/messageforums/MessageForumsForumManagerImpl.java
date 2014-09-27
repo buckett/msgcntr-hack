@@ -394,22 +394,6 @@ public class MessageForumsForumManagerImpl extends HibernateDaoSupport implement
       }
 
     
-    public List<Attachment> getTopicAttachments(final Long topicId) {
-    	if (topicId == null) {
-    		throw new IllegalArgumentException("Null Argument topicId");
-    	}
-    	HibernateCallback hcb = new HibernateCallback() {
-    		public Object doInHibernate(Session session) throws HibernateException, SQLException {
-    			Query q = session.getNamedQuery("findTopicAttachments");
-    			q.setCacheable(true);
-    			q.setParameter("topic", topicId, Hibernate.LONG);
-    			return q.list();
-    		}
-    	};
-    	return (List<Attachment>)getHibernateTemplate().executeFind(hcb);
-    } 
-
-    
     public BaseForum getForumByIdWithTopics(final Long forumId) {
 
       if (forumId == null) {

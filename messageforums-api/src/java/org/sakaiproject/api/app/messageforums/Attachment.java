@@ -25,7 +25,9 @@ package org.sakaiproject.api.app.messageforums;
  *
  * @see org.sakaiproject.api.app.messageforums.Message
  * @see org.sakaiproject.api.app.messageforums.Topic
- * @see org.sakaiproject.api.app.messageforums.BaseForum
+ * @see org.sakaiproject.api.app.messageforums.BaseForum - Link at the API level
+ * @see org.sakaiproject.api.app.messageforums.OpenForum - Link at the DB level
+ * @see org.sakaiproject.api.app.messageforums.PrivateForum
  */
 public interface Attachment extends MutableEntity {
 
@@ -49,26 +51,6 @@ public interface Attachment extends MutableEntity {
 
     public void setAttachmentType(String attachmentType);
 
-    public Message getMessage();
-
-    public void setMessage(Message parent);
-
-    public BaseForum getForum();
-
-    public void setForum(BaseForum forum);
-
-    public Topic getTopic();
-
-    public void setTopic(Topic topic);
-
-    public OpenForum getOpenForum();
-    
-    public void setOpenForum(OpenForum openForum);
-    
-    public PrivateForum getPrivateForum();
-    
-    public void setPrivateForum(PrivateForum privateForum);    
-    
     //Is it required for editing attachment in Pvt Msg????
     public Long getPvtMsgAttachId();
     public void setPvtMsgAttachId(Long pvtMsgAttachId);

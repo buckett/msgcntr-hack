@@ -236,7 +236,6 @@ public class BaseForumImpl extends MutableEntityImpl implements BaseForum {
         if (attachmentsSet == null) {
             attachmentsSet = new TreeSet<Attachment>(new AttachmentByCreatedDateDesc());
         }
-        attachment.setForum(this);
         attachmentsSet.add(attachment);
     }
 
@@ -248,8 +247,6 @@ public class BaseForumImpl extends MutableEntityImpl implements BaseForum {
         if (attachment == null) {
             throw new IllegalArgumentException("Illegal attachment argument passed!");
         }
-        
-        attachment.setForum(null);
         attachmentsSet.remove(attachment);
     }
     

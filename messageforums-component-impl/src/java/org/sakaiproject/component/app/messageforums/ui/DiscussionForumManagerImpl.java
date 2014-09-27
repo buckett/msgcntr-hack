@@ -2348,10 +2348,6 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
   	  return usersAllowed;
     }
 
-	public List<Attachment> getTopicAttachments(Long topicId) {
-		return forumManager.getTopicAttachments(topicId);
-	}
-
 	public MemoryService getMemoryService() {
 		return memoryService;
 	}

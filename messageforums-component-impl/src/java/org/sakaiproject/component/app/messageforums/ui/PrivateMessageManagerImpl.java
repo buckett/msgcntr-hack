@@ -376,21 +376,6 @@ public class PrivateMessageManagerImpl extends HibernateDaoSupport implements
     }
   }
 
-  // Himansu: I am not quite sure this is what you want... let me know.
-  // Before saving a message, we need to add all the attachmnets to a perticular message
-  public void addAttachToPvtMsg(PrivateMessage pvtMsgData,
-      Attachment pvtMsgAttach)
-  {
-    pvtMsgData.addAttachment(pvtMsgAttach);
-  }
-
-  // Required for editing multiple attachments to a message. 
-  // When you reply to a message, you do have option to edit attachments to a message
-  public void removePvtMsgAttachment(Attachment o)
-  {
-    o.getMessage().removeAttachment(o);
-  }
-
   public Attachment getPvtMsgAttachment(Long pvtMsgAttachId)
   {
     return messageManager.getAttachmentById(pvtMsgAttachId);

@@ -44,13 +44,6 @@ public class AttachmentImpl extends MutableEntityImpl implements Attachment {
     private String attachmentType;
 
     private Long pvtMsgAttachId;
-    
-    // foreign keys for hibernate
-    private Message message;
-    private BaseForum forum;
-    private Topic topic;    
-    private OpenForum openForum;
-    private PrivateForum privateForum;
 
     public String getAttachmentId() {
         return attachmentId;
@@ -82,46 +75,6 @@ public class AttachmentImpl extends MutableEntityImpl implements Attachment {
 
     public void setAttachmentType(String attachmentType) {
         this.attachmentType = attachmentType;
-    }
-
-    public Message getMessage() {
-        return message;
-    }
-
-    public void setMessage(Message message) {
-        this.message = message;
-    }
-
-    public BaseForum getForum() {
-        return forum;
-    }
-
-    public void setForum(BaseForum forum) {
-        this.forum = forum;
-    }
-
-    public Topic getTopic() {
-        return topic;
-    }
-
-    public void setTopic(Topic topic) {
-        this.topic = topic;
-    }
-
-    public OpenForum getOpenForum() {
-        return openForum;
-    }
-
-    public void setOpenForum(OpenForum openForum) {
-        this.openForum = openForum;
-    }
-
-    public PrivateForum getPrivateForum() {
-        return privateForum;
-    }
-
-    public void setPrivateForum(PrivateForum privateForum) {
-        this.privateForum = privateForum;
     }
 
     public Long getPvtMsgAttachId()
