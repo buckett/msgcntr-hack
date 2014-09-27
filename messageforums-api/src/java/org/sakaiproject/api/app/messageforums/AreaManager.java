@@ -21,14 +21,12 @@
 package org.sakaiproject.api.app.messageforums;
 
 /**
- * The Area id the high level object of the object model. Typicaly a site
+ * The Area id the high level object of the object model. Typically a site
  * can contain up to 2 Areas - a Discussion Area and a Private Message Area
  * 
  * @author rshastri
  *
  */
-
-
 public interface AreaManager
 {
 	/**
