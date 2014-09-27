@@ -18,6 +18,8 @@ Problems
 --------
 
 The services internally use lots of threadlocals that are only setup when requests come through the portal.
+ - current user is ok to get through threadlocal.
+ - everything else not.
 The services also don't have good tests.
 Need to contain Sakai dependencies inside one class so it's easy to test the code.
 Error handling, not really any use of exceptions.
@@ -32,9 +34,15 @@ Should things like forum titles be i18ned?
 
 Area is known as "Template Settings" in the interface.
 
+Lots of the classes are far too large.
+DuscussionForumManagerImpl has it's own permissions cache because it didn't end up using Sakai security.
+Should have strict DAO?
+
 DB Changes
 ----------
 These columns can all go as  it's a set rather than an list now.
 MFR_AP_ACCESSORS_T.accessors_index_col 
 MFR_AP_MODERATORS_T.moderators_index_col
 MFR_AP_CONTRIBUTORS_T.contributors_index_col
+
+MFR_ATTACHMENT_T.url
