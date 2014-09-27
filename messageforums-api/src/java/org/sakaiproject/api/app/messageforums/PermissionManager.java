@@ -20,25 +20,29 @@
  **********************************************************************************/
 package org.sakaiproject.api.app.messageforums;
 
+/**
+ * This interface didn't have any concept of current site ID to all the calls.
+ * It just assumed this was always set on the thread.
+ */
 public interface PermissionManager {
 
     /**
      * Get the area control permission for a given role.  This provides the permissions
      * that the role currently has.
      */
-    public AreaControlPermission getAreaControlPermissionForRole(String role, String typeId);
+    public AreaControlPermission getAreaControlPermissionForRole(String siteId, String role, String typeId);
 
     /**
      * Get the default area control permission for a given role.  This provides the 
      * permissions that the role currently has.
      */
-    public AreaControlPermission getDefaultAreaControlPermissionForRole(String role, String typeId);
+    public AreaControlPermission getDefaultAreaControlPermissionForRole(String siteId, String role, String typeId);
 
     /**
      * Create an empty area control permission with system properties 
      * populated (ie: uuid).
      */
-    public AreaControlPermission createAreaControlPermissionForRole(String role, String typeId);
+    public AreaControlPermission createAreaControlPermissionForRole(String siteId, String role, String typeId);
     
     /**
      * Save an area control permission.  This is backed in the database by a single
@@ -68,7 +72,7 @@ public interface PermissionManager {
      * Create an empty forum control permission with system properties 
      * populated (ie: uuid).
      */
-    public ForumControlPermission createForumControlPermissionForRole(String role, String typeId);
+    public ForumControlPermission createForumControlPermissionForRole(String siteId, String role, String typeId);
     
     /**
      * Save an forum control permission.  This is backed in the database by a single
@@ -112,7 +116,7 @@ public interface PermissionManager {
      */
     public void saveDefaultTopicControlPermissionForRole(Topic topic, TopicControlPermission permission);
     
-    public ControlPermissions getAreaControlPermissionByRoleAndType(String roleId, String typeId, boolean defaultValue);
+    public ControlPermissions getAreaControlPermissionByRoleAndType(String siteId, String roleId, String typeId, boolean defaultValue);
 
     /**
      * Get the area message permission for a given role.  This provides the permissions

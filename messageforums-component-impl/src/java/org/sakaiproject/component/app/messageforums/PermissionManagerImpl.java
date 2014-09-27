@@ -124,7 +124,7 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
      
 
     /**
-     * @param defaultPermissionsManager The defaultPermissionsManager to set.
+     * @param defaultPermissionManager The defaultPermissionsManager to set.
      */
     public void setDefaultPermissionsManager(
         DefaultPermissionsManager defaultPermissionManager)
@@ -132,8 +132,9 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
       this.defaultPermissionsManager = defaultPermissionManager;
     }
 
-    public AreaControlPermission getAreaControlPermissionForRole(String role, String typeId) {
-        ControlPermissions permissions = getAreaControlPermissionByRoleAndType(role, typeId, false);
+	@Override
+    public AreaControlPermission getAreaControlPermissionForRole(String siteId, String role, String typeId) {
+        ControlPermissions permissions = getAreaControlPermissionByRoleAndType(siteId, role, typeId, false);
         AreaControlPermission cp = new AreaControlPermissionImpl();
 
         if (permissions == null) {
@@ -144,7 +145,7 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
 //            cp.setNewTopic(Boolean.FALSE);
 //            cp.setResponseToResponse(Boolean.FALSE);
 //            cp.setPostToGradebook(Boolean.FALSE);
-          return getDefaultAreaControlPermissionForRole(role, typeId);
+          return getDefaultAreaControlPermissionForRole(siteId, role, typeId);
         } else {
             cp.setPostToGradebook(permissions.getPostToGradebook());
             cp.setChangeSettings(permissions.getChangeSettings());        
@@ -158,7 +159,8 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
         return cp;
     }
 
-    public AreaControlPermission getDefaultAreaControlPermissionForRole(String role, String typeId) {
+	@Override
+    public AreaControlPermission getDefaultAreaControlPermissionForRole(String siteId, String role, String typeId) {
 //        ControlPermissions permissions = getAreaControlPermissionByRoleAndType(role, typeId, true);
         AreaControlPermission cp = new AreaControlPermissionImpl();
 //        if (permissions == null) {
@@ -189,9 +191,10 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
         return cp;
     }
 
-    public AreaControlPermission createAreaControlPermissionForRole(String role, String typeId) {
+	@Override
+    public AreaControlPermission createAreaControlPermissionForRole(String siteId, String role, String typeId) {
         AreaControlPermission permission = new AreaControlPermissionImpl();
-        AreaControlPermission acp = getDefaultAreaControlPermissionForRole(role, typeId);
+        AreaControlPermission acp = getDefaultAreaControlPermissionForRole(siteId, role, typeId);
         permission.setChangeSettings(acp.getChangeSettings());
         permission.setMovePostings(acp.getMovePostings());
         permission.setNewForum(acp.getNewForum());
@@ -204,7 +207,7 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
     }
 
     public void saveAreaControlPermissionForRole(Area area, AreaControlPermission permission, String typeId) {        
-        ControlPermissions permissions = getAreaControlPermissionByRoleAndType(permission.getRole(), typeId, false); 
+        ControlPermissions permissions = getAreaControlPermissionByRoleAndType(area.getContextId(), permission.getRole(), typeId, false);
         if (permissions == null) {
             permissions = new ControlPermissionsImpl();
         }
@@ -231,7 +234,7 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
     }
 
     public void saveDefaultAreaControlPermissionForRole(Area area, AreaControlPermission permission, String typeId) {
-        ControlPermissions permissions = getAreaControlPermissionByRoleAndType(permission.getRole(), typeId, true); 
+        ControlPermissions permissions = getAreaControlPermissionByRoleAndType(area.getContextId(), permission.getRole(), typeId, true);
         if (permissions == null) {
             permissions = new ControlPermissionsImpl();
         }
@@ -293,9 +296,10 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
         return cp;
     }
 
-    public ForumControlPermission createForumControlPermissionForRole(String role, String typeId) {
+	@Override
+    public ForumControlPermission createForumControlPermissionForRole(String siteId, String role, String typeId) {
         ForumControlPermission permission = new ForumControlPermissionImpl();
-        AreaControlPermission acp = getAreaControlPermissionForRole(role, typeId);
+        AreaControlPermission acp = getAreaControlPermissionForRole(siteId, role, typeId);
         permission.setChangeSettings(acp.getChangeSettings());
         permission.setMovePostings(acp.getMovePostings());
         permission.setNewResponse(acp.getNewResponse());
@@ -464,9 +468,9 @@ public class PermissionManagerImpl extends HibernateDaoSupport implements Permis
         }        
     }    
 
-    public ControlPermissions getAreaControlPermissionByRoleAndType(final String roleId, final String typeId, final boolean defaultValue) {
+    public ControlPermissions getAreaControlPermissionByRoleAndType(final String siteId, final String roleId, final String typeId, final boolean defaultValue) {
         LOG.debug("getAreaControlPermissionByRole executing for current user: " + getCurrentUser());
-        final Area area = areaManager.getAreaByContextIdAndTypeId(typeId);
+        final Area area = areaManager.getAreaByContextIdAndTypeId(siteId, typeId);
         if (area == null) {
             return null;
         }
