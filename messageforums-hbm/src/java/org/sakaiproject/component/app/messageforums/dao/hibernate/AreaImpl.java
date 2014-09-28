@@ -31,6 +31,7 @@ import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.api.app.messageforums.Area;
 import org.sakaiproject.api.app.messageforums.BaseForum;
 import org.sakaiproject.api.app.messageforums.DBMembershipItem;
+import org.sakaiproject.api.app.messageforums.HiddenGroup;
 
 public class AreaImpl extends MutableEntityImpl implements Area
 {
@@ -65,7 +66,7 @@ public class AreaImpl extends MutableEntityImpl implements Area
   private Set privateForumsSet;// = new HashSet();
   private Set discussionForumsSet;// = new HashSet();
   private Set membershipItemSet;
-  private Set hiddenGroups;
+  private Set<HiddenGroup> hiddenGroups;
   private Date openDate;
   private Date closeDate;
   
@@ -395,12 +396,12 @@ public Set getDiscussionForumsSet() {
 	}
 
 	@Override
-	public Set getHiddenGroups() {		
+	public Set<HiddenGroup> getHiddenGroups() {
 		return hiddenGroups;
 	}
 
 	@Override
-	public void setHiddenGroups(Set hiddenGroups) {
+	public void setHiddenGroups(Set<HiddenGroup> hiddenGroups) {
 		this.hiddenGroups = hiddenGroups;
 	}
 

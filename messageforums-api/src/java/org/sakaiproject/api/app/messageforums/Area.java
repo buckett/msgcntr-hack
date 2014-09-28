@@ -28,6 +28,8 @@ import java.util.Set;
  * An area for messages within a site. This area has some configuration and links to the forums contained within it.
  * One problem with this is some of the configuration is for the private messages area and some of the configuration
  * is for the discussion forum area.
+ *
+ * @see org.sakaiproject.api.app.messageforums.AreaControlPermission
  */
 
 public interface Area extends MutableEntity {
@@ -203,7 +205,7 @@ public interface Area extends MutableEntity {
 	 * Messages Only.
 	 * The groups that shouldn't be show in the list of groups.
 	 */
-    public Set getHiddenGroups();
+    public Set<HiddenGroup> getHiddenGroups();
        
-    public void setHiddenGroups(Set hiddenGroups);
+    public void setHiddenGroups(Set<HiddenGroup> hiddenGroups);
 }

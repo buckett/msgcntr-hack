@@ -1,5 +1,9 @@
 package org.sakaiproject.api.app.messageforums;
 
+/**
+ * This is a group that should not be shown in the messages interface.
+ * @see Area#getHiddenGroups()
+ */
 public interface HiddenGroup {
 	public Long getId();
 	public void setId(Long id);
