@@ -4,7 +4,10 @@ import java.util.Date;
 
 import org.sakaiproject.api.app.scheduler.ScheduledInvocationCommand;
 
-public interface ForumScheduleNotification extends ScheduledInvocationCommand{
+/**
+ * This probably doesn't need to be part of the API
+ */
+public interface ForumScheduleNotification {
 
 	public void scheduleAvailability(Area area);
 	

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.api.app.scheduler.DelayedInvocation;
+import org.sakaiproject.api.app.scheduler.ScheduledInvocationCommand;
 import org.sakaiproject.api.app.scheduler.ScheduledInvocationManager;
 import org.sakaiproject.time.api.Time;
 import org.sakaiproject.time.api.TimeService;
@@ -22,7 +23,10 @@ import org.sakaiproject.tool.api.Session;
 import org.sakaiproject.tool.api.SessionManager;
 import org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureException;
 
-public class ForumScheduleNotificationImpl implements ForumScheduleNotification {
+/**
+ * This is used to flag that a discussion forum is available and to send out messages.
+ */
+public class ForumScheduleNotificationImpl implements ForumScheduleNotification, ScheduledInvocationCommand {
 	
 	private static final Log LOG = LogFactory.getLog(ForumScheduleNotificationImpl.class);
     
@@ -119,7 +123,8 @@ public class ForumScheduleNotificationImpl implements ForumScheduleNotification 
     	}  	
     }
     
-    
+
+	@Override
     public void execute(String opaqueContext){
 		// We want to act as a special user.
 		String userId = "-forumScheduler-";
