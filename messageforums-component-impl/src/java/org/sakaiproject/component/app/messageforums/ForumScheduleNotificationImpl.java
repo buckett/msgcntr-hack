@@ -27,14 +27,15 @@ import org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureExcep
  * This is used to flag that a discussion forum is available and to send out messages.
  */
 public class ForumScheduleNotificationImpl implements ForumScheduleNotification, ScheduledInvocationCommand {
-	
+
 	private static final Log LOG = LogFactory.getLog(ForumScheduleNotificationImpl.class);
     
     private static final String AREA_PREFIX = "area-";
     private static final String FORUM_PREFIX = "forum-";
     private static final String TOPIC_PREFIX = "topic-";
-	
-    private MessageForumsTypeManager typeManager;
+	public static final String SCHEDULE_KEY = "org.sakaiproject.api.app.messageforums.ForumScheduleNotification";
+
+	private MessageForumsTypeManager typeManager;
     public void setTypeManager(MessageForumsTypeManager typeManager){
     	this.typeManager = typeManager;
     }
@@ -88,16 +89,8 @@ public class ForumScheduleNotificationImpl implements ForumScheduleNotification,
     
     private void scheduleAvailability(String id, boolean availabilityRestricted, Date openDate, Date closeDate){
     	// Remove any existing notifications for this area
-    	DelayedInvocation[] fdi = scheduledInvocationManager.findDelayedInvocations("org.sakaiproject.api.app.messageforums.ForumScheduleNotification",
-    			id);
-    	if (fdi != null && fdi.length > 0)
-    	{
-    		for (DelayedInvocation d : fdi)
-    		{
-    			scheduledInvocationManager.deleteDelayedInvocation(d.uuid);
-    		}
-    	}
-    	
+    	scheduledInvocationManager.deleteDelayedInvocation(SCHEDULE_KEY, id);
+
     	if (availabilityRestricted)
     	{
     		Time openTime = null;
@@ -112,18 +105,23 @@ public class ForumScheduleNotificationImpl implements ForumScheduleNotification,
     		if (openTime != null && openTime.after(timeService.newTime()))
     		{
     			scheduledInvocationManager.createDelayedInvocation(openTime,
-    					"org.sakaiproject.api.app.messageforums.ForumScheduleNotification",
+						SCHEDULE_KEY,
     					id);
     		}
     		if(closeTime != null && closeTime.after(timeService.newTime())){
     			scheduledInvocationManager.createDelayedInvocation(closeTime,
-    					"org.sakaiproject.api.app.messageforums.ForumScheduleNotification",
+						SCHEDULE_KEY,
     					id);
     		}
     	}  	
     }
-    
 
+
+	/**
+	 * Run the notification.
+	 * @param opaqueContext The ID of the thing we are sending out notifications for. This was passed in when the
+	 *                      jobs was setup.
+	 */
 	@Override
     public void execute(String opaqueContext){
 		// We want to act as a special user.
@@ -210,7 +208,9 @@ public class ForumScheduleNotificationImpl implements ForumScheduleNotification,
     			forumManager.saveTopic(topic, topic.getDraft(), false);
     			updateSynopticMessagesForForumComparingOldMessagesCount(siteId, topic.getBaseForum().getId(), topic.getId(), beforeChangeHM, SynopticMsgcntrManager.NUM_OF_ATTEMPTS);
     		}
-    	}
+    	} else {
+			throw new IllegalArgumentException("Failed to parse: "+ opaqueContext);
+		}
     }
     
     public boolean makeAvailableHelper(boolean availabilityRestricted, Date openDate, Date closeDate){
