@@ -7,7 +7,6 @@ import java.util.TimeZone;
 
 /**
  * @author branden
- *
  */
 public interface UserPreferencesManager {
 

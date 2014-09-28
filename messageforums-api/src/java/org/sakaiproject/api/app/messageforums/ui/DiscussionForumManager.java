@@ -81,7 +81,6 @@ public interface DiscussionForumManager
   
   /**
    * Returns all moderated topics in site
-   * @param areaId
    * @return
    */
   public List getModeratedTopicsInSite();

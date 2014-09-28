@@ -134,9 +134,6 @@ public interface UIPermissionsManager
   
   /**
    * Returns whether current user has perm to moderate in this situation
-   * @param topic
-   * @param forum
-   * @return
    */
   public boolean isModeratePostings(Long topicId, Boolean isForumLocked, Boolean isForumDraft, Boolean isTopicLocked, Boolean isTopicDraft, String userId, String siteId);
   public boolean isModeratePostings(DiscussionTopic topic, DiscussionForum forum, String userId, String siteId);

@@ -42,7 +42,6 @@ import org.sakaiproject.component.app.messageforums.dao.hibernate.DateRestrictio
 import org.sakaiproject.component.app.messageforums.dao.hibernate.DiscussionForumImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.DiscussionTopicImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.MessageImpl;
-import org.sakaiproject.component.app.messageforums.dao.hibernate.MessagePermissionsImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.PrivateForumImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.PrivateMessageImpl;
 
