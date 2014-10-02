@@ -58,9 +58,7 @@ public class MembershipManagerImpl implements MembershipManager{
           
   private SiteService siteService;
   private UserDirectoryService userDirectoryService;
-  private AuthzGroupService authzGroupService;
   private ToolManager toolManager;
-  private SecurityService securityService;
   private PrivacyManager privacyManager;
   private PrivateMessageManager prtMsgManager;
   
@@ -223,8 +221,7 @@ public class MembershipManagerImpl implements MembershipManager{
    */
   public Map getAllCourseMembers(boolean filterFerpa, boolean includeRoles, boolean includeAllParticipantsMember, List<String> hiddenGroups)
   {   
-    Map returnMap = new HashMap();    
-    String realmId = getContextSiteId();
+    Map returnMap = new HashMap();
     Site currentSite = null;
         
     if(getPrtMsgManager().isAllowToFieldAllParticipants()){
@@ -238,28 +235,19 @@ public class MembershipManagerImpl implements MembershipManager{
     		returnMap.put(memberAll.getId(), memberAll);
     	}
     }
- 
-    AuthzGroup realm = null;
+
     try{
-      realm = authzGroupService.getAuthzGroup(realmId);
       currentSite = siteService.getSite(toolManager.getCurrentPlacement().getContext());
-      if (currentSite == null) // SAK-12988
-				throw new RuntimeException("Could not obtain Site object!");
     }
     catch (IdUnusedException e){
 		//FIXME Is this expected behavior?  If so it should be documented - LDS
       LOG.debug(e.getMessage(), e);
       return returnMap;
-    } catch (GroupNotDefinedException e) {
-		//FIXME Is this expected behavior?  If so it should be documented - LDS
-    	LOG.error(e.getMessage(), e);
-	}
+    }
 
 	boolean viewHiddenGroups = getPrtMsgManager().isAllowToViewHiddenGroups();
     if(getPrtMsgManager().isAllowToFieldGroups()){
     	/** handle groups */
-    	if (currentSite == null)
-    		throw new IllegalStateException("Site currentSite == null!");
     	Collection groups = currentSite.getGroups();    
     	for (Iterator groupIterator = groups.iterator(); groupIterator.hasNext();){
     		Group currentGroup = (Group) groupIterator.next();     
@@ -278,8 +266,8 @@ public class MembershipManagerImpl implements MembershipManager{
     }
     if(getPrtMsgManager().isAllowToFieldRoles()){
     	/** handle roles */
-    	if (includeRoles && realm != null){
-    		Set roles = realm.getRoles();
+    	if (includeRoles){
+    		Set roles = currentSite.getRoles();
     		for (Iterator roleIterator = roles.iterator(); roleIterator.hasNext();){
     			Role role = (Role) roleIterator.next();
     			MembershipItem member = MembershipItem.getInstance();
@@ -298,26 +286,20 @@ public class MembershipManagerImpl implements MembershipManager{
     
     if(getPrtMsgManager().isAllowToFieldUsers()){
         /** handle users */
-        if (realm == null)
-    			throw new IllegalStateException("AuthzGroup realm == null!");
-        Set users = realm.getMembers();
-        if (users == null)
-    			throw new RuntimeException("Could not obtain members from realm!");
+        Set users = currentSite.getMembers();
         
         /** create our HashSet of user ids */
         for (Iterator userIterator = users.iterator(); userIterator.hasNext();){
           Member member = (Member) userIterator.next();
           String userId = member.getUserId();
           Role userRole = member.getRole();   
-          addUsertoMemberItemMap(returnMap, realm, userId, userRole, MembershipItem.TYPE_USER);
+          addUsertoMemberItemMap(returnMap, currentSite, userId, userRole, MembershipItem.TYPE_USER);
         }
     }    
     
 		if (getPrtMsgManager().isAllowToFieldMyGroups()) {
-			try {
-				Collection<Group> groups = siteService.getSite(toolManager.getCurrentPlacement().getContext())
-						.getGroupsWithMember(userDirectoryService.getCurrentUser().getId());
-				if (groups != null) {
+				Collection<Group> groups = currentSite.getGroupsWithMember(userDirectoryService.getCurrentUser().getId());
+
 					for (Group group : groups) {
                         MembershipItem member = MembershipItem.getInstance();
 						member.setType(MembershipItem.TYPE_MYGROUPS);
@@ -329,29 +311,20 @@ public class MembershipManagerImpl implements MembershipManager{
                             returnMap.put(member.getId(), member);
 						}
 					}
-				}
-			} catch (IdUnusedException e) {
-				LOG.warn("Unable to retrieve site to determine current user's groups.");
-			}
 		}
 
 		if (getPrtMsgManager().isAllowToFieldMyGroupMembers()) {
 
-			try {
-				Collection<Group> groups = siteService.getSite(toolManager.getCurrentPlacement().getContext())
-						.getGroupsWithMember(userDirectoryService.getCurrentUser().getId());
-				if (groups != null) {
+				Collection<Group> groups = currentSite.getGroupsWithMember(userDirectoryService.getCurrentUser().getId());
+
 					for (Group group : groups) {
 						Set<Member> groupMembers = group.getMembers();
 						for (Member groupMember : groupMembers) {
-							addUsertoMemberItemMap(returnMap, realm, groupMember.getUserId(), groupMember.getRole(),
+							addUsertoMemberItemMap(returnMap, currentSite, groupMember.getUserId(), groupMember.getRole(),
 									MembershipItem.TYPE_MYGROUPMEMBERS);
 						}
 					}
-				}
-			} catch (IdUnusedException e) {
-				LOG.warn("Unable to retrieve site to determine current user's group members.");
-			}
+
 		}
 
     // set FERPA status for all items in map - allCourseUsers
@@ -425,19 +398,15 @@ public class MembershipManagerImpl implements MembershipManager{
   public List getAllCourseUsers()
   {       
     Map userMap = new HashMap();    
-    String realmId = getContextSiteId();    
-     
-    AuthzGroup realm = null;
+
+    AuthzGroup realm;
     try{
-      realm = authzGroupService.getAuthzGroup(realmId);      
-    } catch (GroupNotDefinedException e) {
-		//FIXME Is this expected behavior?  If so it should be documented - LDS
-    	LOG.error(e.getMessage(), e);
+		realm = siteService.getSite(toolManager.getCurrentPlacement().getContext());
+    } catch (IdUnusedException e) {
+		throw new IllegalStateException("Can't find current Site.");
 	}
                 
     /** handle users */
-    if (realm == null)
-			throw new IllegalStateException("AuthzGroup realm == null!");
     Set users = realm.getMembers();
     List userIds = getRealmIdList(users);
     List<User> userList = userDirectoryService.getUsers(userIds);
@@ -539,20 +508,12 @@ public class MembershipManagerImpl implements MembershipManager{
     this.userDirectoryService = userDirectoryService;
   }
 
-  public void setAuthzGroupService(AuthzGroupService authzGroupService)
-  {
-    this.authzGroupService = authzGroupService;
-  }
 
   public void setToolManager(ToolManager toolManager)
   {
     this.toolManager = toolManager;
   }
 
-  public void setSecurityService(SecurityService securityService)
-  {
-    this.securityService = securityService;
-  }
 
 public PrivateMessageManager getPrtMsgManager() {
 	return prtMsgManager;

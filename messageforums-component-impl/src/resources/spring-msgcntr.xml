@@ -378,15 +378,9 @@
                 <property name="userDirectoryService">
 				    <ref bean="org.sakaiproject.user.api.UserDirectoryService"/>
 				</property>
-                <property name="authzGroupService">
-                  <ref bean="org.sakaiproject.authz.api.AuthzGroupService"/>
-                </property>
                 <property name="toolManager">
                   <ref bean="org.sakaiproject.tool.api.ActiveToolManager"/>
                 </property>
-                <property name="securityService">
-                  <ref bean="org.sakaiproject.authz.api.SecurityService"/>
-                </property>              
 		 	    <property name="privacyManager">
 					<ref bean="org.sakaiproject.api.privacy.PrivacyManager" />
 		        </property>
