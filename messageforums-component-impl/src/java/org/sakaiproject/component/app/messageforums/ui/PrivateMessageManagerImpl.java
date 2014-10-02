@@ -151,7 +151,7 @@ public class PrivateMessageManagerImpl extends HibernateDaoSupport implements
 
   
   /**
-   * @see org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager#initializePrivateMessageArea(org.sakaiproject.api.app.messageforums.Area)
+   * @see org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager#initializePrivateMessageArea(org.sakaiproject.api.app.messageforums.Area, java.util.List)
    */
   
   
@@ -467,7 +467,8 @@ public class PrivateMessageManagerImpl extends HibernateDaoSupport implements
 
   /**
    * Return Topic based on uuid 
-   * @see org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager#getTopicByIdWithMessages(java.lang.Long)
+   * @see org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager#getTopicByUuid(String)
+   *
    */
   public Topic getTopicByUuid(final String topicUuid)
   {
@@ -786,7 +787,7 @@ public class PrivateMessageManagerImpl extends HibernateDaoSupport implements
 
 
     /**
-   * @see org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager#findMessageCount(java.lang.String)
+   * @see org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager#findMessageCount(String, java.util.List)
    */
   public int findMessageCount(String typeUuid, List aggregateList)
   {    
@@ -821,7 +822,7 @@ public class PrivateMessageManagerImpl extends HibernateDaoSupport implements
   }
   
   /**
-   * @see org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager#findUnreadMessageCount(java.lang.String)
+   * @see org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager#findUnreadMessageCount(String, java.util.List)
    */
   public int findUnreadMessageCount(String typeUuid, List aggregateList)
   {    
@@ -1044,7 +1045,7 @@ public class PrivateMessageManagerImpl extends HibernateDaoSupport implements
 	}
 
   /**
-   * @see org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager#sendPrivateMessage(org.sakaiproject.api.app.messageforums.PrivateMessage, java.util.Set, boolean)
+   * @see org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager#sendPrivateMessage(org.sakaiproject.api.app.messageforums.PrivateMessage, java.util.Map, boolean)
    */
   public void sendPrivateMessage(PrivateMessage message, Map<User, Boolean> recipients, boolean asEmail)
   {
