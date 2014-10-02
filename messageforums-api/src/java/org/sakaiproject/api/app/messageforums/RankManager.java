@@ -22,6 +22,10 @@ package org.sakaiproject.api.app.messageforums;
 
 import java.util.List;
 
+/**
+ * The rank manager allows users to get a rank within a site, this is displayed to other users within the site.
+ * The rank can either be assigned within a site or by hitting a critera.
+ */
 public interface RankManager {
     /**
      * Get all ranks for the site
