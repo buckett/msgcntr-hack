@@ -67,12 +67,6 @@ public interface MessageForumsMessageManager {
 
     public boolean isMessageReadForUser(Long topicId, Long messageId);
 
-    public UnreadStatus findUnreadStatus(Long topicId, Long messageId);
-    
-    public UnreadStatus findUnreadStatusByUserId(Long topicId, Long messageId, String userId);
-
-    public void deleteUnreadStatus(Long topicId, Long messageId);
-
     public int findMessageCountByTopicId(Long topicId);
     public List<Object[]> findMessageCountByForumId(Long forumId);
     
