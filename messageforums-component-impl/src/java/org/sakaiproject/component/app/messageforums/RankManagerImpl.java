@@ -261,7 +261,7 @@ public class RankManagerImpl extends HibernateDaoSupport implements RankManager 
             attach.setModified(new Date());
             attach.setAttachmentId(attachId);
             attach.setAttachmentName(name);
-			attachmentService.initalise(attach);
+			attachmentService.initialise(attach);
             getHibernateTemplate().saveOrUpdate(attach);
 
             return attach;

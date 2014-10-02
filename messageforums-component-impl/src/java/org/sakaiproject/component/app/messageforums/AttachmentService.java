@@ -36,7 +36,7 @@ public class AttachmentService {
 	public void setUserDirectoryService(UserDirectoryService userDirectoryService) {
 		this.userDirectoryService = userDirectoryService;
 	}
-	
+
 	public String getAttachmentRelativeUrl(String id) {
 		try
 		{
@@ -82,7 +82,8 @@ public class AttachmentService {
 
 	}
 
-	public void initalise(RankImage attach) throws IdUnusedException, TypeException, PermissionException, UserNotDefinedException {
+	// TODO This should hide the Sakai exceptions
+	public void initialise(RankImage attach) throws IdUnusedException, TypeException, PermissionException, UserNotDefinedException {
 
 		ContentResource cr = contentHostingService.getResource(attach.getAttachmentId());
 
