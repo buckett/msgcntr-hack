@@ -239,6 +239,7 @@
 	<bean id="org.sakaiproject.component.app.messageforums.AttachmentService"
 			class="org.sakaiproject.component.app.messageforums.AttachmentService">
 		<property name="contentHostingService" ref="org.sakaiproject.content.api.ContentHostingService"/>
+		<property name="userDirectoryService" ref="org.sakaiproject.user.api.UserDirectoryService"/>
 	</bean>
     
     <bean id="org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
