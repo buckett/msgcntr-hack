@@ -28,6 +28,15 @@ public class AttachmentService {
 	private ContentHostingService contentHostingService;
 	private UserDirectoryService userDirectoryService;
 
+
+	public void setContentHostingService(ContentHostingService contentHostingService) {
+		this.contentHostingService = contentHostingService;
+	}
+
+	public void setUserDirectoryService(UserDirectoryService userDirectoryService) {
+		this.userDirectoryService = userDirectoryService;
+	}
+	
 	public String getAttachmentRelativeUrl(String id) {
 		try
 		{
@@ -104,5 +113,6 @@ public class AttachmentService {
 		String finalUrl = leftOfAttachment.concat(Validator.escapeUrl(rightOfAttachment));
 		return finalUrl;
 	}
+
 }
 
