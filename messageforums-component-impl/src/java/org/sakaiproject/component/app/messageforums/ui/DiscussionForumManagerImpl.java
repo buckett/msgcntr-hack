@@ -55,7 +55,6 @@ import org.sakaiproject.component.app.messageforums.dao.hibernate.ActorPermissio
 import org.sakaiproject.component.app.messageforums.dao.hibernate.DBMembershipItemImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.MessageForumsUserImpl;
 import org.sakaiproject.component.cover.ServerConfigurationService;
-import org.sakaiproject.entitybroker.EntityBroker;
 import org.sakaiproject.event.cover.EventTrackingService;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.memory.api.Cache;
@@ -94,7 +93,6 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
   private Map courseMemberMap = null;
   private boolean usingHelper = false; // just a flag until moved to database from helper
   private AttachmentService attachmentService;
-  private EntityBroker entityBroker;
   private MemoryService memoryService;
   private Cache allowedFunctionsCache;
   
@@ -105,10 +103,6 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
      LOG.info("init()");
 	  // So crazy that the authz service is re-implemented.
      allowedFunctionsCache = memoryService.newCache("org.sakaiproject.component.app.messageforums.ui.DiscussionForumManagerImpl.allowedFunctionsCache");
-  }
-  
-  public void setEntityBroker(EntityBroker entityBroker) {
-	  this.entityBroker = entityBroker;
   }
 
 	public void setAttachmentService(AttachmentService attachmentService) {
