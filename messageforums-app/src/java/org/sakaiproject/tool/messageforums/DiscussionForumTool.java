@@ -3350,10 +3350,10 @@ public class DiscussionForumTool
     				decoTopic.addMessage(decoMsg);
     			}
 				if (LOG.isDebugEnabled()) LOG.debug("SETRANK calling getSelectedMessage, we can set Rank here");
-				String userEid = decoMsg.getMessage().getCreatedBy();
-				Rank thisrank = this.getAuthorRank(userEid);
+				String userId = decoMsg.getMessage().getCreatedBy();
+				Rank thisrank = this.getAuthorRank(userId);
 				decoMsg.setAuthorRank(thisrank);
-				decoMsg.setAuthorPostCount(userEid);
+				decoMsg.setAuthorPostCount(userId);
     		}
     	}
     }
@@ -7994,10 +7994,10 @@ public class DiscussionForumTool
 		 selectedMessage.setUserCanEmail(isInstructor() || isSectionTA());
 
 		 // Set Rank for selectedMessage.
-		 String userEid = message.getCreatedBy();
-		 Rank thisrank = this.getAuthorRank(userEid);
+		 String userid = message.getCreatedBy();
+		 Rank thisrank = this.getAuthorRank(userid);
 		 selectedMessage.setAuthorRank(thisrank);
-		 selectedMessage.setAuthorPostCount(userEid);
+		 selectedMessage.setAuthorPostCount(userid);
 
 	 }
 	 
@@ -9787,12 +9787,12 @@ public class DiscussionForumTool
 
 	private Rank authorRank;
 
-	public Rank getAuthorRank(String userEid) {
+	public Rank getAuthorRank(String userId) {
 		// if both types of ranks exist for the same user, use the "Special rank assigned to selected site member(s)" type first.
 		Rank currRank = null;
-		currRank = findRankByUser(userEid);
+		currRank = findRankByUser(userId);
 		if (currRank == null) {
-			int authorCount = messageManager.findAuthoredMessageCountForStudent(userEid);
+			int authorCount = messageManager.findAuthoredMessageCountForStudent(userId);
 			currRank = findRankByMinPost(authorCount);
 		}
 		return currRank;
@@ -9818,9 +9818,9 @@ public class DiscussionForumTool
 		return returnRank;
 	}
 
-	private Rank findRankByUser(String userEid) {
+	private Rank findRankByUser(String userId) {
 		Rank returnRank = null;
-		List sortedranks = rankManager.findRanksByContextIdUserId(getSiteId(), userEid);
+		List sortedranks = rankManager.findRanksByContextIdUserId(getSiteId(), userId);
 		if (sortedranks != null && !sortedranks.isEmpty()) {
 			// if more than one result, pick the first one.
 			returnRank = (Rank) sortedranks.get(0);
