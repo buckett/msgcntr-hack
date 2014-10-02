@@ -52,6 +52,7 @@ import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
 import org.sakaiproject.util.ResourceLoader;
 
+// Loads of use of current placement in here.
 public class MembershipManagerImpl implements MembershipManager{
 
   private static final Log LOG = LogFactory.getLog(MembershipManagerImpl.class);

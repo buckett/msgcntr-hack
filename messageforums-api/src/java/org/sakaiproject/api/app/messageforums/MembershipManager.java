@@ -34,7 +34,7 @@ public interface MembershipManager {
    * view (ie they have privacy status hidden and the current user does not
    * have privileges to view hidden users)
    * To ignore hidden groups, pass in a null value
-   * @param filterFerpa
+   * @param filterFerpa Always looks to be true, so what's the point?
    * @param hiddenGroups
    * @return map of members
    */
