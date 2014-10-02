@@ -59,7 +59,6 @@ import org.sakaiproject.component.app.messageforums.dao.hibernate.PrivateMessage
 import org.sakaiproject.component.app.messageforums.dao.hibernate.UnreadStatusImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.Util;
 import org.sakaiproject.component.app.messageforums.exception.LockedException;
-import org.sakaiproject.content.api.ContentHostingService;
 import org.sakaiproject.event.api.EventTrackingService;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.id.api.IdManager;
@@ -106,7 +105,7 @@ public class MessageForumsMessageManagerImpl extends HibernateDaoSupport impleme
 
     private EventTrackingService eventTrackingService;
     
-    private ContentHostingService contentHostingService;
+    private AttachmentService attachmentService;
 
     public void init() {
        LOG.info("init()");
@@ -145,8 +144,8 @@ public class MessageForumsMessageManagerImpl extends HibernateDaoSupport impleme
         return sessionManager;
     }
     
-    public void setContentHostingService(ContentHostingService contentHostingService) {
-		this.contentHostingService = contentHostingService;
+    public void setAttachmentService(AttachmentService attachmentService) {
+		this.attachmentService = attachmentService;
 	}
  
     /**
@@ -1703,28 +1702,11 @@ public class MessageForumsMessageManagerImpl extends HibernateDaoSupport impleme
     
   public String getAttachmentUrl(String id)
   {
-  	try
-  	{
-		return contentHostingService.getResource(id).getUrl(false);
-  	}
-  	catch(Exception e)
-  	{
-  		LOG.error("MessageForumsMessageManagerImpl.getAttachmentUrl" + e, e);
-  	}
-  	return null;
+  	return attachmentService.getAttachmentUrl(id);
   }
   
   public String getAttachmentRelativeUrl(String id) {
-      try
-      {
-          return contentHostingService.getResource(id).getUrl(true);
-      }
-      catch(Exception e)
-      {
-          LOG.error("MessageForumsMessageManagerImpl.getAttachmentUrl" + e, e);
-      }
-      return null;
-
+		return attachmentService.getAttachmentRelativeUrl(id);
   }
 
 	/**

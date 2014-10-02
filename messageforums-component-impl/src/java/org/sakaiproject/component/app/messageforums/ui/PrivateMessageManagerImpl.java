@@ -59,12 +59,11 @@ import org.sakaiproject.api.app.messageforums.UniqueArrayList;
 import org.sakaiproject.api.app.messageforums.cover.SynopticMsgcntrManagerCover;
 import org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager;
 import org.sakaiproject.authz.cover.SecurityService;
+import org.sakaiproject.component.app.messageforums.AttachmentService;
 import org.sakaiproject.component.app.messageforums.TestUtil;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.PrivateMessageImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.PrivateMessageRecipientImpl;
 import org.sakaiproject.component.cover.ServerConfigurationService;
-import org.sakaiproject.content.api.ContentHostingService;
-import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.email.api.EmailService;
 import org.sakaiproject.event.cover.EventTrackingService;
 import org.sakaiproject.exception.IdUnusedException;
@@ -104,7 +103,7 @@ public class PrivateMessageManagerImpl extends HibernateDaoSupport implements
   private IdManager idManager;
   private SessionManager sessionManager;  
   private EmailService emailService;
-  private ContentHostingService contentHostingService;
+  private AttachmentService attachmentService;
   
   
   private static final String MESSAGES_TITLE = "pvt_message_nav";// Mensajes-->Messages/need to be modified to support internationalization
@@ -126,10 +125,9 @@ public class PrivateMessageManagerImpl extends HibernateDaoSupport implements
     ;
   }
   
-  public void setContentHostingService(ContentHostingService contentHostingService) {
-		this.contentHostingService = contentHostingService;
+ 	public void setAttachmentService(AttachmentService attachmentService) {
+		this.attachmentService = attachmentService;
 	}
-
   /**
    * @see org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager#getPrivateMessageArea()
    */
@@ -312,36 +310,13 @@ public class PrivateMessageManagerImpl extends HibernateDaoSupport implements
 
       attach.setAttachmentName(name);
 
-      ContentResource cr = contentHostingService.getResource(attachId);
-      attach.setAttachmentSize((Long.valueOf(cr.getContentLength())).toString());
-      attach.setCreatedBy(cr.getProperties().getProperty(
-          cr.getProperties().getNamePropCreator()));
-      attach.setModifiedBy(cr.getProperties().getProperty(
-          cr.getProperties().getNamePropModifiedBy()));
-      attach.setAttachmentType(cr.getContentType());
-      String tempString = cr.getUrl();
-      String newString = "";
-      char[] oneChar = new char[1];
-      for (int i = 0; i < tempString.length(); i++)
-      {
-        if (tempString.charAt(i) != ' ')
-        {
-          oneChar[0] = tempString.charAt(i);
-          String concatString = new String(oneChar);
-          newString = newString.concat(concatString);
-        }
-        else
-        {
-          newString = newString.concat("%20");
-        }
-      }
-      //tempString.replaceAll(" ", "%20");
+		attachmentService.initialise(attach);
 
       return attach;
     }
     catch (Exception e)
     {
-      e.printStackTrace();
+		LOG.warn("Failed to find attachment: "+ attachId, e);
       return null;
     }
   }

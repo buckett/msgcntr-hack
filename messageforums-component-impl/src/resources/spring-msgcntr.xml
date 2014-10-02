@@ -223,8 +223,8 @@
 		        <property name="eventTrackingService">
         		    <ref bean="org.sakaiproject.event.api.EventTrackingService"/>
 		        </property>
-		        <property name="contentHostingService">
-        		    <ref bean="org.sakaiproject.content.api.ContentHostingService"/>
+		        <property name="attachmentService">
+        		    <ref bean="org.sakaiproject.component.app.messageforums.AttachmentService"/>
 		        </property>
             </bean>            
         </property>
@@ -234,6 +234,12 @@
             </props>
         </property> 
     </bean>
+
+	<!-- This is just a wrapper around the operations needed to handling attachments -->
+	<bean id="org.sakaiproject.component.app.messageforums.AttachmentService"
+			class="org.sakaiproject.component.app.messageforums.AttachmentService">
+		<property name="contentHostingService" ref="org.sakaiproject.content.api.ContentHostingService"/>
+	</bean>
     
     <bean id="org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
         <property name="transactionManager">
@@ -265,8 +271,8 @@
 		        <property name="emailService">
         		    <ref bean="org.sakaiproject.email.api.EmailService"/>
 		        </property>			 		        
-		        <property name="contentHostingService">
-        		    <ref bean="org.sakaiproject.content.api.ContentHostingService"/>
+		        <property name="attachmentService">
+        		    <ref bean="org.sakaiproject.component.app.messageforums.AttachmentService"/>
 		        </property>
             </bean>           
         </property>
@@ -319,9 +325,9 @@
                  <property name="permissionLevelManager">
 		            <ref bean="org.sakaiproject.api.app.messageforums.PermissionLevelManager"/>
         		 </property>
-        		 <property name="contentHostingService">
-        		    <ref bean="org.sakaiproject.content.api.ContentHostingService"/>
-		        </property>
+				<property name="attachmentService">
+					<ref bean="org.sakaiproject.component.app.messageforums.AttachmentService"/>
+				</property>
 		        <property name="memoryService" ref="org.sakaiproject.memory.api.MemoryService"/>
             </bean>           
         </property>

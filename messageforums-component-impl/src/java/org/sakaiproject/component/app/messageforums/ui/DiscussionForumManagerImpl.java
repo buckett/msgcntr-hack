@@ -50,13 +50,11 @@ import org.sakaiproject.authz.api.Member;
 import org.sakaiproject.authz.api.Role;
 import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.authz.cover.AuthzGroupService;
-import org.sakaiproject.component.app.messageforums.MembershipItem;
+import org.sakaiproject.component.app.messageforums.AttachmentService;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.ActorPermissionsImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.DBMembershipItemImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.MessageForumsUserImpl;
 import org.sakaiproject.component.cover.ServerConfigurationService;
-import org.sakaiproject.content.api.ContentHostingService;
-import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.entitybroker.EntityBroker;
 import org.sakaiproject.event.cover.EventTrackingService;
 import org.sakaiproject.exception.IdUnusedException;
@@ -95,7 +93,7 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
   private PermissionLevelManager permissionLevelManager;
   private Map courseMemberMap = null;
   private boolean usingHelper = false; // just a flag until moved to database from helper
-  private ContentHostingService contentHostingService;
+  private AttachmentService attachmentService;
   private EntityBroker entityBroker;
   private MemoryService memoryService;
   private Cache allowedFunctionsCache;
@@ -112,12 +110,12 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
   public void setEntityBroker(EntityBroker entityBroker) {
 	  this.entityBroker = entityBroker;
   }
-  
-  public void setContentHostingService(ContentHostingService contentHostingService) {
-		this.contentHostingService = contentHostingService;
+
+	public void setAttachmentService(AttachmentService attachmentService) {
+		this.attachmentService = attachmentService;
 	}
 
-  public List searchTopicMessages(Long topicId, String searchText)
+	public List searchTopicMessages(Long topicId, String searchText)
   {
     return forumManager.searchTopicMessages(topicId, searchText);
   }
@@ -1559,19 +1557,13 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
 
       attach.setAttachmentName(name);
 
-      ContentResource cr = contentHostingService.getResource(attachId);
-      attach.setAttachmentSize((Long.valueOf(cr.getContentLength())).toString());
-      attach.setCreatedBy(cr.getProperties().getProperty(
-          cr.getProperties().getNamePropCreator()));
-      attach.setModifiedBy(cr.getProperties().getProperty(
-          cr.getProperties().getNamePropModifiedBy()));
-      attach.setAttachmentType(cr.getContentType());
+      attachmentService.initialise(attach);
 
       return attach;
     }
     catch (Exception e)
     {
-      e.printStackTrace();
+		LOG.warn("Failed to create attachment: "+ attachId, e);
       return null;
     }
   }

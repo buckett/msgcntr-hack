@@ -35,7 +35,6 @@ import org.sakaiproject.api.app.messageforums.RankImage;
 import org.sakaiproject.api.app.messageforums.RankManager;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.RankImageImpl;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.RankImpl;
-import org.sakaiproject.content.api.ContentHostingService;
 import org.sakaiproject.event.api.EventTrackingService;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.exception.InUseException;
@@ -50,7 +49,6 @@ import org.sakaiproject.user.api.UserNotDefinedException;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.user.api.User;
 import org.sakaiproject.util.Validator;
 
@@ -70,7 +68,7 @@ public class RankManagerImpl extends HibernateDaoSupport implements RankManager 
 
     private EventTrackingService eventTrackingService;
 
-    private ContentHostingService contentHostingService;
+    private AttachmentService attachmentService;
 
     public void init() {
         LOG.info("init()");
@@ -84,11 +82,11 @@ public class RankManagerImpl extends HibernateDaoSupport implements RankManager 
         this.eventTrackingService = eventTrackingService;
     }
 
-    public void setContentHostingService(ContentHostingService contentHostingService) {
-        this.contentHostingService = contentHostingService;
-    }
+	public void setAttachmentService(AttachmentService attachmentService) {
+		this.attachmentService = attachmentService;
+	}
 
-    public void setUserDirectoryService(UserDirectoryService userDirectoryService) {
+	public void setUserDirectoryService(UserDirectoryService userDirectoryService) {
         this.userDirectoryService = userDirectoryService;
     }
 
@@ -220,9 +218,7 @@ public class RankManagerImpl extends HibernateDaoSupport implements RankManager 
 
                     if (returnedAttach.getAttachmentId().toLowerCase().startsWith("/attachment"))
                         try {
-                            contentHostingService.removeResource(returnedAttach.getAttachmentId());
-                            // returnedAttach.setSyllabus(null);
-                            // session.saveOrUpdate(returnedAttach);
+                            attachmentService.remove(returnedAttach.getAttachmentId());
                             session.delete(returnedAttach);
                         } catch (PermissionException e) {
                             e.printStackTrace();
@@ -266,21 +262,9 @@ public class RankManagerImpl extends HibernateDaoSupport implements RankManager 
             RankImage attach = new RankImageImpl();
             attach.setCreated(new Date());
             attach.setModified(new Date());
-
-            ContentResource cr = contentHostingService.getResource(attachId);
-
-            User creator = userDirectoryService.getUser(cr.getProperties().getProperty(cr.getProperties().getNamePropCreator()));
-            attach.setCreatedBy(creator.getDisplayName());
-            User modifier = userDirectoryService.getUser(cr.getProperties().getProperty(cr.getProperties().getNamePropModifiedBy()));
-            attach.setModifiedBy(modifier.getDisplayName());
-
-            attach.setAttachmentSize((Long.valueOf(cr.getContentLength())).toString());
             attach.setAttachmentId(attachId);
             attach.setAttachmentName(name);
-            attach.setAttachmentType(cr.getContentType());
-            String tempString = cr.getUrl();
-            attach.setAttachmentUrl(resourceUrlEscaping(tempString));
-
+			attachmentService.initalise(attach);
             getHibernateTemplate().saveOrUpdate(attach);
 
             return attach;
@@ -310,18 +294,6 @@ public class RankManagerImpl extends HibernateDaoSupport implements RankManager 
         getHibernateTemplate().execute(hcb);
     }
 
-    /**
-     * Apparently, the ContentResource object gives a url, but it doesn't escape any special characters. So, need to do some
-     * escaping just for the name portion of the url. So, find the string "attachment" and escape anything after it.
-     */
-    private String resourceUrlEscaping(String url) {
-        int attIndex = url.indexOf("attachment");
-        String leftOfAttachment = url.substring(0, attIndex);
-        String rightOfAttachment = url.substring(attIndex);
-
-        String finalUrl = leftOfAttachment.concat(Validator.escapeUrl(rightOfAttachment));
-        return finalUrl;
-    }
 
     public List findRanksByContextIdUserId(final String contextId, final String userid) {
         if (LOG.isDebugEnabled()) {
