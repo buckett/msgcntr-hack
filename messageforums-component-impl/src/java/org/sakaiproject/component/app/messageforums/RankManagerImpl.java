@@ -20,10 +20,6 @@
  **********************************************************************************/
 package org.sakaiproject.component.app.messageforums;
 
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
@@ -49,8 +45,9 @@ import org.sakaiproject.user.api.UserNotDefinedException;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import org.sakaiproject.user.api.User;
-import org.sakaiproject.util.Validator;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
 
 public class RankManagerImpl extends HibernateDaoSupport implements RankManager {
     private static final Log LOG = LogFactory.getLog(RankManagerImpl.class);
