@@ -50,12 +50,19 @@ Lots of the classes are far too large.
 DuscussionForumManagerImpl has it's own permissions cache because it didn't end up using Sakai security.
 Should have strict DAO?
 
+RankManager stores Ranks against User EIDs rather than IDs, should have a quartz jobs to fix this up properly, but 
+at the moment it just asks the UDS to translate.
+
 DB Changes
 ----------
 These columns can all go as  it's a set rather than an list now.
 MFR_AP_ACCESSORS_T.accessors_index_col 
 MFR_AP_MODERATORS_T.moderators_index_col
 MFR_AP_CONTRIBUTORS_T.contributors_index_col
+
+This looks unused
+
+DROP TABLE MFR_CONTROL_PERMISSIONS_T;
 
 MFR_ATTACHMENT_T.url
 
