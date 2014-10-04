@@ -21,6 +21,8 @@
                 <value>org/sakaiproject/component/app/messageforums/dao/hibernate/MessageMoveHistory.hbm.xml</value>
                 <value>org/sakaiproject/component/app/messageforums/dao/hibernate/Rank.hbm.xml</value>                  
                 <value>org/sakaiproject/component/app/messageforums/dao/hibernate/RankImage.hbm.xml</value>
+				<!-- The Type API -->
+				<value>org/sakaiproject/component/common/type/TypeImpl.hbm.xml</value>
             </list>
         </property>
     </bean>
@@ -633,5 +635,20 @@
             </props>
         </property> 
     </bean>
+
+	<!-- The type manager. -->
+	<bean id="org.sakaiproject.api.common.type.TypeManager"
+		  class="org.sakaiproject.component.common.manager.TypeManagerImpl">
+		<property name="persistableHelper">
+			<bean class="org.sakaiproject.component.common.manager.PersistableHelper">
+				<property name="sessionManager">
+					<ref bean="org.sakaiproject.tool.api.SessionManager"/>
+				</property>
+			</bean>
+		</property>
+		<property name="sessionFactory">
+			<ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
+		</property>
+	</bean>
  
 </beans>
