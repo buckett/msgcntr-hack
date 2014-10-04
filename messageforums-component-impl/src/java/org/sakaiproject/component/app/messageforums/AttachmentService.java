@@ -6,14 +6,15 @@ import org.sakaiproject.api.app.messageforums.Attachment;
 import org.sakaiproject.api.app.messageforums.RankImage;
 import org.sakaiproject.content.api.ContentHostingService;
 import org.sakaiproject.content.api.ContentResource;
-import org.sakaiproject.exception.IdUnusedException;
-import org.sakaiproject.exception.InUseException;
-import org.sakaiproject.exception.PermissionException;
-import org.sakaiproject.exception.TypeException;
+import org.sakaiproject.entity.api.ResourceProperties;
+import org.sakaiproject.exception.*;
+import org.sakaiproject.tool.api.ToolManager;
 import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
 import org.sakaiproject.util.Validator;
+
+import javax.annotation.Resource;
 
 /**
  * This handles attachments.
@@ -25,6 +26,7 @@ public class AttachmentService {
 
 	private final Log log = LogFactory.getLog(AttachmentService.class);
 
+	private ToolManager toolManager;
 	private ContentHostingService contentHostingService;
 	private UserDirectoryService userDirectoryService;
 
@@ -35,6 +37,10 @@ public class AttachmentService {
 
 	public void setUserDirectoryService(UserDirectoryService userDirectoryService) {
 		this.userDirectoryService = userDirectoryService;
+	}
+
+	public void setToolManager(ToolManager toolManager) {
+		this.toolManager = toolManager;
 	}
 
 	public String getAttachmentRelativeUrl(String id) {
@@ -64,6 +70,8 @@ public class AttachmentService {
 	}
 
 	// TODO This should hide the Sakai exception
+	// There is some other code around that uses the reference that gets passed back in the session to get all
+	// the details about the attachment.
 	public void initialise(Attachment attach) throws IdUnusedException, TypeException, PermissionException {
 		// This is used to copy the data from content hosting into the attachment object when creating a
 		// new attachment. The data should be in the attachment object so we don't have to go back to content
@@ -73,6 +81,8 @@ public class AttachmentService {
 			throw new IllegalArgumentException("Attachment doesn't have an ID: "+ attach);
 		}
 		ContentResource cr = contentHostingService.getResource(attachId);
+
+		attach.setAttachmentName(cr.getProperties().getProperty(ResourceProperties.PROP_DISPLAY_NAME));
 		attach.setAttachmentSize((Long.valueOf(cr.getContentLength())).toString());
 		attach.setCreatedBy(cr.getProperties().getProperty(
 				cr.getProperties().getNamePropCreator()));
@@ -101,6 +111,21 @@ public class AttachmentService {
 		contentHostingService.removeResource(attachmentId);
 	}
 
+	public String duplicateAttachment(String attachmentId, String siteId) {
+		try {
+			ContentResource oldAttachment = contentHostingService.getResource(attachmentId);
+			String title = toolManager.getTool("sakai.forums").getTitle();
+			ContentResource attachment = contentHostingService.addAttachmentResource(
+					oldAttachment.getProperties().getProperty(ResourceProperties.PROP_DISPLAY_NAME)
+					, siteId, title, oldAttachment.getContentType(),
+					oldAttachment.getContent(), oldAttachment.getProperties());
+			return attachment.getId();
+		} catch (SakaiException se) {
+			// TODO Better exception?
+			throw new RuntimeException("Failed to duplicate attachment: "+ attachmentId, se);
+		}
+
+	}
 
 	/**
 	 * Apparently, the ContentResource object gives a url, but it doesn't escape any special characters. So, need to do some

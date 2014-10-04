@@ -300,17 +300,14 @@ public class PrivateMessageManagerImpl extends HibernateDaoSupport implements
   }
 
   //Attachment
-  public Attachment createPvtMsgAttachment(String attachId, String name)
+	@Override
+  public Attachment createPvtMsgAttachment(String attachId)
   {
     try
     {
       Attachment attach = messageManager.createAttachment();
-
       attach.setAttachmentId(attachId);
-
-      attach.setAttachmentName(name);
-
-		attachmentService.initialise(attach);
+      attachmentService.initialise(attach);
 
       return attach;
     }

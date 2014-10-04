@@ -20,37 +20,25 @@
  **********************************************************************************/
 package org.sakaiproject.component.app.messageforums;
 
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.Iterator;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.*;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.collection.PersistentSet;
 import org.hibernate.type.StandardBasicTypes;
 import org.sakaiproject.api.app.messageforums.Area;
 import org.sakaiproject.api.app.messageforums.AreaManager;
 import org.sakaiproject.api.app.messageforums.BaseForum;
-import org.sakaiproject.api.app.messageforums.DiscussionForum;
-import org.sakaiproject.api.app.messageforums.DiscussionTopic;
-import org.sakaiproject.api.app.messageforums.ForumScheduleNotification;
-import org.sakaiproject.api.app.messageforums.MessageForumsForumManager;
 import org.sakaiproject.api.app.messageforums.MessageForumsTypeManager;
-import org.sakaiproject.api.app.messageforums.cover.ForumScheduleNotificationCover;
-import org.sakaiproject.api.app.messageforums.cover.SynopticMsgcntrManagerCover;
 import org.sakaiproject.component.api.ServerConfigurationService;
 import org.sakaiproject.component.app.messageforums.dao.hibernate.AreaImpl;
-import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.id.api.IdManager;
-import org.sakaiproject.site.api.Site;
-import org.sakaiproject.site.api.SiteService;
-import org.sakaiproject.tool.api.Placement;
 import org.sakaiproject.tool.api.SessionManager;
-import org.sakaiproject.tool.cover.ToolManager;
 import org.sakaiproject.util.ResourceLoader;
-import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
+import java.util.Date;
+import java.util.Iterator;
 
 /**
  * This is a DAO for Area.
@@ -76,11 +64,11 @@ public class AreaManagerImpl implements AreaManager {
 
 	private IdManager idManager;
 
-    private SessionManager sessionManager;
-
     private MessageForumsTypeManager typeManager;
 
     private ServerConfigurationService serverConfigurationService;
+
+	private SakaiProxy sakaiProxy;
     
     /**
      * sakai.property for setting the default Messages tool option for sending a copy of a message
@@ -102,10 +90,6 @@ public class AreaManagerImpl implements AreaManager {
 
     public void setTypeManager(MessageForumsTypeManager typeManager) {
         this.typeManager = typeManager;
-    }
-
-    public void setSessionManager(SessionManager sessionManager) {
-        this.sessionManager = sessionManager;
     }
 
     public void setIdManager(IdManager idManager) {
@@ -249,8 +233,7 @@ public class AreaManagerImpl implements AreaManager {
         if (TestUtil.isRunningTests()) {
             return "test-context";
         }
-        Placement placement = ToolManager.getCurrentPlacement();
-        String presentSiteId = placement.getContext();
+        String presentSiteId = sakaiProxy.getCurrentSiteId();
         return presentSiteId;
     }
 
@@ -276,7 +259,6 @@ public class AreaManagerImpl implements AreaManager {
     }
 
     private String getCurrentUser() {
-    	String user = sessionManager.getCurrentSessionUserId();
-  		return (user == null) ? "test-user" : user;
+    	return sakaiProxy.getCurrentUserId();
     }
 }

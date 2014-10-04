@@ -150,16 +150,16 @@
                 </property>
 				<property name="idManager">
 					<ref bean="org.sakaiproject.id.api.IdManager" />
-				</property>				 				
-				<property name="sessionManager">
-					<ref bean="org.sakaiproject.tool.api.SessionManager" />
-				</property>				 								
+				</property>
 		        <property name="typeManager">
         		    <ref bean="org.sakaiproject.api.app.messageforums.MessageForumsTypeManager"/>
 		        </property>
 		        <property name="serverConfigurationService">
 		        	<ref bean="org.sakaiproject.component.api.ServerConfigurationService" />
-		        </property>     
+		        </property>
+				<property name="sakaiProxy">
+					<ref bean="org.sakaiproject.component.app.messageforums.SakaiProxy"/>
+				</property>
             </bean>            
         </property>
          <property name="transactionAttributes">

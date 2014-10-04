@@ -1540,16 +1540,14 @@ public class DiscussionForumManagerImpl implements DiscussionForumManager {
     return membershipItem;
   }
   
-//Attachment
-  public Attachment createDFAttachment(String attachId, String name)
+  @Override
+  public Attachment createDFAttachment(String attachId)
   {
     try
     {
       Attachment attach = messageManager.createAttachment();
 
       attach.setAttachmentId(attachId);
-
-      attach.setAttachmentName(name);
 
       attachmentService.initialise(attach);
 

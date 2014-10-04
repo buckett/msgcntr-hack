@@ -69,7 +69,6 @@ import org.sakaiproject.service.gradebook.shared.GradebookService;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
-import org.sakaiproject.tool.cover.ToolManager;
 import org.sakaiproject.util.ResourceLoader;
 import org.sakaiproject.util.Validator;
 import org.sakaiproject.util.cover.LinkMigrationHelper;
@@ -79,6 +78,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * This is mainly a implementation of the Sakai Entity services.
+ */
 public class DiscussionForumServiceImpl  implements DiscussionForumService, EntityTransferrer, EntityTransferrerRefMigrator
 {
 	private static final String MESSAGEFORUM = "messageforum";
@@ -123,7 +125,11 @@ public class DiscussionForumServiceImpl  implements DiscussionForumService, Enti
 	private MessageForumsTypeManager typeManager;
 	private DiscussionForumManager dfManager;
 	private PermissionLevelManager permissionManager;
-	private ContentHostingService contentHostingService;
+	private SakaiProxy sakaiProxy;
+
+	public void setSakaiProxy(SakaiProxy sakaiProxy) {
+		this.sakaiProxy = sakaiProxy;
+	}
 
 	public void setSiteService(SiteService siteService) {
 		this.siteService = siteService;
@@ -135,9 +141,11 @@ public class DiscussionForumServiceImpl  implements DiscussionForumService, Enti
 
 	private SiteService siteService;
 	private ServerConfigurationService serverConfigurationService;
-	
-	public void setContentHostingService(ContentHostingService contentHostingService) {
-		this.contentHostingService = contentHostingService;
+
+	private AttachmentService attachmentService;
+
+	public void setAttachmentService(AttachmentService attachmentService) {
+		this.attachmentService = attachmentService;
 	}
 
 	private static final Log LOG = LogFactory.getLog(DiscussionForumService.class);
@@ -508,9 +516,8 @@ public class DiscussionForumServiceImpl  implements DiscussionForumService, Enti
 						String gradebookUid = null;
 						// if this code is called from a quartz job, like SIS, then getCurrentPlacement() will return null.
 						// so just use the fromContext which gives the site id.
-						if (ToolManager.getCurrentPlacement() != null)
-							gradebookUid = ToolManager.getCurrentPlacement().getContext();
-						else
+						gradebookUid = sakaiProxy.getCurrentSiteId();
+						if (gradebookUid == null)
 							gradebookUid = fromContext;
 
 
@@ -1113,22 +1120,11 @@ public class DiscussionForumServiceImpl  implements DiscussionForumService, Enti
 	}
 	
 	private Attachment copyAttachment(String attachmentId, String toContext) {
-		try {			
-			ContentResource oldAttachment = contentHostingService.getResource(attachmentId);
-			ContentResource attachment = contentHostingService.addAttachmentResource(
-				oldAttachment.getProperties().getProperty(
-						ResourceProperties.PROP_DISPLAY_NAME), toContext, ToolManager.getTool(
-						"sakai.forums").getTitle(), oldAttachment.getContentType(),
-						oldAttachment.getContent(), oldAttachment.getProperties());
-			Attachment thisDFAttach = dfManager.createDFAttachment(
-				attachment.getId(), 
-				attachment.getProperties().getProperty(ResourceProperties.PROP_DISPLAY_NAME));
+		try {
+			String newId = attachmentService.duplicateAttachment(attachmentId, toContext);
+			Attachment thisDFAttach = dfManager.createDFAttachment(newId);
 			return thisDFAttach;
-		} catch (IdUnusedException iue) {
-			LOG.error("Error with attachment id: " + attachmentId);
-			LOG.error(iue.getMessage(), iue);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			//e.printStackTrace();
 			LOG.error("Error with attachment id: " + attachmentId);
 			LOG.error(e.getMessage(), e);

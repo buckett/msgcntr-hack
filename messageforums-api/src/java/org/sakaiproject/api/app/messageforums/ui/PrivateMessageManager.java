@@ -176,7 +176,7 @@ public interface PrivateMessageManager {
     
     
     //Attachment
-    public Attachment createPvtMsgAttachment(String attachId, String name);
+    public Attachment createPvtMsgAttachment(String attachId);
     public Attachment getPvtMsgAttachment(final Long pvtMsgAttachId);
     
     

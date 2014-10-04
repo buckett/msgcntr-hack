@@ -333,11 +333,10 @@ public interface DiscussionForumManager
   
   /**
    * 
-   * @param attachId
-   * @param name
-   * @return
+   * @param attachId The ID of the resource in content hosting.
+   * @return The Attachment.
    */
-  public Attachment createDFAttachment(String attachId, String name);
+  public Attachment createDFAttachment(String attachId);
   
   /**
    * Get the read status of a list of messages for a given user	  

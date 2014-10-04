@@ -54,7 +54,6 @@ public class MessageForumsUserManagerImpl extends HibernateDaoSupport implements
 
   public void init() {
      LOG.info("init()");
-      ;
   }
 
   public EventTrackingService getEventTrackingService() {

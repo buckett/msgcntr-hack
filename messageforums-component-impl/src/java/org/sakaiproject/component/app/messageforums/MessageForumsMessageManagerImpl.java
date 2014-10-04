@@ -1001,20 +1001,6 @@ public class MessageForumsMessageManagerImpl extends HibernateDaoSupport impleme
         }else return null;
     }
 
-    public void deleteUnreadStatus(Long topicId, Long messageId) {
-        if (messageId == null || topicId == null) {
-            LOG.error("deleteUnreadStatus failed with topicId: " + topicId + ", messageId: " + messageId);
-            throw new IllegalArgumentException("Null Argument");
-        }
-
-        LOG.debug("deleteUnreadStatus executing with topicId: " + topicId + ", messageId: " + messageId);
-
-        UnreadStatus status = findUnreadStatus(topicId, messageId);
-        if (status != null) {
-            getHibernateTemplate().delete(status);
-        }
-    }
-
     private boolean isMessageFromForums(Message message) {
     	return message.getTopic() != null;
     }

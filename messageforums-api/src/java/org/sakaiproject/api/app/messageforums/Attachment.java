@@ -25,6 +25,9 @@ package org.sakaiproject.api.app.messageforums;
  * There isn't any attachment manager at the moment, they are linked to other objects that do have services.
  * This might change in the future as we try to keep these detached from the other objects.
  *
+ * All properties are copies from the underlying files in content hosting. Originally you could have a different
+ * name to the display name of the file in content hosting but this was never used and so has been removed.
+ *
  * @see org.sakaiproject.api.app.messageforums.Message
  * @see org.sakaiproject.api.app.messageforums.Topic
  * @see org.sakaiproject.api.app.messageforums.BaseForum - Link at the API level

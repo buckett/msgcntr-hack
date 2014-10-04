@@ -3536,7 +3536,7 @@ private   int   getNum(char letter,   String   a)
   }
   
   //////////////////////////////   ATTACHMENT PROCESSING        //////////////////////////
-  private ArrayList attachments = new ArrayList();
+  private List<DecoratedAttachment> attachments = new ArrayList();
   
   private String removeAttachId = null;
   private ArrayList prepareRemoveAttach = new ArrayList();
@@ -3545,26 +3545,20 @@ private   int   getNum(char letter,   String   a)
   private List allAttachments = new ArrayList();
 
   
-  public ArrayList getAttachments()
+  public List<DecoratedAttachment> getAttachments()
   {
     ToolSession session = SessionManager.getCurrentToolSession();
     if (session.getAttribute(FilePickerHelper.FILE_PICKER_CANCEL) == null &&
         session.getAttribute(FilePickerHelper.FILE_PICKER_ATTACHMENTS) != null) 
     {
       List refs = (List)session.getAttribute(FilePickerHelper.FILE_PICKER_ATTACHMENTS);
-      if(refs != null && refs.size()>0)
+      if(refs != null)
       {
-        Reference ref = (Reference)refs.get(0);
-        
         for(int i=0; i<refs.size(); i++)
         {
-          ref = (Reference) refs.get(i);
-          Attachment thisAttach = prtMsgManager.createPvtMsgAttachment(
-              ref.getId(), ref.getProperties().getProperty(ref.getProperties().getNamePropDisplayName()));
-          
-          //TODO - remove this as being set for test only  
-          //thisAttach.setPvtMsgAttachId(Long.valueOf(1));
-          
+          Reference ref = (Reference) refs.get(i);
+          Attachment thisAttach = prtMsgManager.createPvtMsgAttachment(ref.getId());
+
           attachments.add(new DecoratedAttachment(thisAttach));
           
         }
@@ -3575,38 +3569,13 @@ private   int   getNum(char letter,   String   a)
     
     return attachments;
   }
-  
-  public List getAllAttachments()
+
+	/**
+	 * @deprecated {@link #getAttachments()}
+	 */
+  public List<DecoratedAttachment> getAllAttachments()
   {
-    ToolSession session = SessionManager.getCurrentToolSession();
-    if (session.getAttribute(FilePickerHelper.FILE_PICKER_CANCEL) == null &&
-        session.getAttribute(FilePickerHelper.FILE_PICKER_ATTACHMENTS) != null) 
-    {
-      List refs = (List)session.getAttribute(FilePickerHelper.FILE_PICKER_ATTACHMENTS);
-      if(refs != null && refs.size()>0)
-      {
-        Reference ref = (Reference)refs.get(0);
-        
-        for(int i=0; i<refs.size(); i++)
-        {
-          ref = (Reference) refs.get(i);
-          Attachment thisAttach = prtMsgManager.createPvtMsgAttachment(
-              ref.getId(), ref.getProperties().getProperty(ref.getProperties().getNamePropDisplayName()));
-          
-          //TODO - remove this as being set for test only
-          //thisAttach.setPvtMsgAttachId(Long.valueOf(1));
-          allAttachments.add(new DecoratedAttachment(thisAttach));
-        }
-      }
-    }
-    session.removeAttribute(FilePickerHelper.FILE_PICKER_ATTACHMENTS);
-    session.removeAttribute(FilePickerHelper.FILE_PICKER_CANCEL);
-    
-//    if( allAttachments == null || (allAttachments.size()<1))
-//    {
-//      allAttachments.addAll(this.getDetailMsg().getMsg().getAttachments()) ;
-//    }
-    return allAttachments;
+		return getAttachments();
   }
   
   public void setAttachments(ArrayList attachments)

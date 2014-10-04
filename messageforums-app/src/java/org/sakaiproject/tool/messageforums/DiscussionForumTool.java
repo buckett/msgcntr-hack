@@ -3612,7 +3612,9 @@ public class DiscussionForumTool
       	for (int i = 0; i < refs.size(); i++)
       	{
       		ref = (Reference) refs.get(i);
+			// TODO this is often done in the service, here it doesn't need to load the ContentResource as the ref has it.
       		Attachment thisAttach = messageManager.createAttachment();
+			// Setting name to the displayname.
       		thisAttach.setAttachmentName(ref.getProperties().getProperty(
       				ref.getProperties().getNamePropDisplayName()));
       		thisAttach.setAttachmentSize(ref.getProperties().getProperty(
@@ -8618,8 +8620,7 @@ public class DiscussionForumTool
 		for (int topicAttach=0; topicAttach < fromTopicAttach.size(); topicAttach++) {
 			Attachment thisAttach = (Attachment)fromTopicAttach.get(topicAttach);
 			Attachment thisDFAttach = forumManager.createDFAttachment(
-					thisAttach.getAttachmentId(),
-					thisAttach.getAttachmentName());
+					thisAttach.getAttachmentId());
 			newTopic.addAttachment(thisDFAttach);
 		}
 	}
@@ -8714,8 +8715,7 @@ public class DiscussionForumTool
 			for (int topicAttach=0; topicAttach < fromForumAttach.size(); topicAttach++) {
 				Attachment thisAttach = (Attachment)fromForumAttach.get(topicAttach);
 				Attachment thisDFAttach = forumManager.createDFAttachment(
-						thisAttach.getAttachmentId(),
-						thisAttach.getAttachmentName());
+						thisAttach.getAttachmentId());
 				forum.addAttachment(thisDFAttach);
 			}
 		}
@@ -8901,8 +8901,7 @@ public class DiscussionForumTool
                 for (Iterator attachmentIterator = attachmentsTemplate.iterator(); attachmentIterator.hasNext();) {
                     DecoratedAttachment currentAttachment = (DecoratedAttachment) attachmentIterator.next();
                     Attachment thisDFAttach = forumManager.createDFAttachment(
-                            currentAttachment.getAttachment().getAttachmentId(),
-                            currentAttachment.getAttachment().getAttachmentName());
+                            currentAttachment.getAttachment().getAttachmentId());
                     attachments.add(new DecoratedAttachment(thisDFAttach));
                 }
 
