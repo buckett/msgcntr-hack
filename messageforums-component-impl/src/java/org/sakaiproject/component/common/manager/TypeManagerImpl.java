@@ -40,8 +40,6 @@ import java.sql.SQLException;
  */
 public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 {
-	private static final Log LOG = LogFactory.getLog(TypeManagerImpl.class);
-
 	private static final String ID = "id";
 
 	private static final String FINDTYPEBYID = "findTypeById";
@@ -66,36 +64,9 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 
 	private PersistableHelper persistableHelper; // dep inj
 
-	// public Type getType(final Long id)
-	// {
-	// if (LOG.isDebugEnabled())
-	// {
-	// LOG.debug("getType(Long " + id + ")");
-	// }
-	// if (id == null) throw new IllegalArgumentException();
-	//
-	// final HibernateCallback hcb = new HibernateCallback()
-	// {
-	// public Object doInHibernate(Session session) throws HibernateException,
-	// SQLException
-	// {
-	// Query q = session.getNamedQuery(FINDTYPEBYID);
-	// q.setLong(ID, id.longValue());
-	// q.setCacheable(cacheFindTypeById);
-	// return q.uniqueResult();
-	// }
-	// };
-	// Type type = (Type) getHibernateTemplate().execute(hcb);
-	// return type;
-	// }
 
 	public Type createType(String authority, String domain, String keyword, String displayName, String description)
 	{
-		if (LOG.isDebugEnabled())
-		{
-			LOG.debug("createType(String " + authority + ", String " + domain + ", String " + keyword + ", String " + displayName
-					+ ", String " + description + ")");
-		}
 		// validation
 		if (authority == null || authority.length() < 1) throw new IllegalArgumentException("authority");
 		if (domain == null || domain.length() < 1) throw new IllegalArgumentException("domain");
@@ -116,10 +87,6 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 
 	public void saveType(Type type)
 	{
-		if (LOG.isDebugEnabled())
-		{
-			LOG.debug("saveType(Type " + type + ")");
-		}
 		if (type == null) throw new IllegalArgumentException("type");
 
 		if (type instanceof TypeImpl)
@@ -136,10 +103,6 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 
 	public Type getType(final String uuid)
 	{
-		if (LOG.isDebugEnabled())
-		{
-			LOG.debug("getType(String " + uuid + ")");
-		}
 		if (uuid == null || uuid.length() < 1)
 		{
 			throw new IllegalArgumentException("uuid");
@@ -162,10 +125,6 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 
 	public Type getType(final String authority, final String domain, final String keyword)
 	{
-		if (LOG.isDebugEnabled())
-		{
-			LOG.debug("getType(String " + authority + ", String " + domain + ", String " + keyword + ")");
-		}
 		// validation
 		if (authority == null || authority.length() < 1) throw new IllegalArgumentException("authority");
 		if (domain == null || domain.length() < 1) throw new IllegalArgumentException("domain");
@@ -194,11 +153,6 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 	 */
 	public void setCacheFindTypeByTuple(boolean cacheFindTypeByTuple)
 	{
-		if (LOG.isInfoEnabled())
-		{
-			LOG.info("setCacheFindTypeByTuple(boolean " + cacheFindTypeByTuple + ")");
-		}
-
 		this.cacheFindTypeByTuple = cacheFindTypeByTuple;
 	}
 
@@ -208,11 +162,6 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 	 */
 	public void setCacheFindTypeByUuid(boolean cacheFindTypeByUuid)
 	{
-		if (LOG.isInfoEnabled())
-		{
-			LOG.info("setCacheFindTypeByUuid(boolean " + cacheFindTypeByUuid + ")");
-		}
-
 		this.cacheFindTypeByUuid = cacheFindTypeByUuid;
 	}
 
@@ -222,21 +171,11 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 	 */
 	public void setCacheFindTypeById(boolean cacheFindTypeById)
 	{
-		if (LOG.isInfoEnabled())
-		{
-			LOG.info("setCacheFindTypeById(boolean " + cacheFindTypeById + ")");
-		}
-
 		this.cacheFindTypeById = cacheFindTypeById;
 	}
 
 	public void deleteType(Type type)
 	{
-		if (LOG.isDebugEnabled())
-		{
-			LOG.debug("deleteType(Type " + type + ")");
-		}
-
 		throw new UnsupportedOperationException("Types should never be deleted!");
 	}
 
