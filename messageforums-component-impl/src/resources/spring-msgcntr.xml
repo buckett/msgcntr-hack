@@ -646,6 +646,9 @@
 				</property>
 			</bean>
 		</property>
+		<property name="idManager">
+			<ref bean="org.sakaiproject.id.api.IdManager"/>
+		</property>
 		<property name="sessionFactory">
 			<ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
 		</property>

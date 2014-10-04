@@ -21,15 +21,13 @@
 
 package org.sakaiproject.component.common.manager;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.sakaiproject.api.common.type.Type;
 import org.sakaiproject.api.common.type.TypeManager;
 import org.sakaiproject.component.common.type.TypeImpl;
-import org.sakaiproject.id.cover.IdManager;
+import org.sakaiproject.id.api.IdManager;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -40,13 +38,9 @@ import java.sql.SQLException;
  */
 public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 {
-	private static final String ID = "id";
-
-	private static final String FINDTYPEBYID = "findTypeById";
-
 	private static final String UUID = "uuid";
 
-	private static final String FINDTYPEBYUUID = "findTypeByUuid";
+	private static final String FIND_TYPE_BY_UUID = "findTypeByUuid";
 
 	private static final String AUTHORITY = "authority";
 
@@ -54,15 +48,15 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 
 	private static final String KEYWORD = "keyword";
 
-	private static final String FINDTYPEBYTUPLE = "findTypeByTuple";
+	private static final String FIND_TYPE_BY_TUPLE = "findTypeByTuple";
 
 	private boolean cacheFindTypeByTuple = true;
 
 	private boolean cacheFindTypeByUuid = true;
 
-	private boolean cacheFindTypeById = true;
-
 	private PersistableHelper persistableHelper; // dep inj
+
+	private IdManager idManager;
 
 
 	public Type createType(String authority, String domain, String keyword, String displayName, String description)
@@ -75,7 +69,7 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 
 		TypeImpl ti = new TypeImpl();
 		persistableHelper.createPersistableFields(ti);
-		ti.setUuid(IdManager.createUuid());
+		ti.setUuid(idManager.createUuid());
 		ti.setAuthority(authority);
 		ti.setDomain(domain);
 		ti.setKeyword(keyword);
@@ -97,7 +91,7 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 		}
 		else
 		{ // found external Type
-			throw new IllegalAccessError("Alternate Type implementations not supported yet.");
+			throw new IllegalArgumentException("Alternate Type implementations not supported yet.");
 		}
 	}
 
@@ -112,7 +106,7 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 		{
 			public Object doInHibernate(Session session) throws HibernateException, SQLException
 			{
-				Query q = session.getNamedQuery(FINDTYPEBYUUID);
+				Query q = session.getNamedQuery(FIND_TYPE_BY_UUID);
 				q.setString(UUID, uuid);
 				q.setCacheable(cacheFindTypeByUuid);
 				q.setCacheRegion(Type.class.getCanonicalName());
@@ -134,7 +128,7 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 		{
 			public Object doInHibernate(Session session) throws HibernateException, SQLException
 			{
-				Query q = session.getNamedQuery(FINDTYPEBYTUPLE);
+				Query q = session.getNamedQuery(FIND_TYPE_BY_TUPLE);
 				q.setString(AUTHORITY, authority);
 				q.setString(DOMAIN, domain);
 				q.setString(KEYWORD, keyword);
@@ -165,15 +159,6 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 		this.cacheFindTypeByUuid = cacheFindTypeByUuid;
 	}
 
-	/**
-	 * @param cacheFindTypeById
-	 *        The cacheFindTypeById to set.
-	 */
-	public void setCacheFindTypeById(boolean cacheFindTypeById)
-	{
-		this.cacheFindTypeById = cacheFindTypeById;
-	}
-
 	public void deleteType(Type type)
 	{
 		throw new UnsupportedOperationException("Types should never be deleted!");
@@ -188,4 +173,7 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 		this.persistableHelper = persistableHelper;
 	}
 
+	public void setIdManager(IdManager idManager) {
+		this.idManager = idManager;
+	}
 }
