@@ -42,13 +42,14 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 
 	private static final String FIND_TYPE_BY_UUID = "findTypeByUuid";
 
+	private static final String FIND_TYPE_BY_TUPLE = "findTypeByTuple";
+
 	private static final String AUTHORITY = "authority";
 
 	private static final String DOMAIN = "domain";
 
 	private static final String KEYWORD = "keyword";
 
-	private static final String FIND_TYPE_BY_TUPLE = "findTypeByTuple";
 
 	private boolean cacheFindTypeByTuple = true;
 
@@ -62,10 +63,14 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 	public Type createType(String authority, String domain, String keyword, String displayName, String description)
 	{
 		// validation
-		if (authority == null || authority.length() < 1) throw new IllegalArgumentException("authority");
-		if (domain == null || domain.length() < 1) throw new IllegalArgumentException("domain");
-		if (keyword == null || keyword.length() < 1) throw new IllegalArgumentException("keyword");
-		if (displayName == null || displayName.length() < 1) throw new IllegalArgumentException("displayName");
+		if (authority == null || authority.length() < 1 || authority.length() > 100)
+			throw new IllegalArgumentException("authority");
+		if (domain == null || domain.length() < 1 || domain.length() > 100)
+			throw new IllegalArgumentException("domain");
+		if (keyword == null || keyword.length() < 1 || keyword.length() > 100)
+			throw new IllegalArgumentException("keyword");
+		if (displayName == null || displayName.length() < 1| displayName.length() > 255)
+			throw new IllegalArgumentException("displayName");
 
 		TypeImpl ti = new TypeImpl();
 		persistableHelper.createPersistableFields(ti);
@@ -91,7 +96,7 @@ public class TypeManagerImpl extends HibernateDaoSupport implements TypeManager
 		}
 		else
 		{ // found external Type
-			throw new IllegalArgumentException("Alternate Type implementations not supported yet.");
+			throw new IllegalArgumentException("Alternate Type implementations not supported.");
 		}
 	}
 

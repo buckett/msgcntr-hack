@@ -5161,7 +5161,7 @@ public class DiscussionForumTool
 
   /**
    * Construct the proper String reference for an Event
-   * 
+   *
    * @param message
    * @return
    */
@@ -9783,8 +9783,6 @@ public class DiscussionForumTool
         }
 		return null;
 	}
-
-	private Rank authorRank;
 
 	public Rank getAuthorRank(String userId) {
 		// if both types of ranks exist for the same user, use the "Special rank assigned to selected site member(s)" type first.

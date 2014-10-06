@@ -73,7 +73,6 @@ import org.sakaiproject.component.app.messageforums.dao.hibernate.PrivateMessage
 import org.sakaiproject.component.app.messageforums.dao.hibernate.PrivateTopicImpl;
 import org.sakaiproject.component.cover.ComponentManager;
 import org.sakaiproject.component.cover.ServerConfigurationService;
-import org.sakaiproject.content.api.ContentHostingService;
 import org.sakaiproject.content.api.FilePickerHelper;
 import org.sakaiproject.entity.api.Reference;
 import org.sakaiproject.event.api.Event;
@@ -173,7 +172,6 @@ public class PrivateMessagesTool
   
   /** Dependency Injected   */
   private MessageForumsTypeManager typeManager;
-  private ContentHostingService contentHostingService;
  
   /** Navigation for JSP   */
   public static final String MAIN_PG="main";
@@ -5069,10 +5067,6 @@ private   int   getNum(char letter,   String   a)
 	  	
 	  	return eventMessagePrefix + ToolManager.getCurrentPlacement().getContext() + 
 	  				"/" + object.toString() + "/" + SessionManager.getCurrentSessionUserId();
-	}
-
-	public void setContentHostingService(ContentHostingService contentHostingService) {
-		this.contentHostingService = contentHostingService;
 	}
 
 	public SynopticMsgcntrManager getSynopticMsgcntrManager() {

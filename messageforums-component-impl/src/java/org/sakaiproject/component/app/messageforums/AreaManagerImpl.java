@@ -68,6 +68,10 @@ public class AreaManagerImpl implements AreaManager {
 
     private ServerConfigurationService serverConfigurationService;
 
+	public void setSakaiProxy(SakaiProxy sakaiProxy) {
+		this.sakaiProxy = sakaiProxy;
+	}
+
 	private SakaiProxy sakaiProxy;
     
     /**

@@ -39,6 +39,10 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-tx</artifactId>
     </dependency>
+	  <dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-context</artifactId>
+	  </dependency>
     <dependency>
       <groupId>org.sakaiproject.kernel</groupId>
       <artifactId>sakai-kernel-api</artifactId>
@@ -68,14 +72,10 @@
         <artifactId>gradebook-service-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>commons-beanutils</groupId>
-      <artifactId>commons-beanutils</artifactId>
-      <version>1.7.0</version>
-    </dependency>
-    <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
   </dependency>
+    <!-- Used for base64 encode/decode in XML import/export -->
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
@@ -83,7 +83,6 @@
     <dependency>
         <groupId>javax.mail</groupId>
         <artifactId>mail</artifactId>
-        <scope>provided</scope>
     </dependency>
     <dependency>
     	<groupId>org.sakaiproject.search</groupId>
@@ -91,16 +90,18 @@
         <scope>provided</scope>
     </dependency>
     <dependency>
-       <groupId>org.opensymphony.quartz</groupId>
+       <groupId>org.quartz-scheduler</groupId>
        <artifactId>quartz</artifactId>
-       <version>1.6.6</version>
-       <scope>provided</scope>
     </dependency>
     <dependency>
         <groupId>org.sakaiproject.scheduler</groupId>
         <artifactId>scheduler-api</artifactId>
-        <scope>provided</scope>
     </dependency>
+	  <dependency>
+		  <groupId>javax.inject</groupId>
+		  <artifactId>javax.inject</artifactId>
+		  <version>1</version>
+	  </dependency>
   </dependencies>
   <build>
     <resources>
@@ -111,19 +112,10 @@
         </includes>
       </resource>
       <resource>
-        <directory>${basedir}/src/bundle</directory>
-        <includes>
-          <include>**/*.properties</include>
-        </includes>
-      </resource>
-      <resource>
-        <directory>src/java</directory>
+        <directory>${basedir}/src/resources</directory>
         <includes>
           <include>**/*.xml</include>
         </includes>
-        <excludes>
-          <exclude>**/web.xml</exclude>
-        </excludes>
       </resource>
     </resources>
   </build>

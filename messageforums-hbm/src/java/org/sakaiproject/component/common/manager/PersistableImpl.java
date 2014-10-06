@@ -26,11 +26,12 @@ import java.util.Date;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.api.common.type.Persistable;
+import org.sakaiproject.component.common.type.PersistableEdit;
 
 /**
  * @author <a href="mailto:lance@indiana.edu">Lance Speelmon</a>
  */
-public abstract class PersistableImpl implements Persistable
+public abstract class PersistableImpl implements Persistable, PersistableEdit
 {
 	private static final Log LOG = LogFactory.getLog(PersistableImpl.class);
 
@@ -122,6 +123,7 @@ public abstract class PersistableImpl implements Persistable
 		return lastModifiedBy;
 	}
 
+	@Override
 	public void setLastModifiedBy(String lastModifiedBy)
 	{
 		if (LOG.isDebugEnabled())
@@ -143,6 +145,7 @@ public abstract class PersistableImpl implements Persistable
 		return lastModifiedDate;
 	}
 
+	@Override
 	public void setLastModifiedDate(Date lastModifiedDate)
 	{
 		if (LOG.isDebugEnabled())
@@ -164,6 +167,7 @@ public abstract class PersistableImpl implements Persistable
 		return createdBy;
 	}
 
+	@Override
 	public void setCreatedBy(String createdBy)
 	{
 		if (LOG.isDebugEnabled())
@@ -184,6 +188,7 @@ public abstract class PersistableImpl implements Persistable
 		return createdDate;
 	}
 
+	@Override
 	public void setCreatedDate(Date createdDate)
 	{
 		if (LOG.isDebugEnabled())

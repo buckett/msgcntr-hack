@@ -22,6 +22,7 @@
 package org.sakaiproject.api.common.type;
 
 /**
+ * This can probably go from the API as it's just been pulled in from another project and doesn't need to be in here.
  * @author <a href="mailto:lance@indiana.edu">Lance Speelmon </a>
  */
 public interface TypeManager

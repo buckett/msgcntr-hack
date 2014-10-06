@@ -5,10 +5,10 @@
 
 <hibernate-mapping>
 
-  <class 
+  <class
       name="org.sakaiproject.component.app.messageforums.dao.hibernate.TopicImpl"
       table="MFR_TOPIC_T" 
-      optimistic-lock="version" 
+      optimistic-lock="version"
       discriminator-value="TO">
 
     <!-- Inherited fields from MutableEntity -->
@@ -69,7 +69,7 @@
     </property>
 	
 	<property name="autoMarkThreadsRead" column="AUTO_MARK_THREADS_READ" not-null="true" />
-
+	<!--
 	<list name="messages" lazy="false" table="MFR_MESSAGE_T" cascade="all-delete-orphan">
 	    <key column="surrogateKey"/>
 	    <index column="t_index_col" />

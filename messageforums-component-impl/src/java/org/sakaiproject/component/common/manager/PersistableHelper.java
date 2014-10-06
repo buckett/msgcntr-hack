@@ -4,7 +4,7 @@
  ***********************************************************************************
  *
  * Copyright (c) 2003, 2004, 2005, 2006 The Sakai Foundation.
- * 
+ *
  * Licensed under the Educational Community License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -21,132 +21,64 @@
 
 package org.sakaiproject.component.common.manager;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.sakaiproject.api.common.type.Persistable;
-import org.sakaiproject.tool.api.Session;
+import org.sakaiproject.component.common.type.PersistableEdit;
 import org.sakaiproject.tool.api.SessionManager;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
 /**
- * @author <a href="mailto:lance@indiana.edu">Lance Speelmon</a>
+ * Refactored this to get rid of the reflection.
  */
 public class PersistableHelper
 {
 	private static final String SYSTEM = "SYSTEM";
 
-	private static final Log LOG = LogFactory.getLog(PersistableHelper.class);
-
-	private static final String LASTMODIFIEDDATE = "lastModifiedDate";
-
-	private static final String LASTMODIFIEDBY = "lastModifiedBy";
-
-	private static final String CREATEDDATE = "createdDate";
-
-	private static final String CREATEDBY = "createdBy";
-
 	private SessionManager sessionManager; // dep inj
 
-	public void modifyPersistableFields(Persistable persistable)
+	public void modifyPersistableFields(PersistableEdit persistable)
 	{
-		Date now = new Date(); // time sensitive
-		if (LOG.isDebugEnabled())
-		{
-			LOG.debug("modifyPersistableFields(Persistable " + persistable + ")");
-		}
 		if (persistable == null) throw new IllegalArgumentException("Illegal persistable argument passed!");
 
-		try
-		{
-			String actor = getActor();
+		String actor = getActor();
+		Date now = new Date(); // time sensitive
 
-			PropertyUtils.setProperty(persistable, LASTMODIFIEDBY, actor);
-			PropertyUtils.setProperty(persistable, LASTMODIFIEDDATE, now);
-		}
-		catch (NoSuchMethodException e)
-		{
-			LOG.error(e);
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			LOG.error(e);
-			throw new RuntimeException(e);
-		} catch (InvocationTargetException e) {
-			LOG.error(e);
-			throw new RuntimeException(e);
-		}
+
+		persistable.setLastModifiedBy(actor);
+		persistable.setLastModifiedDate(now);
+
 	}
 
-	public void createPersistableFields(Persistable persistable)
+	public void createPersistableFields(PersistableEdit persistable)
 	{
-		Date now = new Date(); // time sensitive
-		if (LOG.isDebugEnabled())
-		{
-			LOG.debug("modifyPersistableFields(Persistable " + persistable + ")");
-		}
 		if (persistable == null) throw new IllegalArgumentException("Illegal persistable argument passed!");
 
-		try
-		{
-			String actor = getActor();
+		String actor = getActor();
+		Date now = new Date(); // time sensitive
 
-			PropertyUtils.setProperty(persistable, LASTMODIFIEDBY, actor);
-			PropertyUtils.setProperty(persistable, LASTMODIFIEDDATE, now);
-			PropertyUtils.setProperty(persistable, CREATEDBY, actor);
-			PropertyUtils.setProperty(persistable, CREATEDDATE, now);
-		}
-		catch (NoSuchMethodException e)
-		{
-			LOG.error(e);
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			LOG.error(e);
-			throw new RuntimeException(e);
-		} catch (InvocationTargetException e) {
-			LOG.error(e);
-			throw new RuntimeException(e);
-		}
+		persistable.setLastModifiedBy(actor);
+		persistable.setLastModifiedDate(now);
+		persistable.setCreatedBy(actor);
+		persistable.setCreatedDate(now);
 	}
 
 	private String getActor()
 	{
-		LOG.debug("getActor()");
-
-		String actor = null;
-		Session session = sessionManager.getCurrentSession();
-		if (session != null)
-		{
-			actor = session.getUserId();
-		}
-		else
-		{
-			return SYSTEM;
-		}
+		String actor = sessionManager.getCurrentSessionUserId();
 		if (actor == null || actor.length() < 1)
 		{
-			return SYSTEM;
+			actor = SYSTEM;
 		}
-		else
-		{
-			return actor;
-		}
+		return actor;
 	}
 
 	/**
 	 * Dependency injection.
-	 * 
+	 *
 	 * @param sessionManager
 	 *        The sessionManager to set.
 	 */
 	public void setSessionManager(SessionManager sessionManager)
 	{
-		if (LOG.isDebugEnabled())
-		{
-			LOG.debug("setSessionManager(SessionManager " + sessionManager + ")");
-		}
-
 		this.sessionManager = sessionManager;
 	}
 }

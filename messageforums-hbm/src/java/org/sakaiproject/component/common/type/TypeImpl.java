@@ -31,8 +31,6 @@ import org.sakaiproject.component.common.manager.PersistableImpl;
  */
 public class TypeImpl extends PersistableImpl implements Type
 {
-	private static final Log LOG = LogFactory.getLog(TypeImpl.class);
-
 	private String authority;
 
 	private String domain;
@@ -50,8 +48,6 @@ public class TypeImpl extends PersistableImpl implements Type
 	 */
 	private String getBusinessKey()
 	{
-		LOG.trace("getBusinessKey()");
-
 		StringBuilder sb = new StringBuilder();
 		sb.append(authority);
 		sb.append(domain);
@@ -64,28 +60,15 @@ public class TypeImpl extends PersistableImpl implements Type
 	 */
 	public boolean equals(Object obj)
 	{
-		if (LOG.isTraceEnabled())
-		{
-			LOG.trace("equals(Object " + obj + ")");
-		}
-
 		if (this == obj) return true;
 		if (!(obj instanceof Type)) return false;
 		if (obj instanceof TypeImpl)
 		{ // found well known Type
-			if (LOG.isDebugEnabled())
-			{
-				LOG.debug("equals(obj): // found well known Type");
-			}
 			TypeImpl other = (TypeImpl) obj;
 			if (this.getBusinessKey().equals(other.getBusinessKey())) return true;
 		}
 		else
 		{ // found external Type
-			if (LOG.isDebugEnabled())
-			{
-				LOG.debug("equals(obj): // found external Type");
-			}
 			Type other = (Type) obj;
 			if (this.getAuthority().equals(other.getAuthority()) && this.getDomain().equals(other.getDomain())
 					&& this.getKeyword().equals(other.getKeyword())) return true;
@@ -98,8 +81,6 @@ public class TypeImpl extends PersistableImpl implements Type
 	 */
 	public int hashCode()
 	{
-		LOG.trace("hashCode()");
-
 		return getBusinessKey().hashCode();
 	}
 
@@ -108,8 +89,6 @@ public class TypeImpl extends PersistableImpl implements Type
 	 */
 	public String toString()
 	{
-		LOG.trace("toString()");
-
 		StringBuilder sb = new StringBuilder();
 		sb.append("{id=");
 		sb.append(super.id);
@@ -125,122 +104,61 @@ public class TypeImpl extends PersistableImpl implements Type
 		return sb.toString();
 	}
 
-	/**
-	 * @see org.sakaiproject.service.type.Type#getAuthority()
-	 */
 	public String getAuthority()
 	{
-		LOG.trace("getAuthority()");
-
 		return authority;
 	}
 
-	/**
-	 * @see org.sakaiproject.service.type.Type#getDomain()
-	 */
 	public String getDomain()
 	{
-		LOG.trace("getDomain()");
-
 		return domain;
 	}
 
-	/**
-	 * @see org.sakaiproject.service.type.Type#getKeyword()
-	 */
 	public String getKeyword()
 	{
-		LOG.trace("getKeyword()");
-
 		return keyword;
 	}
 
-	/**
-	 * @see org.sakaiproject.service.type.Type#getDisplayName()
-	 */
 	public String getDisplayName()
 	{
-		LOG.trace("getDisplayName()");
-
 		return displayName;
 	}
 
-	/**
-	 * @see org.sakaiproject.service.type.Type#getDescription()
-	 */
 	public String getDescription()
 	{
-		LOG.trace("getDescription()");
-
 		return description;
 	}
 
-	/**
-	 * @see org.sakaiproject.service.type.Type#setAuthority(String)
-	 */
 	public void setAuthority(String authority)
 	{
-		if (LOG.isDebugEnabled())
-		{
-			LOG.debug("setAuthority(String " + authority + ")");
-		}
 		if (authority == null || authority.length() < 1) throw new IllegalArgumentException("authority");
 
 		this.authority = authority;
 	}
 
-	/**
-	 * @see org.sakaiproject.service.type.Type#setDomain(String)
-	 */
 	public void setDomain(String domain)
 	{
-		if (LOG.isDebugEnabled())
-		{
-			LOG.debug("setDomain(String " + domain + ")");
-		}
 		if (domain == null || domain.length() < 1) throw new IllegalArgumentException("domain");
 
 		this.domain = domain;
 	}
 
-	/**
-	 * @see org.sakaiproject.service.type.Type#setKeyword(String)
-	 */
 	public void setKeyword(String keyword)
 	{
-		if (LOG.isDebugEnabled())
-		{
-			LOG.debug("setKeyword(String " + keyword + ")");
-		}
 		if (keyword == null || keyword.length() < 1) throw new IllegalArgumentException("keyword");
 
 		this.keyword = keyword;
 	}
 
-	/**
-	 * @see org.sakaiproject.service.type.Type#setDisplayName(String)
-	 */
 	public void setDisplayName(String displayName)
 	{
-		if (LOG.isDebugEnabled())
-		{
-			LOG.debug("setDisplayName(String " + displayName + ")");
-		}
 		if (displayName == null || displayName.length() < 1) throw new IllegalArgumentException("displayName");
 
 		this.displayName = displayName;
 	}
 
-	/**
-	 * @see org.sakaiproject.service.type.Type#setDescription(String)
-	 */
 	public void setDescription(String description)
 	{
-		if (LOG.isDebugEnabled())
-		{
-			LOG.debug("setDescription(String " + description + ")");
-		}
-
 		this.description = description;
 	}
 

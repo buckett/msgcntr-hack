@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
     <bean id="org.sakaiproject.springframework.orm.hibernate.impl.AdditionalHibernateMappingsImpl.messageforum" 
           class="org.sakaiproject.springframework.orm.hibernate.impl.AdditionalHibernateMappingsImpl">
         <property name="mappingResources">
@@ -13,7 +17,7 @@
                 <value>org/sakaiproject/component/app/messageforums/dao/hibernate/MessageImpl.hbm.xml</value>
                 <value>org/sakaiproject/component/app/messageforums/dao/hibernate/OpenForum.hbm.xml</value>
                 <value>org/sakaiproject/component/app/messageforums/dao/hibernate/PrivateForum.hbm.xml</value>
-                <value>org/sakaiproject/component/app/messageforums/dao/hibernate/Label.hbm.xml</value>
+				<value>org/sakaiproject/component/app/messageforums/dao/hibernate/PermissionLevelImpl.hbm.xml</value>
                 <value>org/sakaiproject/component/app/messageforums/dao/hibernate/DBMembershipItemImpl.hbm.xml</value>
                 <value>org/sakaiproject/component/app/messageforums/dao/hibernate/EmailNotification.hbm.xml</value>
                 <value>org/sakaiproject/component/app/messageforums/dao/hibernate/SynopticMsgcntrItem.hbm.xml</value>
@@ -46,14 +50,11 @@
         </property> 
         <property name="permissionManager">
             <ref bean="org.sakaiproject.api.app.messageforums.PermissionLevelManager"/>
-        </property> 
-        <property name="contentHostingService">
-        		    <ref bean="org.sakaiproject.content.api.ContentHostingService"/>
         </property>
     </bean>
 	    
     <bean id="org.sakaiproject.api.app.messageforums.MessageForumsTypeManager" 
-        class="org.sakaiproject.component.app.messageforums.MessageForumsTypeManagerImpl" init-method="init" singleton="true">
+        class="org.sakaiproject.component.app.messageforums.MessageForumsTypeManagerImpl" init-method="init" scope="singleton">
         <property name="typeManager">
             <ref bean="org.sakaiproject.api.common.type.TypeManager"/>
         </property>
@@ -110,7 +111,7 @@
             <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager"/>
         </property>
         <property name="target">
-            <bean class="org.sakaiproject.component.app.messageforums.PermissionLevelManagerImpl" singleton="true" init-method="init">
+            <bean class="org.sakaiproject.component.app.messageforums.PermissionLevelManagerImpl" scope="singleton" init-method="init">
                 <property name="autoDdl">
       						<value>${auto.ddl}</value>
 		    				</property>
@@ -146,7 +147,7 @@
             <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager"/>
         </property>
         <property name="target">
-            <bean class="org.sakaiproject.component.app.messageforums.AreaManagerImpl" singleton="true" init-method="init">
+            <bean class="org.sakaiproject.component.app.messageforums.AreaManagerImpl" scope="singleton" init-method="init">
                 <property name="sessionFactory">
                     <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
                 </property>
@@ -177,7 +178,7 @@
             <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager"/>
         </property>
 		<property name="target">
-			<bean class="org.sakaiproject.component.app.messageforums.MessageForumsForumManagerImpl" singleton="true" init-method="init">
+			<bean class="org.sakaiproject.component.app.messageforums.MessageForumsForumManagerImpl" scope="singleton" init-method="init">
 				<property name="sessionFactory">
                     <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
 				</property>   
@@ -209,7 +210,7 @@
             <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager"/>
         </property>
         <property name="target">
-            <bean class="org.sakaiproject.component.app.messageforums.MessageForumsMessageManagerImpl" singleton="true" init-method="init">
+            <bean class="org.sakaiproject.component.app.messageforums.MessageForumsMessageManagerImpl" scope="singleton" init-method="init">
                 <property name="sessionFactory">
                     <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
                 </property>
@@ -249,7 +250,7 @@
             <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager"/>
         </property>
         <property name="target">
-            <bean class="org.sakaiproject.component.app.messageforums.ui.PrivateMessageManagerImpl" singleton="true" init-method="init">
+            <bean class="org.sakaiproject.component.app.messageforums.ui.PrivateMessageManagerImpl" scope="singleton" init-method="init">
                 <property name="sessionFactory">
                     <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
                 </property>
@@ -291,7 +292,7 @@
             <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager"/>
         </property>
         <property name="target">
-            <bean class="org.sakaiproject.component.app.messageforums.ui.DiscussionForumManagerImpl" singleton="true" init-method="init">
+            <bean class="org.sakaiproject.component.app.messageforums.ui.DiscussionForumManagerImpl" scope="singleton" init-method="init">
                 <property name="sessionFactory">
                     <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
                 </property>
@@ -346,7 +347,7 @@
             <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager"/>
         </property>
         <property name="target">
-            <bean class="org.sakaiproject.component.app.messageforums.MessageForumsUserManagerImpl" singleton="true" init-method="init">
+            <bean class="org.sakaiproject.component.app.messageforums.MessageForumsUserManagerImpl" scope="singleton" init-method="init">
                 <property name="sessionFactory">
                     <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
                 </property>
@@ -373,7 +374,7 @@
             <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager"/>
         </property>
         <property name="target">
-            <bean class="org.sakaiproject.component.app.messageforums.MembershipManagerImpl" singleton="true" init-method="init">            
+            <bean class="org.sakaiproject.component.app.messageforums.MembershipManagerImpl" scope="singleton" init-method="init">            
                 <property name="siteService">
                   <ref bean="org.sakaiproject.site.api.SiteService"/>
                 </property>
@@ -402,84 +403,7 @@
    	   	class="org.sakaiproject.component.app.messageforums.SakaiUserPreferencesManagerImpl">
    	   	<property name="timeService" ref="org.sakaiproject.time.api.TimeService" />
    	</bean>
-    
-    <bean id="org.sakaiproject.api.app.messageforums.ForumTopicEntityProvider" class="org.sakaiproject.component.app.messageforums.entity.ForumTopicEntityProviderImpl">
-		<property name="forumManager" ref="org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager" />
-    </bean>
-    
-    <bean id="org.sakaiproject.api.app.messageforums.TopicEntityProvider" class="org.sakaiproject.component.app.messageforums.entity.TopicEntityProviderImpl">
-		<property name="forumManager" ref="org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager" />
-		<property name="uiPermissionsManager">
-             <ref bean="org.sakaiproject.api.app.messageforums.ui.UIPermissionsManager"/>
-		</property>
-		<property name="messageManager">
-             <ref bean="org.sakaiproject.api.app.messageforums.MessageForumsMessageManager"/>
-        </property>
-        <property name="privateMessageManager">
-          <ref bean="org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager"/>
-      	</property>
-      	<property name="typeManager">
-            <ref bean="org.sakaiproject.api.app.messageforums.MessageForumsTypeManager"/>
-        </property>
-    </bean>
-    
-    <bean id="org.sakaiproject.api.app.messageforums.ForumEntityProvider" class="org.sakaiproject.component.app.messageforums.entity.ForumEntityProviderImpl">
-		<property name="forumManager" ref="org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager" />
-    </bean>
 
-    <bean id="org.sakaiproject.api.app.messageforums.ForumMessageEntityProvider" class="org.sakaiproject.component.app.messageforums.entity.ForumMessageEntityProviderImpl">
-		<property name="forumManager" ref="org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager" />
-		<property name="privateMessageManager">
-          <ref bean="org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager"/>
-      	</property>
-      	<property name="uiPermissionsManager">
-            <ref bean="org.sakaiproject.api.app.messageforums.ui.UIPermissionsManager"/>
-        </property>
-        <property name="messageManager">
-            <ref bean="org.sakaiproject.api.app.messageforums.MessageForumsMessageManager"/>
-        </property>
-    </bean>
-
-	<bean id="org.sakaiproject.api.app.messageforums.SynopticMsgcntrItemProvider" class="org.sakaiproject.component.app.messageforums.entity.SynopticMsgcntrItemEntityProviderImpl">
-		<property name="synopticMsgcntrManager" ref="org.sakaiproject.api.app.messageforums.SynopticMsgcntrManager" />
-    </bean>
-
-
-	<bean id="forumsAdaptor"
-		class="org.sakaiproject.component.app.messageforums.entity.MessageForumsEntityContentProducer"
-		singleton="true" init-method="init">
-		<property name="searchService">
-			<ref bean="org.sakaiproject.search.api.SearchService" />
-		</property>
-		<property name="searchIndexBuilder">
-			<ref bean="org.sakaiproject.search.api.SearchIndexBuilder" />
-		</property>
-		<property name="serverConfigurationService">
-			<ref bean="org.sakaiproject.component.api.ServerConfigurationService" />
-		</property>
-		<property name="toolName">
-			<value>forums</value>
-		</property>
-		<property name="entityBroker" ref="org.sakaiproject.entitybroker.EntityBroker" />
-		<property name="messageForumsMessageManager"
-			ref="org.sakaiproject.api.app.messageforums.MessageForumsMessageManager" />
-		<property name="UIPermissionManager"
-			ref="org.sakaiproject.api.app.messageforums.ui.UIPermissionsManager" />
-		<property name="discussionForumManager"
-			ref="org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager" />
-		<property name="developerHelperService"
-			ref="org.sakaiproject.entitybroker.DeveloperHelperService" />
-		<property name="addEvents">
-			<list>
-				<value>forums.new</value>
-			</list>
-		</property>
-		<property name="removeEvents">
-			<list>
-				<value>forums.delete</value>
-			</list>
-		</property>
-	</bean>
     
     
     <bean id="org.sakaiproject.api.app.messageforums.EmailNotificationManager" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
@@ -487,7 +411,7 @@
             <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager"/>
         </property>
         <property name="target">
-            <bean class="org.sakaiproject.component.app.messageforums.EmailNotificationManagerImpl" singleton="true" init-method="init">
+            <bean class="org.sakaiproject.component.app.messageforums.EmailNotificationManagerImpl" scope="singleton" init-method="init">
                 <property name="sessionFactory">
                     <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
                 </property>
@@ -508,31 +432,14 @@
             </props>
         </property> 
     </bean>
- 		
-	<bean id="org.sakaiproject.api.app.messageforums.ForumScheduleNotification" class="org.sakaiproject.component.app.messageforums.ForumScheduleNotificationImpl">
- 		<property name="timeService" ref="org.sakaiproject.time.api.TimeService" />
-		<property name="scheduledInvocationManager" ref="org.sakaiproject.api.app.scheduler.ScheduledInvocationManager" />
-		<property name="typeManager">
-          <ref bean="org.sakaiproject.api.app.messageforums.MessageForumsTypeManager"/>
-        </property>
-        <property name="areaManager">
-  	        <ref bean="org.sakaiproject.api.app.messageforums.AreaManager"/>
-        </property>      
-        <property name="forumManager">
-             <ref bean="org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager"/>
-         </property>
-		<property name="sessionManager">
-			<ref bean="org.sakaiproject.tool.api.SessionManager"/>
-		</property>
-	</bean>
-    
+
     <bean id="org.sakaiproject.api.app.messageforums.SynopticMsgcntrManager"     
  		  class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
          <property name="transactionManager">
              <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager"/>
          </property>
  		<property name="target">
- 			<bean class="org.sakaiproject.component.app.messageforums.SynopticMsgcntrManagerImpl" singleton="true" init-method="init">
+ 			<bean class="org.sakaiproject.component.app.messageforums.SynopticMsgcntrManagerImpl" scope="singleton" init-method="init">
  				<property name="sessionFactory">
                      <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
                  </property>
@@ -563,51 +470,13 @@
  
  	</bean>
  
- 	
- 	<bean id="org.sakaiproject.component.app.messageforums.jobs.UpdateSynopticMessageCounts"
-    		class="org.sakaiproject.component.app.messageforums.jobs.UpdateSynopticMessageCounts"
-    		init-method="init">   
-    		<property name="pvtMessageManager">
-             <ref bean="org.sakaiproject.api.app.messageforums.ui.PrivateMessageManager"/>
-         </property>   
-        
-         <property name="uiPermissionsManager">
-             <ref bean="org.sakaiproject.api.app.messageforums.ui.UIPermissionsManager"/>
-         </property>
-         <property name="typeManager">
-             <ref bean="org.sakaiproject.api.app.messageforums.MessageForumsTypeManager"/>
-         </property>
-         <property name="forumManager">
-             <ref bean="org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager"/>
-         </property>
-         <property name="messageManager">
-             <ref bean="org.sakaiproject.api.app.messageforums.MessageForumsMessageManager"/>
-         </property>
-         <property name="siteService">
-           <ref bean="org.sakaiproject.site.api.SiteService"/>
-         </property>
-    	</bean>
-    	
-    <bean id="UpdateSynopticMessageCountsJob"
-       class="org.sakaiproject.component.app.scheduler.jobs.SpringJobBeanWrapper"
-       singleton="true" init-method="init">
-       <property name="beanId">
-          <value>org.sakaiproject.component.app.messageforums.jobs.UpdateSynopticMessageCounts</value>
-       </property>
-       <property name="jobName">
-          <value>Update Synoptic Message Counts Job</value>
-       </property>
-       <property name="schedulerManager">
-          <ref bean="org.sakaiproject.api.app.scheduler.SchedulerManager" />
-       </property>
-    </bean>
-    
+
     <bean id="org.sakaiproject.api.app.messageforums.RankManager" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
         <property name="transactionManager">
             <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager"/>
         </property>
         <property name="target">
-            <bean class="org.sakaiproject.component.app.messageforums.RankManagerImpl" singleton="true" init-method="init">
+            <bean class="org.sakaiproject.component.app.messageforums.RankManagerImpl" scope="singleton" init-method="init">
                 <property name="sessionFactory">
                     <ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
                 </property>
@@ -623,7 +492,7 @@
 				<property name="idManager">
 					<ref bean="org.sakaiproject.id.api.IdManager" />
 				</property>		 								
-		        <property name="attachmentservice">
+		        <property name="attachmentService">
         		    <ref bean="org.sakaiproject.component.app.messageforums.AttachmentService"/>
 		        </property>
 		        
@@ -637,21 +506,40 @@
     </bean>
 
 	<!-- The type manager. -->
-	<bean id="org.sakaiproject.api.common.type.TypeManager"
-		  class="org.sakaiproject.component.common.manager.TypeManagerImpl">
-		<property name="persistableHelper">
-			<bean class="org.sakaiproject.component.common.manager.PersistableHelper">
-				<property name="sessionManager">
-					<ref bean="org.sakaiproject.tool.api.SessionManager"/>
+	<bean id="org.sakaiproject.api.common.type.TypeManager" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager"/>
+		</property>
+		<property name="target">
+			<bean
+					class="org.sakaiproject.component.common.manager.TypeManagerImpl">
+				<property name="persistableHelper">
+					<bean class="org.sakaiproject.component.common.manager.PersistableHelper">
+						<property name="sessionManager">
+							<ref bean="org.sakaiproject.tool.api.SessionManager"/>
+						</property>
+					</bean>
+				</property>
+				<property name="idManager">
+					<ref bean="org.sakaiproject.id.api.IdManager"/>
+				</property>
+				<property name="sessionFactory">
+					<ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
 				</property>
 			</bean>
 		</property>
-		<property name="idManager">
-			<ref bean="org.sakaiproject.id.api.IdManager"/>
-		</property>
-		<property name="sessionFactory">
-			<ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
 		</property>
 	</bean>
- 
+
+	<context:component-scan base-package="org.sakaiproject.component.app.messageforums"/>
+	<!--<bean id="org.sakaiproject.component.app.messageforums.SakaiProxy"-->
+		  <!--class="org.sakaiproject.component.app.messageforums.SakaiProxyImpl">-->
+		<!--<property name="sessionManager" ref="org.sakaiproject.tool.api.SessionManager"/>-->
+		<!--<property name="idManager" ref="org.sakaiproject.id.api.IdManager"/>-->
+		<!--<property name="toolManager" ref="org.sakaiproject.tool.api.ToolManager"/>-->
+		  <!--</bean>-->
 </beans>

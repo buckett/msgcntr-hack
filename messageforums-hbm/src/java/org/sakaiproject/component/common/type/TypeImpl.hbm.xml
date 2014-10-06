@@ -51,8 +51,7 @@
     </property>
 
     <property name="displayName">
-      <column name="DISPLAY_NAME" length="255" not-null="true"
-        index="CMN_TYPE_T_DISPLAY_NAME_I" />
+      <column name="DISPLAY_NAME" length="255" not-null="true"/>
     </property>
 
     <property name="description">
@@ -60,10 +59,6 @@
     </property>
 
   </class>
-
-  <query name="findTypeById">
-    <![CDATA[from org.sakaiproject.component.common.type.TypeImpl as type where type.id = :id]]>
-  </query>
 
   <query name="findTypeByUuid">
     <![CDATA[from org.sakaiproject.component.common.type.TypeImpl as type where type.uuid = :uuid]]>
